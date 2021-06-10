@@ -57,7 +57,7 @@ public class UserRegistAdminController {
 
 	/**
 	 * POSTメソッドを利用して会員情報入力画面に戻る処理
-	 * 
+	 *
 	 * @param form 会員情報
 	 * @return "user/regist/user_regist_input_admin" 会員情報 登録入力画面へ
 	 */

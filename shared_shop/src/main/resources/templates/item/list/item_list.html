@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			商品一覧 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+	</head>
+	<body class="user item_list">
+		<header>
+			<div class="container">
+				<h1 class="site_title">
+					シェアードショップ
+				</h1>
+				<div class="user_info">
+					<a href="/shared_shop/login">
+						ログイン
+					</a>
+					|
+					<a href="/shared_shop/user/regist/input">
+						新規会員登録
+					</a>
+				</div>
+			</div>
+		</header>
+		<nav class="navi_area">
+			<ul class="navi_menu">
+				<li>
+					<a href="/shared_shop/">
+						トップ
+					</a>
+				</li>
+				<li>
+					<a href="/shared_shop/item/list/1">
+						新着一覧
+					</a>
+				</li>
+				<li>
+					<a href="/shared_shop/basket/list?page=0">
+						買い物かご
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="container">
+			<aside class="search" >
+				<div  class="search_area">
+					<h2 class="title">
+						カテゴリ別検索
+					</h2>
+					<div class="form">
+						<form action="/shared_shop/item/list/category/1">
+							<select name="categoryId">
+								<option value="2">
+									書籍
+								</option>
+								<option value="1">
+									食料品
+								</option>
+								<option value="15">
+									キッチン用品
+								</option>
+								<option value="13">
+									アクセサリ
+								</option>
+								<option value="10">
+									OA用品
+								</option>
+								<option value="12">
+									手芸用品
+								</option>
+								<option value="9">
+									飲み物
+								</option>
+								<option value="8">
+									ネットワーク機器
+								</option>
+								<option value="6">
+									掃除用具
+								</option>
+								<option value="5">
+									文房具
+								</option>
+								<option value="7">
+									食器
+								</option>
+								<option value="3">
+									乗り物
+								</option>
+							</select>
+							<input type="submit" value="検索" />
+						</form>
+					</div>
+				</div>
+			</aside>
+			<article class="main">
+				<h2 class="title">
+					商品一覧
+				</h2>
+				<div class="sorted_by">
+					<span>
+						新着順
+					</span>
+					<a href="/shared_shop/item/list/2?categoryId=&amp;min=&amp;max=">
+						売れ筋順
+					</a>
+				</div>
+				<table class="list_table item_detail">
+					<tr>
+						<th>
+							商品画像
+						</th>
+						<th>
+							商品名
+						</th>
+						<th>
+							価格
+						</th>
+						<th>
+							カテゴリ
+						</th>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/common/no_image.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/26">
+								やさしいJava
+							</a>
+						</td>
+						<td>
+							2580
+						</td>
+						<td>
+							書籍
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180311122622_apple.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/1">
+								りんご
+							</a>
+						</td>
+						<td>
+							110
+						</td>
+						<td>
+							食料品
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180312124614_dictionary.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/2">
+								辞書
+							</a>
+						</td>
+						<td>
+							2000
+						</td>
+						<td>
+							書籍
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/common/no_image.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/3">
+								オレンジ
+							</a>
+						</td>
+						<td>
+							150
+						</td>
+						<td>
+							食料品
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180613122242_DoubleClips.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/20">
+								ダブルクリップ(チェック柄)
+							</a>
+						</td>
+						<td>
+							550
+						</td>
+						<td>
+							文房具
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180613010510_Note.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/25">
+								ノート
+							</a>
+						</td>
+						<td>
+							45
+						</td>
+						<td>
+							文房具
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180613010316_BlackPencil.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/24">
+								鉛筆
+							</a>
+						</td>
+						<td>
+							20
+						</td>
+						<td>
+							文房具
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180613010231_MaskingTape-Dotted.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/23">
+								マスキングテープ(水玉)
+							</a>
+						</td>
+						<td>
+							450
+						</td>
+						<td>
+							文房具
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180613010141_MaskingTape-Star.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/22">
+								マスキングテープ(星)
+							</a>
+						</td>
+						<td>
+							450
+						</td>
+						<td>
+							文房具
+						</td>
+					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180613125349_MaskingTapes.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/21">
+								マスキングテープ
+							</a>
+						</td>
+						<td>
+							980
+						</td>
+						<td>
+							文房具
+						</td>
+					</tr>
+				</table>
+			</article>
+		</div>
+		<footer>
+			<small class="container">
+				Copyright(C) 2017 System Shared co., ltd, ALL Rights Reserved
+			</small>
+		</footer>
+	</body>
+</html>

@@ -249,12 +249,12 @@ p {
 }
 
 .input_list .error_message {
-	
+
 	display: block;
 	line-height: 0.9em;
 	font-size: 0.9rem;
 	color: #C00;
-	
+
 }
 
 .input_list .error_list{
@@ -411,6 +411,9 @@ select {
 }
 
 /* ---- テーブル ---- */
+.list_table{
+	width: 200px;;
+}
 /* ---- 共通 ---- */
 .list_table,
 .detail_table {
@@ -433,6 +436,16 @@ select {
 }
 
 /* ---- 個別 ---- */
+/*以下のpicとcontents_nameは追記*/
+.pic{
+	width: -700px;
+	color: yellow;
+}
+.contents_name{
+	width: 300px;
+	color: blue;
+}
+
 /* ---- 一覧テーブル ---- */
 .list_table {
 	width: 100%;
@@ -614,6 +627,8 @@ form.delete {
 	width: 100%;
 	height: auto;
 }
+
+
 
 /* ---- リンク表示(ブロック中央寄せ) ---- */
 p.link_center {

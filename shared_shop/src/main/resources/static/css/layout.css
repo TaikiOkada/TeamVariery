@@ -140,6 +140,7 @@ header {
 }
 
 
+
 /* ---- ナビゲーションバー ---- */
 .navi_area {
 	background: #edf9fe;
@@ -234,7 +235,12 @@ aside.admin_menu {
 .main {
 	float: right;
 	width: 76%;
+	/* width: 100%; */
 	padding-bottom: 80px;
+	/*追記文*/
+	position: relative;
+	top: 0px;
+	right: 100px;
 }
 .admin_menu .main {
 	width: 100%;

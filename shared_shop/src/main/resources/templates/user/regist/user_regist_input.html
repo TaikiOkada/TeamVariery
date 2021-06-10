@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			会員新規登録 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+	</head>
+	<body class="user user_regist_input">
+		<header>
+			<div class="container">
+				<h1 class="site_title">
+					シェアードショップ
+				</h1>
+				<div class="user_info">
+					<a href="login">
+						ログイン
+					</a>
+					|
+					<a href="user/regist/input">
+						新規会員登録
+					</a>
+				</div>
+			</div>
+		</header>
+		<nav class="navi_area">
+			<ul class="navi_menu">
+				<li>
+					<a href="">
+						トップ
+					</a>
+				</li>
+				<li>
+					<a href="item/list/1">
+						新着一覧
+					</a>
+				</li>
+				<li>
+					<a href="basket/list?page=0">
+						買い物かご
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="container">
+			<aside class="search">
+				<div class="search_area">
+					<h2 class="title">
+						カテゴリ別検索
+					</h2>
+					<div class="form">
+						<form action="item/list/category/1">
+							<select name="categoryId">
+								<option value="1">
+									食料品
+								</option>
+								<option value="2">
+									書籍
+								</option>
+								<option value="15">
+									キッチン用品
+								</option>
+								<option value="13">
+									アクセサリ
+								</option>
+								<option value="9">
+									飲み物
+								</option>
+								<option value="10">
+									OA用品
+								</option>
+								<option value="25">
+									手芸用品
+								</option>
+								<option value="8">
+									ネットワーク機器
+								</option>
+								<option value="7">
+									食器
+								</option>
+								<option value="6">
+									掃除用具
+								</option>
+								<option value="5">
+									文房具
+								</option>
+								<option value="12">
+									手芸用品
+								</option>
+								<option value="23">
+									OA用品
+								</option>
+								<option value="18">
+									文房具
+								</option>
+								<option value="19">
+									掃除用具
+								</option>
+								<option value="20">
+									食器
+								</option>
+								<option value="21">
+									ネットワーク機器
+								</option>
+								<option value="22">
+									飲み物
+								</option>
+								<option value="16">
+									乗り物
+								</option>
+								<option value="3">
+									乗り物
+								</option>
+							</select>
+							<input type="submit" value="検索" />
+						</form>
+					</div>
+				</div>
+			</aside>
+			<article class="main">
+				<h2 class="title">
+					会員新規登録
+				</h2>
+				<div class="user_info_form_area">
+					<form method="post" class="user_info_form" action="user/regist/check">
+						<br />
+						<ul class="input_list">
+							<li>
+								<label>
+									<span class="input_title">
+										メールアドレス
+									</span>
+									<input type="text" name="email" value="" id="email" />
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										パスワード
+									</span>
+									<input type="password" name="password" value="" />
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										氏名
+									</span>
+									<input type="text" name="name" value="" />
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										郵便番号
+									</span>
+									<input type="text" name="postalCode" value="" />
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										住所
+									</span>
+									<textarea name="address" rows="6"></textarea>
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										電話番号
+									</span>
+									<input type="text" name="phoneNumber" value="" />
+								</label>
+							</li>
+						</ul>
+						<input type="hidden" name="authority" value="2" />
+						<input type="submit" value="確認" class="send_button" />
+					</form>
+					<form action="">
+						<input type="submit" value="戻る" class="back_button" />
+					</form>
+				</div>
+			</article>
+		</div>
+		<footer>
+			<small class="container">
+				Copyright(C) 2017 System Shared co., ltd, ALL Rights Reserved
+			</small>
+		</footer>
+	</body>
+</html>

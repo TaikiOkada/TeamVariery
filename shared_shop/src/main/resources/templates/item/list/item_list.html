@@ -1,114 +1,25 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
 	<head>
 		<title>
 			商品一覧 | シェアードショップ
 		</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
 	</head>
 	<body class="user item_list">
-		<header>
-			<div class="container">
-				<h1 class="site_title">
-					シェアードショップ
-				</h1>
-				<div class="user_info">
-					<a href="/shared_shop/user/detail">
-						一般三郎
-					</a>
-					さん、ようこそ |
-					<a href="/shared_shop/logout">
-						ログアウト
-					</a>
-				</div>
-			</div>
-		</header>
-		<nav class="navi_area">
-			<ul class="navi_menu">
-				<li>
-					<a href="/shared_shop/">
-						トップ
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/item/list/1">
-						新着一覧
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/basket/list">
-						買い物かご
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/order/list">
-						注文一覧
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<div class="container">
-			<aside class="search">
-				<div class="search_area">
-					<h2 class="title">
-						カテゴリ別検索
-					</h2>
-					<div class="form">
-						<form action="/shared_shop/item/list/category/1">
-							<select name="categoryId">
-								<option value="1">
-									食料品
-								</option>
-								<option value="2">
-									書籍
-								</option>
-								<option value="3">
-									乗り物
-								</option>
-								<option value="5">
-									文房具
-								</option>
-								<option value="6">
-									掃除用具
-								</option>
-								<option value="7">
-									食器
-								</option>
-								<option value="8">
-									ネットワーク機器
-								</option>
-								<option value="9">
-									飲み物
-								</option>
-								<option value="10">
-									OA用品
-								</option>
-								<option value="12">
-									手芸用品
-								</option>
-								<option value="13">
-									アクセサリ
-								</option>
-								<option value="15">
-									キッチン用品
-								</option>
-							</select>
-							<input type="submit" value="検索" />
-						</form>
-					</div>
-				</div>
-			</aside>
-			<article class="main">
+	<article class="mainuser">
 				<h2 class="title">
 					商品一覧
 				</h2>
 				<div class="sorted_by">
 					<span>
-						新着順
+
+					<a href="/shared_shop/item/list/１?categoryId=&amp;min=&amp;max=">
+					新着順
+					</a>
 					</span>
 					<a href="/shared_shop/item/list/2?categoryId=&amp;min=&amp;max=">
 						売れ筋順
@@ -116,192 +27,28 @@
 				</div>
 				<table class="list_table item_detail">
 					<tr>
-						<th>
+						<th width="20px" >
 							商品画像
 						</th>
-						<th>
+						<th width="50px">
 							商品名
 						</th>
-						<th>
+						<th width="10px">
 							価格
 						</th>
-						<th>
+						<th width="20px">
 							カテゴリ
 						</th>
-					</tr>
-					<tr th:each = "item${items}">
-					<td th:text="${item.image}"></td>
+					 </tr>
+					 <tr th:each = "item:${items}">
+						<td th:text="${item.image}"></td>
 						<td th:text="${item.name}"></td>
 						<td th:text="${item.price}"></td>
-						<td th:text="${item.category.category_id}"></td>
+						<td th:text="${item.category.name}"></td>
+						<!-- <td th:text="${item.category.category_id}"></td> -->
 					</tr>
-<!-- 					<tr>
-						<td class="image">
-							<img src="img/20180311122622_apple.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/1">
-								りんご
-							</a>
-						</td>
-						<td>
-							110
-						</td>
-						<td>
-							食料品
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180312124614_dictionary.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/2">
-								辞書
-							</a>
-						</td>
-						<td>
-							2000
-						</td>
-						<td>
-							書籍
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/common/no_image.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/3">
-								オレンジ
-							</a>
-						</td>
-						<td>
-							150
-						</td>
-						<td>
-							食料品
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613122242_DoubleClips.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/20">
-								ダブルクリップ(チェック柄)
-							</a>
-						</td>
-						<td>
-							550
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010510_Note.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/25">
-								ノート
-							</a>
-						</td>
-						<td>
-							45
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010316_BlackPencil.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/24">
-								鉛筆
-							</a>
-						</td>
-						<td>
-							20
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010231_MaskingTape-Dotted.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/23">
-								マスキングテープ(水玉)
-							</a>
-						</td>
-						<td>
-							450
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010141_MaskingTape-Star.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/22">
-								マスキングテープ(星)
-							</a>
-						</td>
-						<td>
-							450
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613125349_MaskingTapes.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/21">
-								マスキングテープ
-							</a>
-						</td>
-						<td>
-							980
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180328125919_ColorPencil.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/18">
-								水性色鉛筆
-							</a>
-						</td>
-						<td>
-							3500
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr> -->
-				</table>
+					</table>
+
 			</article>
-		</div>
-		<footer>
-			<small class="container">
-				Copyright(C) 2017 System Shared co., ltd, ALL Rights Reserved
-			</small>
-		</footer>
 	</body>
 </html>

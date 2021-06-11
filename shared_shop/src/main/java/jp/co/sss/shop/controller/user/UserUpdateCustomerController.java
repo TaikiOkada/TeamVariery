@@ -109,25 +109,33 @@ public class UserUpdateCustomerController {
 
 		// 変更対象の会員情報を取得
 		User user = userRepository.findById(form.getId()).orElse(null);
+		System.out.println(000);
 
 		// 会員情報の削除フラグを取得
 		Integer deleteFlag = user.getDeleteFlag();
+		System.out.println(111);
 		// 会員情報の登録日付を取得
 		Date insertDate = user.getInsertDate();
+		System.out.println(222);
 
 		// 入力値をUserエンティティの各フィールドにコピー
 		BeanUtils.copyProperties(form, user);
+		System.out.println(333);
 
 		// 削除フラグをセット
 		user.setDeleteFlag(deleteFlag);
+		System.out.println(444);
 		// 登録日付をセット
 		user.setInsertDate(insertDate);
+		System.out.println(555);
 
-		// 会員情報を保存
+//		// 会員情報を保存
 		userRepository.save(user);
+		System.out.println(666);
 
 		// セッションからログインユーザーの情報を取得
 		UserBean userBean = (UserBean) session.getAttribute("user");
+		System.out.println(777);
 		// 変更対象の会員が、ログインユーザと一致していた場合セッション情報を変更
 		if (user.getId().equals(userBean.getId())) {
 			// Userエンティティの各フィールドの値をUserBeanにコピー
@@ -135,7 +143,7 @@ public class UserUpdateCustomerController {
 			// 会員情報をViewに渡す
 			session.setAttribute("user", userBean);
 		}
-
+		System.out.println(888);
 		return "redirect:/user/update/complete";
 	}
 
@@ -146,7 +154,7 @@ public class UserUpdateCustomerController {
 	 */
 	@RequestMapping(path = "/user/update/complete", method = RequestMethod.GET)
 	public String updateCustomerCompleteRedirect() {
-
+		System.out.println(999);
 		return "user/update/user_update_complete";
 	}
 }

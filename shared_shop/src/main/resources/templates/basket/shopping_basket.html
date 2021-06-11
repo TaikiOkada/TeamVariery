@@ -1,375 +1,277 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
 	<head>
 		<title>
 			買い物かご | シェアードショップ
 		</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
 	</head>
 	<body class="user shopping_basket">
-		<header>
-			<div class="container">
-				<h1 class="site_title">
-					シェアードショップ
-				</h1>
-				<div class="user_info">
-					<a href="/shared_shop/user/detail">
-						一般三郎
-					</a>
-					さん、ようこそ |
-					<a href="/shared_shop/logout">
-						ログアウト
-					</a>
-				</div>
-			</div>
-		</header>
-		<nav class="navi_area">
-			<ul class="navi_menu">
-				<li>
-					<a href="/shared_shop/">
-						トップ
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/item/list/1">
-						新着一覧
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/basket/list?page=0">
-						買い物かご
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/order/list">
-						注文一覧
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<div class="container">
-			<aside class="search" >
-				<div  class="search_area">
-					<h2 class="title">
-						カテゴリ別検索
-					</h2>
-					<div class="form">
-						<form action="/shared_shop/item/list/category/1">
-							<select name="categoryId">
-								<option value="2">
-									書籍
-								</option>
-								<option value="1">
-									食料品
-								</option>
-								<option value="15">
-									キッチン用品
-								</option>
-								<option value="13">
-									アクセサリ
-								</option>
-								<option value="10">
-									OA用品
-								</option>
-								<option value="12">
-									手芸用品
-								</option>
-								<option value="9">
-									飲み物
-								</option>
-								<option value="8">
-									ネットワーク機器
-								</option>
-								<option value="6">
-									掃除用具
-								</option>
-								<option value="5">
-									文房具
-								</option>
-								<option value="7">
-									食器
-								</option>
-								<option value="3">
-									乗り物
-								</option>
-							</select>
-							<input type="submit" value="検索" />
+		<article class="main">
+			<h2 class="title">
+				買い物かご
+			</h2>
+			<table class="list_table basket">
+				<tr>
+					<th>
+						商品名
+					</th>
+					<th>
+						数
+					</th>
+					<th>
+						操作
+					</th>
+					<th>
+						在庫
+					</th>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/6">
+							人間失格
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="6" />
+							<input type="submit" value="削除" class="delete"/>
 						</form>
-					</div>
-				</div>
-			</aside>
-			<article class="main">
-				<h2 class="title">
-					買い物かご
-				</h2>
-				<table class="list_table basket">
-					<tr>
-						<th>
-							商品名
-						</th>
-						<th>
-							数
-						</th>
-						<th>
-							操作
-						</th>
-						<th>
-							在庫
-						</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/6">
-								人間失格
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="6" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							4
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/3">
-								オレンジ
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="3" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/1">
-								りんご
-							</a>
-						</td>
-						<td>
-							2
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="1" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/4">
-								さくらんぼ
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="4" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/10">
-								消しゴム
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="10" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/14">
-								クレヨン
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="14" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/18">
-								水性色鉛筆
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="18" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							1
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/24">
-								鉛筆
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="24" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/25">
-								ノート
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="25" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/item/detail/20">
-								ダブルクリップ(チェック柄)
-							</a>
-						</td>
-						<td>
-							1
-						</td>
-						<td>
-							<form action="/shared_shop/basket/delete" method="post">
-								<input type="hidden" name="id" value="20" />
-								<input type="submit" value="削除" class="delete"/>
-							</form>
-						</td>
-						<td>
-							在庫あり
-						</td>
-					</tr>
-				</table>
+					</td>
+					<td>
+						4
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/3">
+							オレンジ
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="3" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/1">
+							りんご
+						</a>
+					</td>
+					<td>
+						2
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="1" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/4">
+							さくらんぼ
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="4" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/10">
+							消しゴム
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="10" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/14">
+							クレヨン
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="14" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/18">
+							水性色鉛筆
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="18" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						1
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/24">
+							鉛筆
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="24" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/25">
+							ノート
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="25" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="/shared_shop/item/detail/20">
+							ダブルクリップ(チェック柄)
+						</a>
+					</td>
+					<td>
+						1
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" value="20" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td>
+						在庫あり
+					</td>
+				</tr>
+			</table>
 
-				<div class="user_info_form_area">
-					<form action="/shared_shop/address/input" method="post">
-						<span>
-							<input type="hidden" name="itemId" value="6" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="3" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="1" />
-							<input type="hidden" name="orderNum" value="2" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="4" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="10" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="14" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="18" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="24" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="25" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="20" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<span>
-							<input type="hidden" name="itemId" value="22" />
-							<input type="hidden" name="orderNum" value="1" />
-						</span>
-						<input type="submit" value="ご注文のお手続き" />
-					</form>
-					<form action="/shared_shop/basket/allDelete/" method="post">
-						<input type="submit" value="買い物かごを空にする" class="delete" />
-					</form>
-				</div>
-			</article>
-		</div>
-		<footer>
-			<small class="container">
-				Copyright(C) 2017 System Shared co., ltd, ALL Rights Reserved
-			</small>
-		</footer>
+			<div class="user_info_form_area">
+				<form action="/shared_shop/address/input" method="post">
+					<span>
+						<input type="hidden" name="itemId" value="6" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="3" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="1" />
+						<input type="hidden" name="orderNum" value="2" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="4" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="10" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="14" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="18" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="24" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="25" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="20" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<span>
+						<input type="hidden" name="itemId" value="22" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<input type="submit" value="ご注文のお手続き" />
+				</form>
+				<form action="/shared_shop/basket/allDelete/" method="post">
+					<input type="submit" value="買い物かごを空にする" class="delete" />
+				</form>
+			</div>
+		</article>
 	</body>
 </html>

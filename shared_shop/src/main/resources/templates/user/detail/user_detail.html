@@ -33,7 +33,7 @@
 		</div>
 
 		<div class="detail_button_area">
-			<form th:action="@{/user/list}">
+			<form th:action="@{/}">
 				<input type="submit" value="戻る" />
 			</form>
 			<form th:action="@{/user/update/input}" method="post" th:if="${user.authority != 0}">

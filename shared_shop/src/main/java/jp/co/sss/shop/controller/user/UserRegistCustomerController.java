@@ -15,6 +15,10 @@ import jp.co.sss.shop.repository.UserRepository;
  *
  * @author SystemShared
  */
+/**
+ * @author edu
+ *
+ */
 @Controller
 public class UserRegistCustomerController {
 
@@ -40,4 +44,27 @@ public class UserRegistCustomerController {
 	}
 
 
+	/**
+	 * 会員情報確認画面表示処理
+	 *
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(path = "/user/regist/check", method = RequestMethod.POST)
+	public String registCheck(Model model) {
+
+		return "user/regist/user_regist_check";
+	}
+
+	/**
+	 * 会員情報完了画面表示
+	 *
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.POST)
+	public String registComplete(Model model) {
+
+		return "user/regist/user_regist_complete";
+	}
 }

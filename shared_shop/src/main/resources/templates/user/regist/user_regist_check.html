@@ -1,107 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
 	<head>
 		<title>
 			会員登録確認 | シェアードショップ
 		</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+
 	</head>
 	<body class="user user_regist_check">
-		<header>
-			<div class="container">
-				<h1 class="site_title">
-					シェアードショップ
-				</h1>
-				<div class="user_info">
-					<a href="/shared_shop/login">
-						ログイン
-					</a>
-					|
-					<a href="/shared_shop/user/regist/input">
-						新規会員登録
-					</a>
-				</div>
-			</div>
-		</header>
-		<nav class="navi_area">
-			<ul class="navi_menu">
-				<li>
-					<a href="/shared_shop/">
-						トップ
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/item/list/1">
-						新着一覧
-					</a>
-				</li>
-				<li>
-					<a href="/shared_shop/basket/list?page=0">
-						買い物かご
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<div class="container">
-			<aside class="search" >
-				<div  class="search_area">
-					<h2 class="title">
-						カテゴリ別検索
-					</h2>
-					<div class="form">
-						<form action="/shared_shop/item/list/category/1">
-							<select name="categoryId">
-								<option value="2">
-									書籍
-								</option>
-								<option value="1">
-									食料品
-								</option>
-								<option value="15">
-									キッチン用品
-								</option>
-								<option value="13">
-									アクセサリ
-								</option>
-								<option value="6">
-									掃除用具
-								</option>
-								<option value="5">
-									文房具
-								</option>
-								<option value="7">
-									食器
-								</option>
-								<option value="12">
-									手芸用品
-								</option>
-								<option value="8">
-									ネットワーク機器
-								</option>
-								<option value="9">
-									飲み物
-								</option>
-								<option value="10">
-									OA用品
-								</option>
-								<option value="11">
-									園芸用品
-								</option>
-								<option value="3">
-									乗り物
-								</option>
-								<option value="4">
-									その他
-								</option>
-							</select>
-							<input type="submit" value="検索" />
-						</form>
-					</div>
-				</div>
-			</aside>
+
 			<article class="main">
 				<h2 class="title">
 					会員登録確認
@@ -112,81 +21,57 @@
 				<div class="user_info_form_area">
 					<ul class="input_list">
 						<li>
-							<span class="input_title">
-								メールアドレス
-							</span>
-							<span class="input_value">
-								ippan_kaede2@test.com
-							</span>
+							<span class="input_title">メールアドレス</span>
+							<span class="input_value" th:text="${userForm.email}"></span>
 						</li>
 						<li>
-							<span class="input_title">
-								パスワード
-							</span>
-							<span class="input_value">
-								********
-							</span>
+							<span class="input_title">パスワード</span>
+							<span class="input_value">********</span>
 						</li>
 						<li>
-							<span class="input_title">
-								氏名
-							</span>
-							<span class="input_value">
-								一般かえで
-							</span>
+							<span class="input_title">氏名</span>
+							<span class="input_value" th:text="${userForm.name}"></span>
 						</li>
 						<li>
-							<span class="input_title">
-								郵便番号
-							</span>
-							<span class="input_value">
-								1111111
-							</span>
+							<span class="input_title">郵便番号</span>
+							<span class="input_value" th:text="${userForm.postalCode}"></span>
 						</li>
 						<li>
-							<span class="input_title">
-								住所
-							</span>
-							<span class="input_value">
-								東京都
-							</span>
+							<span class="input_title">住所</span>
+							<span class="input_value" th:text="${userForm.address}"></span>
 						</li>
 						<li>
-							<span class="input_title">
-								電話番号
-							</span>
-							<span class="input_value">
-								0312341234
-							</span>
+							<span class="input_title">電話番号</span>
+							<span class="input_value" th:text="${userForm.phoneNumber}"></span>
 						</li>
 					</ul>
-					<form method="post" action="/shared_shop/user/regist/complete" class="user_info_form">
-						<input type="hidden" name="email" value="ippan_kaede2@test.com" />
-						<input type="hidden" name="password" value="12341234" />
-						<input type="hidden" name="name" value="一般かえで" />
-						<input type="hidden" name="postalCode" value="1111111" />
-						<input type="hidden" name="address" value="東京都" />
-						<input type="hidden" name="phoneNumber" value="0312341234" />
-						<input type="hidden" name="authority" value="2" />
+					<ul>
+						<li th:each="error:${#fields.detailedErrors()}">
+							<span th:text="${error.message}"></span>
+						</li>
+					</ul>
+
+					<form method="post" th:action="@{/user/regist/complete}" th:object="${userForm}"  class="user_info_form">
+						<input type="hidden" name="email" th:value="${userForm.email}" />
+						<input type="hidden" name="password" th:value="${userForm.password}" />
+						<input type="hidden" name="name" th:value="${userForm.name}" />
+						<input type="hidden" name="postalCode" th:value="${userForm.postalCode}" />
+						<input type="hidden" name="address" th:value="${userForm.address}" />
+						<input type="hidden" name="phoneNumber" th:value="${userForm.phoneNumber}" />
+						<input type="hidden" name="authority" th:value="${userForm.authority}" />
 						<input type="submit" value="登録" class="send_button" />
 					</form>
-					<form method="post" action="/shared_shop/user/regist/input" class="update">
-						<input type="hidden" name="email" value="ippan_kaede2@test.com" />
-						<input type="hidden" name="password" value="12341234" />
-						<input type="hidden" name="name" value="一般かえで" />
-						<input type="hidden" name="postalCode" value="1111111" />
-						<input type="hidden" name="address" value="東京都" />
-						<input type="hidden" name="phoneNumber" value="0312341234" />
-						<input type="hidden" name="authority" value="2" />
+					<form method="post" th:action="@{/user/regist/input}">
+						<input type="hidden" name="email" th:value="${userForm.email}" />
+						<input type="hidden" name="password" th:value="${userForm.password}" />
+						<input type="hidden" name="name" th:value="${userForm.name}" />
+						<input type="hidden" name="postalCode" th:value="${userForm.postalCode}" />
+						<input type="hidden" name="address" th:value="${userForm.address}" />
+						<input type="hidden" name="phoneNumber" th:value="${userForm.phoneNumber}" />
+						<input type="hidden" name="authority" th:value="${userForm.authority}" />
 						<input type="submit" value="戻る" class="back_button" />
 					</form>
 				</div>
 			</article>
-		</div>
-		<footer>
-			<small class="container">
-				Copyright(C) 2017 System Shared co., ltd, ALL Rights Reserved
-			</small>
-		</footer>
-	</body>
+
 </html>

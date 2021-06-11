@@ -42,6 +42,11 @@ public class ItemShowCustomerController {
 
 	  return "/item/list";
 	  }
+	  /*ドロップダウンリスト*/
+	  @RequestMapping("/findAllDropDown")
+	  public String item_listDropdown(int deleteFlag, Pageable pageable) {
+		  return "redirect:/";
+	  }
 
 
 	/*商品詳細検索*/

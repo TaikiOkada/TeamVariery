@@ -1,13 +1,18 @@
 package jp.co.sss.shop.controller.user;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.UserRepository;
 
@@ -63,9 +68,32 @@ public class UserRegistCustomerController {
 	 * @return
 	 */
 	@RequestMapping(path = "/user/regist/check", method = RequestMethod.POST)
-	public String registCheck(Model model) {
+	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result) {
 
+		if (result.hasErrors()) {
+			return "user/regist/user_regist_input";
+		}
 		return "user/regist/user_regist_check";
+	}
+
+	/**
+	 * 会員情報登録完了処理
+	 *
+	 * @param form 会員情報
+	 * @return "redirect:/user/regist/complete" 会員情報 登録完了画面へ
+	 */
+	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.POST)
+	public String registComplete(@ModelAttribute UserForm form) {
+		// 会員情報の生成
+		User user = new User();
+
+		// 入力値を会員情報にコピー
+		BeanUtils.copyProperties(form, user);
+
+		// 会員情報を保存
+		userRepository.save(user);
+
+		return "redirect:/user/regist/complete";
 	}
 
 	/**
@@ -74,7 +102,7 @@ public class UserRegistCustomerController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.POST)
+	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.GET)
 	public String registComplete(Model model) {
 
 		return "user/regist/user_regist_complete";

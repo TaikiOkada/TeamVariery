@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<title>会員変更完了 | シェアードショップ</title>
+<meta charset="UTF-8" />
 </head>
 <body>
-
+		<h2 class="title">会員変更完了</h2>
+		<p class="complete_message">会員情報の変更が完了しました。</p>
+		<p class="complete_link"><a th:href="@{/user/detail/{id}(id=${session.user.id})}">会員詳細へ戻る</a></p>
 </body>
 </html>

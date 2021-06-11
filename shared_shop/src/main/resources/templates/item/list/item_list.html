@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>
 			商品一覧 | シェアードショップ
@@ -40,7 +40,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="/shared_shop/basket/list?page=0">
+					<a href="/shared_shop/basket/list">
 						買い物かご
 					</a>
 				</li>
@@ -114,7 +114,7 @@
 						売れ筋順
 					</a>
 				</div>
-				<table class="list_table item_detail">
+				<table th:each = item${items} class="list_table item_detail">
 					<tr>
 						<th>
 							商品画像
@@ -129,6 +129,10 @@
 							カテゴリ
 						</th>
 					</tr>
+					<td th:text="${items.image}"></td>
+						<td th:text="${items.name}"></td>
+						<td th:text="${items.price}"></td>
+						<td th:text="${items.category_id}"></td>
 					<tr>
 						<td class="image">
 							<img src="img/20180311122622_apple.jpg" />

@@ -18,7 +18,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 
 	// 商品情報を新着順で検索
-	public Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
-
-
+	//public static Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable) {
+		// TODO 自動生成されたメソッド・スタブ
+	public static String findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable) {
+		return "/item/list";
+	}
 }

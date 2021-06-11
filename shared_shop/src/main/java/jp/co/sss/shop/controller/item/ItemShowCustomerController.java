@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.ItemRepository;
 
 /**
@@ -38,7 +39,9 @@ public class ItemShowCustomerController {
 
 	/*トップ画面→新着順への遷移*/
 	  @RequestMapping(path = "/item/list/{sortType}")
-	  public String index1(Model model, Pageable pageable) {
+	  public String index1(Model model, Integer deleteFlag, Pageable pageable) {
+		  System.out.println(deleteFlag);
+	  model.addAttribute("items", ItemRepository.findByDeleteFlagOrderByInsertDateDesc(deleteFlag, pageable));
 
 	  return "/item/list";
 	  }

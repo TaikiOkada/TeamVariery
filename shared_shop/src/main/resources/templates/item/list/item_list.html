@@ -114,7 +114,7 @@
 						売れ筋順
 					</a>
 				</div>
-				<table th:each = item${items} class="list_table item_detail">
+				<table class="list_table item_detail">
 					<tr>
 						<th>
 							商品画像
@@ -129,11 +129,13 @@
 							カテゴリ
 						</th>
 					</tr>
-					<td th:text="${items.image}"></td>
-						<td th:text="${items.name}"></td>
-						<td th:text="${items.price}"></td>
-						<td th:text="${items.category_id}"></td>
-					<tr>
+					<tr th:each = "item${items}">
+					<td th:text="${item.image}"></td>
+						<td th:text="${item.name}"></td>
+						<td th:text="${item.price}"></td>
+						<td th:text="${item.category_id}"></td>
+					</tr>
+<!-- 					<tr>
 						<td class="image">
 							<img src="img/20180311122622_apple.jpg" />
 						</td>
@@ -292,7 +294,7 @@
 						<td>
 							文房具
 						</td>
-					</tr>
+					</tr> -->
 				</table>
 			</article>
 		</div>

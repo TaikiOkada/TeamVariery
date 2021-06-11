@@ -32,18 +32,18 @@ public class ItemShowCustomerController {
 	 */
 	@RequestMapping(path = "/")
 	public String index(Model model,  Pageable pageable) {
-
-
+		model.addAttribute("items", itemRepository.findAll());
+		System.out.println(9);
 		return "index";
 	}
 
 	/*トップ画面→新着順への遷移*/
 	  @RequestMapping(path = "/item/list/{sortType}")
-	  public String index1(Model model, Integer deleteFlag, Pageable pageable) {
-		  System.out.println(deleteFlag);
-	  model.addAttribute("items", ItemRepository.findByDeleteFlagOrderByInsertDateDesc(deleteFlag, pageable));
+	  public String index1(Model model, Pageable pageable) {
+	  System.out.println(9);
+	  model.addAttribute("items", itemRepository.findAll());
 
-	  return "/item/list";
+	  return "/item/list/item_list";
 	  }
 	  /*ドロップダウンリスト*/
 	  @RequestMapping("/findAllDropDown")

@@ -64,7 +64,10 @@ public class ItemShowCustomerController {
 		System.out.println("a");
 		return "/item_list";
 	}
-	}
+
+}
+
+
 
 
 

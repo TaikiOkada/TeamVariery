@@ -8,6 +8,7 @@ public class BasketCustomerController {
 	@RequestMapping(path = "/basket/list", method = RequestMethod.GET)
 	public String showBasket() {
 		System.out.println("aaa");
-		return "basket/shopping_basket";
+		return "index";
+//		return "basket/shopping_basket";
 	}
 }

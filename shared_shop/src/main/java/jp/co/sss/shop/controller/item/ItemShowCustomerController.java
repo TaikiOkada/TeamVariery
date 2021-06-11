@@ -38,8 +38,9 @@ public class ItemShowCustomerController {
 	/*トップ画面→新着順への遷移*/
 	  @RequestMapping(path = "/item/list/1")
 	  public String item_list(Model model) {
-		  System.out.println(9);
+		  //全件表示
 		  model.addAttribute("items", itemRepository.findAll());
+		  //model.addAttribute("items",itemRepository.findByDeleteFlagOrderByInsertDateDesc(deleteFlag, pageable));
 
 		  return "/item/list/item_list";
 	  }

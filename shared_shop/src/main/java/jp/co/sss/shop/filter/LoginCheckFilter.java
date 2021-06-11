@@ -17,7 +17,7 @@ import jp.co.sss.shop.util.URLCheck;
 
 /**
  * ログインチェック用フィルタ
- * 
+ *
  * @author System Shared
  */
 @Component
@@ -51,7 +51,7 @@ public class LoginCheckFilter implements Filter {
 
 	/**
 	 * リクエストURLがチェック対象であるかを判定
-	 * 
+	 *
 	 * @param requestURL リクエストURL
 	 * @return true：チェック対象、false：チェック対象外
 	 */

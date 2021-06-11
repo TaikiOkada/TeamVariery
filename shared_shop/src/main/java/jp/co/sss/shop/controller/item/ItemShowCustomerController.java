@@ -31,16 +31,17 @@ public class ItemShowCustomerController {
 	 */
 	@RequestMapping(path = "/")
 	public String index(Model model,  Pageable pageable) {
-
-
+		model.addAttribute("items", itemRepository.findAll());
 		return "index";
 	}
 
 	/*トップ画面→新着順への遷移*/
-	  @RequestMapping(path = "/item/list/{sortType}")
-	  public String index1(Model model, Pageable pageable) {
+	  @RequestMapping(path = "/item/list/1")
+	  public String item_list(Model model) {
+		  System.out.println(9);
+		  model.addAttribute("items", itemRepository.findAll());
 
-	  return "/item/list";
+		  return "/item/list/item_list";
 	  }
 	  /*ドロップダウンリスト*/
 	  @RequestMapping("/findAllDropDown")
@@ -56,12 +57,9 @@ public class ItemShowCustomerController {
 	  return "/item/detail/item_detail_Stock5over";
 	  }
 
-	@RequestMapping(path = "item/list/1")
-	public String item_list(){
-		System.out.println("a");
-		return "/item_list";
-	}
-	}
+}
+
+
 
 
 

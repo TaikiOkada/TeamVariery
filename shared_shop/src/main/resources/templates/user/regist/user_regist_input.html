@@ -1,125 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
 	<head>
 		<title>
 			会員新規登録 | シェアードショップ
 		</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+
 	</head>
 	<body class="user user_regist_input">
-		<header>
-			<div class="container">
-				<h1 class="site_title">
-					シェアードショップ
-				</h1>
-				<div class="user_info">
-					<a href="/shared_shop/login">
-						ログイン
-					</a>
-					|
-					<a href="/shared_shop/user/regist/input">
-						新規会員登録
-					</a>
-				</div>
-			</div>
-		</header>
-		<nav class="navi_area">
-			<ul class="navi_menu">
-				<li>
-					<a href="/shared_shop">
-						トップ
-					</a>
-				</li>
-				<li>
-					<a href="item/list/1">
-						新着一覧
-					</a>
-				</li>
-				<li>
-					<a href="basket/list?page=0">
-						買い物かご
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<div class="container">
-			<aside class="search">
-				<div class="search_area">
-					<h2 class="title">
-						カテゴリ別検索
-					</h2>
-					<div class="form">
-						<form action="item/list/category/1">
-							<select name="categoryId">
-								<option value="1">
-									食料品
-								</option>
-								<option value="2">
-									書籍
-								</option>
-								<option value="15">
-									キッチン用品
-								</option>
-								<option value="13">
-									アクセサリ
-								</option>
-								<option value="9">
-									飲み物
-								</option>
-								<option value="10">
-									OA用品
-								</option>
-								<option value="25">
-									手芸用品
-								</option>
-								<option value="8">
-									ネットワーク機器
-								</option>
-								<option value="7">
-									食器
-								</option>
-								<option value="6">
-									掃除用具
-								</option>
-								<option value="5">
-									文房具
-								</option>
-								<option value="12">
-									手芸用品
-								</option>
-								<option value="23">
-									OA用品
-								</option>
-								<option value="18">
-									文房具
-								</option>
-								<option value="19">
-									掃除用具
-								</option>
-								<option value="20">
-									食器
-								</option>
-								<option value="21">
-									ネットワーク機器
-								</option>
-								<option value="22">
-									飲み物
-								</option>
-								<option value="16">
-									乗り物
-								</option>
-								<option value="3">
-									乗り物
-								</option>
-							</select>
-							<input type="submit" value="検索" />
-						</form>
-					</div>
-				</div>
-			</aside>
+
 			<article class="main">
 				<h2 class="title">
 					会員新規登録
@@ -180,16 +71,12 @@
 						<input type="hidden" name="authority" value="2" />
 						<input type="submit" value="確認" class="send_button" />
 					</form>
-					<form method="get" action="/shared_shop/">
+					<form method="get" action="/shared_shop">
 						<input type="submit" value="戻る" class="back_button" />
 					</form>
 				</div>
 			</article>
-		</div>
-		<footer>
-			<small class="container">
-				Copyright(C) 2017 System Shared co., ltd, ALL Rights Reserved
-			</small>
-		</footer>
+
+
 	</body>
 </html>

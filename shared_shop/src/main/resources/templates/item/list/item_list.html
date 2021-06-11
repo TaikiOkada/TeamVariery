@@ -1,10 +1,9 @@
 
-
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>
-			¤•iˆê—— | ƒVƒFƒA[ƒhƒVƒ‡ƒbƒv
+			å•†å“ä¸€è¦§ | ã‚·ã‚§ã‚¢ãƒ¼ãƒ‰ã‚·ãƒ§ãƒƒãƒ—
 		</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,15 +14,15 @@
 		<header>
 			<div class="container">
 				<h1 class="site_title">
-					ƒVƒFƒA[ƒhƒVƒ‡ƒbƒv
+					ã‚·ã‚§ã‚¢ãƒ¼ãƒ‰ã‚·ãƒ§ãƒƒãƒ—
 				</h1>
 				<div class="user_info">
-					<a href="/shared_shop/login">
-						ƒƒOƒCƒ“
+					<a href="/shared_shop/user/detail">
+						ä¸€èˆ¬ä¸‰éƒŽ
 					</a>
-					|
-					<a href="/shared_shop/user/regist/input">
-						V‹K‰ïˆõ“o˜^
+					ã•ã‚“ã€ã‚ˆã†ã“ã |
+					<a href="/shared_shop/logout">
+						ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ
 					</a>
 				</div>
 			</div>
@@ -32,129 +31,124 @@
 			<ul class="navi_menu">
 				<li>
 					<a href="/shared_shop/">
-						ƒgƒbƒv
+						ãƒˆãƒƒãƒ—
 					</a>
 				</li>
 				<li>
 					<a href="/shared_shop/item/list/1">
-						V’…ˆê——
+						æ–°ç€ä¸€è¦§
 					</a>
 				</li>
 				<li>
-					<a href="/shared_shop/basket/list?page=0">
-						”ƒ‚¢•¨‚©‚²
+					<a href="/shared_shop/basket/list">
+						è²·ã„ç‰©ã‹ã”
+					</a>
+				</li>
+				<li>
+					<a href="/shared_shop/order/list">
+						æ³¨æ–‡ä¸€è¦§
 					</a>
 				</li>
 			</ul>
 		</nav>
 		<div class="container">
-			<aside class="search" >
-				<div  class="search_area">
+			<aside class="search">
+				<div class="search_area">
 					<h2 class="title">
-						ƒJƒeƒSƒŠ•ÊŒŸõ
+						ã‚«ãƒ†ã‚´ãƒªåˆ¥æ¤œç´¢
 					</h2>
 					<div class="form">
 						<form action="/shared_shop/item/list/category/1">
 							<select name="categoryId">
-								<option value="2">
-									‘Ð
-								</option>
 								<option value="1">
-									H—¿•i
+									é£Ÿæ–™å“
 								</option>
-								<option value="15">
-									ƒLƒbƒ`ƒ“—p•i
-								</option>
-								<option value="13">
-									ƒAƒNƒZƒTƒŠ
-								</option>
-								<option value="10">
-									OA—p•i
-								</option>
-								<option value="12">
-									ŽèŒ|—p•i
-								</option>
-								<option value="9">
-									ˆù‚Ý•¨
-								</option>
-								<option value="8">
-									ƒlƒbƒgƒ[ƒN‹@Ší
-								</option>
-								<option value="6">
-									‘|œ—p‹ï
-								</option>
-								<option value="5">
-									•¶–[‹ï
-								</option>
-								<option value="7">
-									HŠí
+								<option value="2">
+									æ›¸ç±
 								</option>
 								<option value="3">
-									æ‚è•¨
+									ä¹—ã‚Šç‰©
+								</option>
+								<option value="5">
+									æ–‡æˆ¿å…·
+								</option>
+								<option value="6">
+									æŽƒé™¤ç”¨å…·
+								</option>
+								<option value="7">
+									é£Ÿå™¨
+								</option>
+								<option value="8">
+									ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯æ©Ÿå™¨
+								</option>
+								<option value="9">
+									é£²ã¿ç‰©
+								</option>
+								<option value="10">
+									OAç”¨å“
+								</option>
+								<option value="12">
+									æ‰‹èŠ¸ç”¨å“
+								</option>
+								<option value="13">
+									ã‚¢ã‚¯ã‚»ã‚µãƒª
+								</option>
+								<option value="15">
+									ã‚­ãƒƒãƒãƒ³ç”¨å“
 								</option>
 							</select>
-							<input type="submit" value="ŒŸõ" />
+							<input type="submit" value="æ¤œç´¢" />
 						</form>
 					</div>
 				</div>
 			</aside>
 			<article class="main">
 				<h2 class="title">
-					¤•iˆê——
+					å•†å“ä¸€è¦§
 				</h2>
 				<div class="sorted_by">
 					<span>
-						V’…‡
+						æ–°ç€é †
 					</span>
 					<a href="/shared_shop/item/list/2?categoryId=&amp;min=&amp;max=">
-						”„‚ê‹Ø‡
+						å£²ã‚Œç­‹é †
 					</a>
 				</div>
 				<table class="list_table item_detail">
 					<tr>
 						<th>
-							¤•i‰æ‘œ
+							å•†å“ç”»åƒ
 						</th>
 						<th>
-							¤•i–¼
+							å•†å“å
 						</th>
 						<th>
-							‰¿Ši
+							ä¾¡æ ¼
 						</th>
 						<th>
-							ƒJƒeƒSƒŠ
+							ã‚«ãƒ†ã‚´ãƒª
 						</th>
 					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/common/no_image.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/26">
-								‚â‚³‚µ‚¢Java
-							</a>
-						</td>
-						<td>
-							2580
-						</td>
-						<td>
-							‘Ð
-						</td>
+					<tr th:each = "item${items}">
+					<td th:text="${item.image}"></td>
+						<td th:text="${item.name}"></td>
+						<td th:text="${item.price}"></td>
+						<td th:text="${item.category_id}"></td>
 					</tr>
-					<tr>
+<!-- 					<tr>
 						<td class="image">
 							<img src="img/20180311122622_apple.jpg" />
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/1">
-								‚è‚ñ‚²
+								ã‚Šã‚“ã”
 							</a>
 						</td>
 						<td>
 							110
 						</td>
 						<td>
-							H—¿•i
+							é£Ÿæ–™å“
 						</td>
 					</tr>
 					<tr>
@@ -163,14 +157,14 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/2">
-								Ž«‘
+								è¾žæ›¸
 							</a>
 						</td>
 						<td>
 							2000
 						</td>
 						<td>
-							‘Ð
+							æ›¸ç±
 						</td>
 					</tr>
 					<tr>
@@ -179,14 +173,14 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/3">
-								ƒIƒŒƒ“ƒW
+								ã‚ªãƒ¬ãƒ³ã‚¸
 							</a>
 						</td>
 						<td>
 							150
 						</td>
 						<td>
-							H—¿•i
+							é£Ÿæ–™å“
 						</td>
 					</tr>
 					<tr>
@@ -195,14 +189,14 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/20">
-								ƒ_ƒuƒ‹ƒNƒŠƒbƒv(ƒ`ƒFƒbƒN•¿)
+								ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒãƒ—(ãƒã‚§ãƒƒã‚¯æŸ„)
 							</a>
 						</td>
 						<td>
 							550
 						</td>
 						<td>
-							•¶–[‹ï
+							æ–‡æˆ¿å…·
 						</td>
 					</tr>
 					<tr>
@@ -211,14 +205,14 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/25">
-								ƒm[ƒg
+								ãƒŽãƒ¼ãƒˆ
 							</a>
 						</td>
 						<td>
 							45
 						</td>
 						<td>
-							•¶–[‹ï
+							æ–‡æˆ¿å…·
 						</td>
 					</tr>
 					<tr>
@@ -227,14 +221,14 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/24">
-								‰”•M
+								é‰›ç­†
 							</a>
 						</td>
 						<td>
 							20
 						</td>
 						<td>
-							•¶–[‹ï
+							æ–‡æˆ¿å…·
 						</td>
 					</tr>
 					<tr>
@@ -243,14 +237,14 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/23">
-								ƒ}ƒXƒLƒ“ƒOƒe[ƒv(…‹Ê)
+								ãƒžã‚¹ã‚­ãƒ³ã‚°ãƒ†ãƒ¼ãƒ—(æ°´çŽ‰)
 							</a>
 						</td>
 						<td>
 							450
 						</td>
 						<td>
-							•¶–[‹ï
+							æ–‡æˆ¿å…·
 						</td>
 					</tr>
 					<tr>
@@ -259,14 +253,14 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/22">
-								ƒ}ƒXƒLƒ“ƒOƒe[ƒv(¯)
+								ãƒžã‚¹ã‚­ãƒ³ã‚°ãƒ†ãƒ¼ãƒ—(æ˜Ÿ)
 							</a>
 						</td>
 						<td>
 							450
 						</td>
 						<td>
-							•¶–[‹ï
+							æ–‡æˆ¿å…·
 						</td>
 					</tr>
 					<tr>
@@ -275,16 +269,32 @@
 						</td>
 						<td>
 							<a href="/shared_shop/item/detail/21">
-								ƒ}ƒXƒLƒ“ƒOƒe[ƒv
+								ãƒžã‚¹ã‚­ãƒ³ã‚°ãƒ†ãƒ¼ãƒ—
 							</a>
 						</td>
 						<td>
 							980
 						</td>
 						<td>
-							•¶–[‹ï
+							æ–‡æˆ¿å…·
 						</td>
 					</tr>
+					<tr>
+						<td class="image">
+							<img src="img/20180328125919_ColorPencil.jpg" />
+						</td>
+						<td>
+							<a href="/shared_shop/item/detail/18">
+								æ°´æ€§è‰²é‰›ç­†
+							</a>
+						</td>
+						<td>
+							3500
+						</td>
+						<td>
+							æ–‡æˆ¿å…·
+						</td>
+					</tr> -->
 				</table>
 			</article>
 		</div>

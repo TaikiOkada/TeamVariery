@@ -237,11 +237,17 @@ aside.admin_menu {
 	width: 76%;
 	/* width: 100%; */
 	padding-bottom: 80px;
-	/*追記文*/
+}
+/*user側のトップページ*/
+.mainuser{
+	float: right;
+	width: 76%;
+	/* width: 100%; */
+	padding-bottom: 80px;
 	position: relative;
 	top: 0px;
-	right: 100px;
-}
+	right: 200px;
+	}
 .admin_menu .main {
 	width: 100%;
 	float: none;

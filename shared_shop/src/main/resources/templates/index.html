@@ -6,11 +6,8 @@
 <meta charset="UTF-8" />
 </head>
 <body class="user index">
-<!-- 	<h2 class="title">売れ筋商品</h2>
-	<div class="item">
-		<div class="item_name"></div>
-	</div> -->
-	<article class="main">
+
+	<article class="mainuser">
 				<h2 class="title">
 					商品一覧
 				</h2>
@@ -27,181 +24,27 @@
 				</div>
 				<table class="list_table item_detail">
 					<tr>
-						<!-- 個別に動かすため、class名を追記 -->
-						<th width="20%" >
+						<th width="20px" >
 							商品画像
 						</th>
-						<th width="50%">
+						<th width="50px">
 							商品名
 						</th>
-						<th width="10%">
+						<th width="10px">
 							価格
 						</th>
-						<th width="20%">
+						<th width="20px">
 							カテゴリ
 						</th>
+					 </tr>
+					 <tr th:each = "item:${items}">
+						<td th:text="${item.image}"></td>
+						<td th:text="${item.name}"></td>
+						<td th:text="${item.price}"></td>
+						<!-- <td th:text="${item.category.category_id}"></td> -->
 					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/common/no_image.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/26">
-								やさしいJava
-							</a>
-						</td>
-						<td>
-							2580
-						</td>
-						<td>
-							書籍
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180311122622_apple.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/1">
-								りんご
-							</a>
-						</td>
-						<td>
-							110
-						</td>
-						<td>
-							食料品
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180312124614_dictionary.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/2">
-								辞書
-							</a>
-						</td>
-						<td>
-							2000
-						</td>
-						<td>
-							書籍
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/common/no_image.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/3">
-								オレンジ
-							</a>
-						</td>
-						<td>
-							150
-						</td>
-						<td>
-							食料品
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613122242_DoubleClips.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/20">
-								ダブルクリップ(チェック柄)
-							</a>
-						</td>
-						<td>
-							550
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010510_Note.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/25">
-								ノート
-							</a>
-						</td>
-						<td>
-							45
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010316_BlackPencil.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/24">
-								鉛筆
-							</a>
-						</td>
-						<td>
-							20
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010231_MaskingTape-Dotted.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/23">
-								マスキングテープ(水玉)
-							</a>
-						</td>
-						<td>
-							450
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613010141_MaskingTape-Star.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/22">
-								マスキングテープ(星)
-							</a>
-						</td>
-						<td>
-							450
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-					<tr>
-						<td class="image">
-							<img src="img/20180613125349_MaskingTapes.jpg" />
-						</td>
-						<td>
-							<a href="/shared_shop/item/detail/21">
-								マスキングテープ
-							</a>
-						</td>
-						<td>
-							980
-						</td>
-						<td>
-							文房具
-						</td>
-					</tr>
-				</table>
+					</table>
+
 			</article>
 </body>
 </html>

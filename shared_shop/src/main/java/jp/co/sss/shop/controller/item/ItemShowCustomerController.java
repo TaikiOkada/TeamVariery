@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.ItemRepository;
 
 /**
@@ -31,16 +32,23 @@ public class ItemShowCustomerController {
 	 */
 	@RequestMapping(path = "/")
 	public String index(Model model,  Pageable pageable) {
-
-
+		model.addAttribute("items", itemRepository.findAll());
+		System.out.println(9);
 		return "index";
 	}
 
 	/*トップ画面→新着順への遷移*/
 	  @RequestMapping(path = "/item/list/{sortType}")
 	  public String index1(Model model, Pageable pageable) {
+	  System.out.println(9);
+	  model.addAttribute("items", itemRepository.findAll());
 
-	  return "/item/list";
+	  return "/item/list/item_list";
+	  }
+	  /*ドロップダウンリスト*/
+	  @RequestMapping("/findAllDropDown")
+	  public String item_listDropdown(int deleteFlag, Pageable pageable) {
+		  return "redirect:/";
 	  }
 
 
@@ -56,7 +64,10 @@ public class ItemShowCustomerController {
 		System.out.println("a");
 		return "/item_list";
 	}
-	}
+
+}
+
+
 
 
 

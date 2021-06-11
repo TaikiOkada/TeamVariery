@@ -9,7 +9,7 @@ public class DeliveryFeeController {
 	public String showDeliveryFee() {
 		System.out.println("あああ");
 
-		return "/Comfirm";
+		return "confirm/Confirm";
 	}
 
 }

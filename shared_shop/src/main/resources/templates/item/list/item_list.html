@@ -21,7 +21,7 @@
 					新着順
 					</a>
 					</span>
-					<a href="/shared_shop/item/list/2?categoryId=&amp;min=&amp;max=">
+					<a href="/shared_shop/item/list/2">
 						売れ筋順
 					</a>
 				</div>
@@ -44,6 +44,7 @@
 					 <tr th:each = "item:${items}">
 						<td><img th:src="'../../img/' + ${item.image}"/></td>
 						<td th:text="${item.name}"></td>
+						<!-- <a th:href="@{/item/detail/{id}(itemId=${item.name})" th:text="${item.name}"></a> -->
 						<td th:text="${item.price}"></td>
 						<td th:text="${item.category.name}"></td>
 						<!-- <td th:text="${item.category.category_id}"></td> -->

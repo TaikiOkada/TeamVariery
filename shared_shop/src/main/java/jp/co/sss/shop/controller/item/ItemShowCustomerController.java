@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.repository.ItemRepository;
+import jp.co.sss.shop.repository.OrderItemRepository;
 import jp.co.sss.shop.util.BeanCopy;
 import jp.co.sss.shop.util.Constant;
 
@@ -31,6 +33,8 @@ public class ItemShowCustomerController {
 	 */
 	@Autowired
 	ItemRepository itemRepository;
+	OrderItemRepository orderitemRepository;
+
 
 
 	/**
@@ -43,7 +47,6 @@ public class ItemShowCustomerController {
 	@RequestMapping(path = "/")
 	public String index(Model model,  Pageable pageable) {
 		model.addAttribute("items", itemRepository.findAll());
-		System.out.println("トップ画面");
 		return "index";
 	}
 	/*メニューバーの処理*/
@@ -52,7 +55,6 @@ public class ItemShowCustomerController {
 	  public String item_list(Model model,  Pageable pageable) {
 		  //全件表示
 		  model.addAttribute("items", itemRepository.findAll());
-		  System.out.println("新着一覧");
 		  return "/item/list/item_list";
 	  }
 	  /*サイドバーの処理*/
@@ -69,9 +71,7 @@ public class ItemShowCustomerController {
 	  /*新着順に並び替え*/
 	  @RequestMapping(path = "/item/list/neworder")
 	   public String findByDeleteFlagOrderByInsertDateDesc(Model model, Pageable pageable) {
-
 		  model.addAttribute("items", itemRepository.findAllByOrderByInsertDateDesc(pageable));
-		  System.out.println("新着順");
 		  	return "/item/list/item_list";
 		}
 
@@ -79,14 +79,14 @@ public class ItemShowCustomerController {
 	  /*売れ筋順に並びえ*/
 	  @RequestMapping(path = "/item/list/2")
 	   public String showItemOrderBySale(Model model, Pageable pageable) {
-		   System.out.println("売れ筋順");
+		  model.addAttribute("items", itemRepository.findAllByOrderByStockAsc(pageable));
+
 			return "/item/list/item_list";
 		}
 
 	  /*商品詳細検索*/
 		@RequestMapping(path = "/item/detail/{id}")
 		public String showItem(@PathVariable int id, Model model) {
-			System.out.println("商品詳細表示");
 			// 商品IDに該当する商品情報を取得
 			Item item = itemRepository.findById(id).orElse(null);
 

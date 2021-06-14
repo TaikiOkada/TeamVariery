@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
     th:replace="~{common/layout_4block :: layout(~{::body/content()})}">
-<head>
-<title>会員登録入力 | シェアードショップ</title>
-<meta charset="UTF-8" />
-</head>
-<body class="admin user_regist_input_admin">
+	<head>
+		<title>会員登録入力 | シェアードショップ</title>
+		<meta charset="UTF-8" />
+	</head>
+	<body class="admin user_regist_input_admin">
 		<h2 class="title">会員登録入力</h2>
 		<div class="user_info_form_area">
 			<form method="post" th:action="@{/user/regist/check/admin}" th:object="${userForm}" class="user_info_form">
 				<ul th:if="${#fields.hasErrors('*')}"  th:class="input_list" >
   					<li th:each="err : ${#fields.errors('*')}" th:text="${err}" th:class="error_list" ></li>
 				</ul>
-				
+
 					<ul class="input_list">
 						<li>
 							<label>

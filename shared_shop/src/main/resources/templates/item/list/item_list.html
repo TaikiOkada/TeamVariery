@@ -25,6 +25,7 @@
 						売れ筋順
 					</a>
 				</div>
+				<img src = "/templates/img/common/20180311122622_apple.jpg" width = "20px" height = "20px"/>
 				<table class="list_table item_detail">
 					<tr>
 						<th width="20px" >
@@ -39,16 +40,20 @@
 						<th width="20px">
 							カテゴリ
 						</th>
+
 					 </tr>
 					 <tr th:each = "item:${items}">
-						<td th:text="${item.image}"></td>
+						<td> <img th:src="@{/templates/img/common/20180311122622_apple.jpg}"></td>
 						<td th:text="${item.name}"></td>
 						<td th:text="${item.price}"></td>
 						<td th:text="${item.category.name}"></td>
 						<!-- <td th:text="${item.category.category_id}"></td> -->
 					</tr>
 					</table>
-
+					<!-- エラーメッセージ表示 -->
+					<div class="error">
+						<p th:text="${errorMessage}"></p>
+					</div>
 			</article>
 	</body>
 </html>

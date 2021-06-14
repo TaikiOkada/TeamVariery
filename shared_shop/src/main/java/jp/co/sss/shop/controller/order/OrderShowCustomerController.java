@@ -25,7 +25,7 @@ import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.util.PriceCalc;
 
 /**
- * 注文管理 一覧表示機能(顧客用)のコントローラクラス
+ * 注文管理 一覧表示機能(用)のコントローラクラス
  *
  * @author SystemShared
  */
@@ -44,6 +44,8 @@ public class OrderShowCustomerController {
 	@Autowired
 	HttpSession session;
 
+
+
 	/**
 	 * 注文情報一覧表示処理
 	 *
@@ -55,13 +57,15 @@ public class OrderShowCustomerController {
 	 *            セッション情報
 	 * @param pageable
 	 *            ページング情報
-	 * @return "order/list/order_list_admin" 注文情報 一覧画面へ
+	 *
+	 *
+	 * @return "order/list/order_list" 注文情報 一覧画面へ
 	 */
 	@RequestMapping(path = "/order/list", method = RequestMethod.GET)
 	public String showOrderList(Model model, @ModelAttribute OrderShowForm form,
-	        Pageable pageable) {
+	         Pageable pageable) {
 
-		// すべての注文情報を取得
+		// ログイン中のユーザーのすべての注文情報を取得
 		Page<Order> orderList = orderRepository.findAllOrderByInsertDateDesc(pageable);
 
 		// 注文情報リストを生成

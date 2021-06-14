@@ -17,7 +17,7 @@ import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.UserRepository;
 
 /**
- * 登録機能(顧客)のコントローラクラス
+ * 登録機能(一般会員用)のコントローラクラス
  *
  * @author SystemShared
  */

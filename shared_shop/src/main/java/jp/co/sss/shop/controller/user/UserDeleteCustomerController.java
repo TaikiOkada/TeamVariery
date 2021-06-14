@@ -1,5 +1,7 @@
 package jp.co.sss.shop.controller.user;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,8 +76,8 @@ public class UserDeleteCustomerController {
 	 * @return "user/delete/user_delete_complete" 会員情報 削除完了画面へ
 	 */
 	@RequestMapping(path = "/user/delete/complete", method = RequestMethod.GET)
-	public String deleteCustomerCompleteRedirect() {
-
+	public String deleteCustomerCompleteRedirect(HttpSession session) {
+		session.invalidate();
 		return "user/delete/user_delete_complete";
 	}
 

@@ -44,7 +44,7 @@ public class UserRegistCustomerController {
 	 * @return "user/regist/user_regist_input" 会員情報 登録入力画面へ
 	 */
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.GET)
-	public String registInput(Model model) {
+	public String registInput(UserForm form) {
 
 		return "user/regist/user_regist_input";
 	}
@@ -56,7 +56,11 @@ public class UserRegistCustomerController {
 	 * @return "user/regist/user_regist_input" 会員情報 登録入力画面へ
 	 */
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.POST)
-	public String registInput(UserForm form) {
+	public String registInput(Model model) {
+
+		UserForm userForm = new UserForm();
+
+		model.addAttribute("userForm", userForm);
 
 		return "user/regist/user_regist_input";
 	}
@@ -64,8 +68,10 @@ public class UserRegistCustomerController {
 	/**
 	 * 会員情報確認画面表示処理
 	 *
-	 * @param model
-	 * @return
+	 * @param form   会員情報フォーム
+	 * @param result 入力チェック結果
+	 * @return 入力値エラーあり："user/regist/user_regist_input" 会員情報登録画面へ
+	 *         入力値エラーなし："user/regist/user_regist_check" 会員情報 登録確認画面へ
 	 */
 	@RequestMapping(path = "/user/regist/check", method = RequestMethod.POST)
 	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result) {
@@ -99,8 +105,8 @@ public class UserRegistCustomerController {
 	/**
 	 * 会員情報完了画面表示処理
 	 *
-	 * @param model
-	 * @return
+	 * @param form 会員情報
+	 * @return "user/regist/user_regist_complete_admin" 会員情報 登録完了画面へ
 	 */
 	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.GET)
 	public String registComplete(Model model) {

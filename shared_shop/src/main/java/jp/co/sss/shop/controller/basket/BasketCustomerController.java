@@ -1,12 +1,19 @@
 package jp.co.sss.shop.controller.basket;
 
-import org.springframework.boot.web.servlet.server.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.repository.ItemRepository;
+
 @Controller
 public class BasketCustomerController {
+
+	HttpSession session;
+
+	ItemRepository itemRepository;
 
 	/**
 	 * 買い物かごに追加
@@ -14,7 +21,11 @@ public class BasketCustomerController {
 	 * @return basket/shopping_basket 買い物かご画面
 	 */
 	@RequestMapping(path = "/basket/add", method = RequestMethod.POST)
-	public String addItem(Session session) {
+	public String addItem() {
+		// 買い物かごがまだ用意されていない場合
+		if (session.getAttribute("basket") == null) {
+			session.setAttribute("basket", itemRepository.getOne(1));
+		}
 		System.out.println("買い物add");
 		return basketList();
 	}
@@ -25,7 +36,7 @@ public class BasketCustomerController {
 	 * @return basket/shopping_basket 買い物かご画面
 	 */
 	@RequestMapping(path = "/basket/delete", method = RequestMethod.POST)
-	public String deleteItem(Session session) {
+	public String deleteItem() {
 		System.out.println("買い物delete");
 		return basketList();
 	}
@@ -36,7 +47,7 @@ public class BasketCustomerController {
 	 * @return basket/shopping_basket 買い物かご画面
 	 */
 	@RequestMapping(path = "/basket/allDelete", method = RequestMethod.POST)
-	public String allDelete(Session session) {
+	public String allDelete() {
 		System.out.println("買い物allDelete");
 		return basketList();
 	}
@@ -48,6 +59,10 @@ public class BasketCustomerController {
 	 */
 	@RequestMapping(path = "/basket/list", method = RequestMethod.GET)
 	public String basketListGet() {
+//		// 買い物かごがまだ用意されていない場合
+//		if (session.getAttribute("basket") == null) {
+//			session.setAttribute("basket", itemRepository.getOne(1));
+//		}
 
 		return "basket/shopping_basket";
 	}

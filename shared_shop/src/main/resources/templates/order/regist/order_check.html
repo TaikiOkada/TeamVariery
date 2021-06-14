@@ -1,10 +1,150 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+	<head>
+		<title>
+			お届け先入力 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		<h2 class="title">
+			注文内容最終確認
+		</h2>
+		<br />
+		<table class="list_table item_detail">
+			<tr>
+				<th>
+					商品名
+				</th>
+				<th>
+					商品画像
+				</th>
+				<th>
+					単価
+				</th>
+				<th>
+					数量
+				</th>
+				<th>
+					小計
+				</th>
+			</tr>
+			<tr>
+				<td>
+					ダブルクリップ(チェック柄)
+				</td>
+				<td>
+					<img src="img/20180613122242_DoubleClips.jpg" />
+				</td>
+				<td>
+					550
+				</td>
+				<td>
+					1
+				</td>
+				<td>
+					550
+				</td>
+			</tr>
+			<tr>
+				<td>
+					さくらんぼ
+				</td>
+				<td>
+					<img src="img/20180312125622_cherry.jpg" />
+				</td>
+				<td>
+					810
+				</td>
+				<td>
+					1
+				</td>
+				<td>
+					810
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3"></td>
+				<td class="total">
+					合計
+				</td>
+				<td class="total">
+					1360
+				</td>
+			</tr>
+		</table>
+		<div class="user_info_form_area">
+			<table class="detail_table address">
+				<caption class="table_caption">
+					お届け先
+				</caption>
+				<tr>
+					<th>
+						郵便番号
+					</th>
+					<td>
+						1111111
+					</td>
+				</tr>
+				<tr>
+					<th>
+						住所
+					</th>
+					<td>
+						東京都台東区4-5-6 ABCマンション5階
+					</td>
+				</tr>
+				<tr>
+					<th>
+						氏名
+					</th>
+					<td>
+						一般三郎
+					</td>
+				</tr>
+				<tr>
+					<th>
+						電話番号
+					</th>
+					<td>
+						0123456789
+					</td>
+				</tr>
+			</table>
+			<table class="detail_table pay">
+				<caption class="table_caption">
+					お支払い方法
+				</caption>
+				<tr>
+					<th>
+						お支払い方法
+					</th>
+					<td>
+						<span>
+							クレジットカード
+						</span>
+					</td>
+				</tr>
+			</table>
+			<form method="post" action="/shared_shop/order/complete" >
+				<input type="hidden" name="postalCode" value="1111111"/>
+				<input type="hidden" name="address" value="東京都台東区4-5-6 ABCマンション5階"/>
+				<input type="hidden" name="name" value="一般三郎"/>
+				<input type="hidden" name="phoneNumber" value="0123456789"/>
+				<input type="hidden" name="payMethod" value="1"/>
+				<input class="send_button" type="submit" value="ご注文の確定" />
+			</form>
+			<form method="post" action="/shared_shop/payment/input" class="update">
+				<input type="hidden" name="postalCode" value="1111111"/>
+				<input type="hidden" name="address" value="東京都台東区4-5-6 ABCマンション5階"/>
+				<input type="hidden" name="name" value="一般三郎"/>
+				<input type="hidden" name="phoneNumber" value="0123456789"/>
+				<input type="hidden" name="payMethod" value="1"/>
+				<input type="hidden" name="backflg" value="true" />
+				<input class="back_button" type="submit" value="戻る" />
+			</form>
+		</div>
+	</body>
 </html>

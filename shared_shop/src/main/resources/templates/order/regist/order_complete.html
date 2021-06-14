@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+	<head>
+		<title>
+			注文完了 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		<h2 class="title">
+			注文完了
+		</h2>
+		<p class="complete_message">
+			ご注文ありがとうございます。
+			<br />
+			注文手続きが完了しました。
+		</p>
+		<p class="complete_link">
+			<a href="/shared_shop/">
+				トップへ戻る
+			</a>
+		</p>
+	</body>
 </html>
+

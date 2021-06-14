@@ -12,7 +12,7 @@
 	<body class="user item_list">
 	<article class="mainuser">
 				<h2 class="title">
-					商品一覧(新着一覧ページだよ)
+					商品一覧
 				</h2>
 				<div class="sorted_by">
 					<span>
@@ -21,7 +21,8 @@
 					新着順
 					</a>
 					</span>
-					<a href="/shared_shop/item/list/2?categoryId=&amp;min=&amp;max=">
+
+					<a href="/shared_shop/item/list/2">
 						売れ筋順
 					</a>
 				</div>
@@ -43,7 +44,9 @@
 					 </tr>
 					 <tr th:each = "item:${items}">
 						<td><img th:src="'../../img/' + ${item.image}"/></td>
-						<td th:text="${item.name}"></td>
+
+						<td><a th:href="@{/item/detail/{id} (id=${item.id})}" th:text="${item.name}"></a></td>
+						
 						<td th:text="${item.price}"></td>
 						<td th:text="${item.category.name}"></td>
 						<!-- <td th:text="${item.category.category_id}"></td> -->

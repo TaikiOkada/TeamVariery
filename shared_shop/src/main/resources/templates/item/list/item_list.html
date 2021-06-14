@@ -39,16 +39,20 @@
 						<th width="20px">
 							カテゴリ
 						</th>
+
 					 </tr>
 					 <tr th:each = "item:${items}">
-						<td th:text="${item.image}"></td>
+						<td><img th:src="'../../img/' + ${item.image}"/></td>
 						<td th:text="${item.name}"></td>
 						<td th:text="${item.price}"></td>
 						<td th:text="${item.category.name}"></td>
 						<!-- <td th:text="${item.category.category_id}"></td> -->
 					</tr>
 					</table>
-
+					<!-- エラーメッセージ表示 -->
+					<div class="error">
+						<p th:text="${errorMessage}"></p>
+					</div>
 			</article>
 	</body>
 </html>

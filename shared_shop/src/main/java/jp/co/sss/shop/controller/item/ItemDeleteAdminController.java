@@ -35,7 +35,7 @@ public class ItemDeleteAdminController {
 	 */
 	@RequestMapping(path = "/item/delete/check", method = RequestMethod.POST)
 	public String deleteCheck(Integer id, Model model) {
-	
+
 		// 削除対象の商品情報を取得
 		Item item = itemRepository.findById(id).orElse(null);
 		ItemBean itemBean = BeanCopy.copyEntityToBean(item);
@@ -66,10 +66,10 @@ public class ItemDeleteAdminController {
 
 		return "redirect:/item/delete/complete";
 	}
-	
+
 	/**
 	 * 商品情報削除完了画面表示
-	 * 
+	 *
 	 * @return "item/delete/item_delete_complete"  商品情報 削除完了画面へ
 	 */
 	@RequestMapping(path = "/item/delete/complete", method = RequestMethod.GET)
@@ -78,5 +78,5 @@ public class ItemDeleteAdminController {
 		return "item/delete/item_delete_complete";
 	}
 
-	
+
 }

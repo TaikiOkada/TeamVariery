@@ -23,8 +23,8 @@
 					<dt>価格：</dt>
 					<dd th:text="${item.price}"></dd>
 					<dt>在庫：</dt>
-					<dd  th:block th:if="${item.stock != 0}" th:text="${item.stock}"></dd>
-					<dd  th:if="${item.stock == 0}" '在庫なし'></dd>
+					<dd  th:if="${item.stock != 0}" th:text="${item.stock}"></dd>
+					<dd  th:if="${item.stock == 0}" th:text='在庫なし'></dd>
 					<dt>カテゴリ：</dt>
 					<dd th:text="${item.categoryName}"></dd>
 					<dt>説明：</dt>

@@ -1,10 +1,97 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+	<head>
+		<title>
+			お届け先入力 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body class="user order_address_input">
+		<h2 class="title">
+			お届け先入力
+		</h2>
+		<div class="user_info_form_area">
+			<form method="post" action="/shared_shop/payment/input">
+				<ul class="error_list">
+					<li>
+						<span>
+							郵便番号は正しい形式で入力してください。
+						</span>
+					</li>
+					<li>
+						<span>
+							電話番号は正しい形式で入力してください。
+						</span>
+					</li>
+					<li>
+						<span>
+							電話番号は10文字以上11文字以内で入力してください。
+						</span>
+					</li>
+					<li>
+						<span>
+							氏名は必須項目です。
+						</span>
+					</li>
+					<li>
+						<span>
+							氏名は1文字以上30文字以内で入力してください。
+						</span>
+					</li>
+					<li>
+						<span>
+							住所は1文字以上150文字以内で入力してください。
+						</span>
+					</li>
+					<li>
+						<span>
+							郵便番号は7文字以上8文字以内で入力してください。
+						</span>
+					</li>
+				</ul>
+				<br />
+				<ul class="input_list">
+					<li>
+						<label>
+							<span class="input_title">
+								郵便番号
+							</span>
+							<input type="text" name="postalCode" value=""/>
+						</label>
+					</li>
+					<li>
+						<label>
+							<span class="input_title">
+								住所
+							</span>
+							<textarea name="address" rows="6"></textarea>
+						</label>
+					</li>
+					<li>
+						<label>
+							<span class="input_title">
+								氏名
+							</span>
+							<input type="text" name="name" value=""/>
+						</label>
+					</li>
+					<li>
+						<label>
+							<span class="input_title">
+								電話番号
+							</span>
+							<input type="text" name="phoneNumber" value=""/>
+						</label>
+					</li>
+				</ul>
+				<input type="submit" value="次へ" class="send_button" />
+				<input type="hidden" name="backflg" value="false" />
+			</form>
+			<form action="/shared_shop/basket/list?page=0">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
+		</div>
+	</body>
 </html>

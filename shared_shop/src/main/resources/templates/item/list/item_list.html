@@ -25,7 +25,6 @@
 						売れ筋順
 					</a>
 				</div>
-				<img src = "/templates/img/common/20180311122622_apple.jpg" width = "20px" height = "20px"/>
 				<table class="list_table item_detail">
 					<tr>
 						<th width="20px" >
@@ -43,7 +42,7 @@
 
 					 </tr>
 					 <tr th:each = "item:${items}">
-						<td> <img th:src="@{/templates/img/common/20180311122622_apple.jpg}"></td>
+						<td><img th:src="'../../img/' + ${item.image}"/></td>
 						<td th:text="${item.name}"></td>
 						<td th:text="${item.price}"></td>
 						<td th:text="${item.category.name}"></td>

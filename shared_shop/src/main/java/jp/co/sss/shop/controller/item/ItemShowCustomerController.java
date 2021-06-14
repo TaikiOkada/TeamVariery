@@ -1,5 +1,6 @@
 package jp.co.sss.shop.controller.item;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -41,6 +42,7 @@ public class ItemShowCustomerController {
 	@RequestMapping(path = "/")
 	public String index(Model model,  Pageable pageable) {
 		model.addAttribute("items", itemRepository.findAll());
+		System.out.println("トップ画面");
 		return "index";
 	}
 	/*メニューバーの処理*/
@@ -49,60 +51,42 @@ public class ItemShowCustomerController {
 	  public String item_list(Model model,  Pageable pageable) {
 		  //全件表示
 		  model.addAttribute("items", itemRepository.findAll());
-
+		  System.out.println("新着一覧");
 		  return "/item/list/item_list";
 	  }
 	  /*サイドバーの処理*/
 	  /*ドロップダウンリスト*/
-	  @RequestMapping("/findAllDropDown")
-	  public String item_listDropdown(int deleteFlag, Pageable pageable) {
-		  return "redirect:/";
+	  @RequestMapping("/item/list/category/1")
+	  public String item_listDropdown(Integer category_id,Model model, Pageable pageable) {
+		  System.out.println("ドロップダウンリスト");
+			  model.addAttribute("items", itemRepository.findAll());
+			  model.addAttribute("errorMessage", "閲覧できる書籍はありません");
+		  return "/item/list/item_list";
 	  }
 
 	  /*テーブルの処理*/
 	  /*新着順に並び替え*/
 	  @RequestMapping(path = "/item/list/1?categoryId=&amp;min=&amp;max=")
-	   public String showItem(Model model, Pageable pageable) {
-		   System.out.println(32);
-		  // 商品情報を全件検索(新着順)
-			Page<Item> itemList = itemRepository.findByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED, pageable);
-
-			// エンティティ内の検索結果をJavaBeansにコピー
-			List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
-
-			// 商品情報をViewへ渡す
-			model.addAttribute("pages", itemList);
-			model.addAttribute("items", itemBeanList);
-			model.addAttribute("url", "/item/list/");
-
-			System.out.println(22);
-			return "redirect://item/list/item_list";
+	   public String searchByCategory(java.sql.Date insertDate, Model model, Pageable pageable) {
+		  Item item = new Item();
+		  item.setInsertDate(insertDate);
+		  //model.addAttribute("items", itemRepository.findByItem(item, pageable));
+		  System.out.println("新着順");
+		  			return "/item/list/item_list";
 		}
 
 
-	  /*売れ筋順に並び替え*/
+	  /*売れ筋順に並びえ*/
 	  @RequestMapping(path = "/item/list/2?categoryId=&amp;min=&amp;max=")
 	   public String showItemOrderBySale(Model model, Pageable pageable) {
-		   System.out.println(32);
-		  // 商品情報を全件検索(売れ筋順)
-			Page<Item> itemList = itemRepository.findByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED, pageable);
-
-			// エンティティ内の検索結果をJavaBeansにコピー
-			List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
-
-			// 商品情報をViewへ渡す
-			model.addAttribute("pages", itemList);
-			model.addAttribute("items", itemBeanList);
-			model.addAttribute("url", "/item/list/");
-
-			System.out.println(22);
-			return "item/list/item_list";
+		   System.out.println("売れ筋順");
+			return "/item/list/item_list";
 		}
 
 	  /*商品詳細検索*/
 		@RequestMapping(path = "/item/detail/{id}")
 		public String showItem(@PathVariable int id, Model model) {
-
+			System.out.println("商品詳細表示");
 			// 商品IDに該当する商品情報を取得
 			Item item = itemRepository.findById(id).orElse(null);
 

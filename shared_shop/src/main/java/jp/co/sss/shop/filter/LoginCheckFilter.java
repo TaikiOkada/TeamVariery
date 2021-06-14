@@ -66,7 +66,11 @@ public class LoginCheckFilter implements Filter {
 				&& requestURL.indexOf("/item/detail/") == -1
 				&& !requestURL.endsWith("/user/regist/input")
 				&& !requestURL.endsWith("/user/regist/check")
-				&& !requestURL.endsWith("/user/regist/complete")) {
+				&& !requestURL.endsWith("/user/regist/complete")
+
+				//未ログイン時の送料詳細のチェック回避
+				&& requestURL.endsWith("confirm/Confirm")) {
+
 			// URLのリクエスト先がフィルタ実行対象である場合
 			return true;
 		} else {

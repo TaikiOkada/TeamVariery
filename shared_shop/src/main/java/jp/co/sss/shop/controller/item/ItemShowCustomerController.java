@@ -1,6 +1,7 @@
 package jp.co.sss.shop.controller.item;
 
 import java.util.Date;
+
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -66,18 +67,17 @@ public class ItemShowCustomerController {
 
 	  /*テーブルの処理*/
 	  /*新着順に並び替え*/
-	  @RequestMapping(path = "/item/list/1?categoryId=&amp;min=&amp;max=")
-	   public String searchByCategory(java.sql.Date insertDate, Model model, Pageable pageable) {
-		  Item item = new Item();
-		  item.setInsertDate(insertDate);
-		  //model.addAttribute("items", itemRepository.findByItem(item, pageable));
+	  @RequestMapping(path = "/item/list/neworder")
+	   public String findByDeleteFlagOrderByInsertDateDesc(Model model, Pageable pageable) {
+
+		  model.addAttribute("items", itemRepository.findAllByOrderByInsertDateDesc(pageable));
 		  System.out.println("新着順");
-		  			return "/item/list/item_list";
+		  	return "/item/list/item_list";
 		}
 
 
 	  /*売れ筋順に並びえ*/
-	  @RequestMapping(path = "/item/list/2?categoryId=&amp;min=&amp;max=")
+	  @RequestMapping(path = "/item/list/2")
 	   public String showItemOrderBySale(Model model, Pageable pageable) {
 		   System.out.println("売れ筋順");
 			return "/item/list/item_list";

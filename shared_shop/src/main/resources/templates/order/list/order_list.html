@@ -1,10 +1,183 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+	<head>
+		<title>
+			注文一覧 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+	</head>
+	<body class="user order_list">
 
-</body>
+				<h2 class="title">
+					注文一覧
+				</h2>
+				<table class="list_table order">
+					<tr>
+						<th>
+							注文日時
+						</th>
+						<th>
+							支払い方法
+						</th>
+						<th>
+							合計金額
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/27">
+								2018-12-19
+							</a>
+						</td>
+						<td>
+							<span>
+								クレジットカード
+							</span>
+						</td>
+						<td  class="text">
+							7055
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/26">
+								2018-11-09
+							</a>
+						</td>
+						<td>
+							<span>
+								銀行振り込み
+							</span>
+						</td>
+						<td  class="text">
+							450
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/25">
+								2018-10-25
+							</a>
+						</td>
+						<td>
+							<span>
+								着払い
+							</span>
+						</td>
+						<td  class="text">
+							1100
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/21">
+								2018-03-27
+							</a>
+						</td>
+						<td>
+							<span>
+								クレジットカード
+							</span>
+						</td>
+						<td  class="text">
+							450
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/22">
+								2018-03-27
+							</a>
+						</td>
+						<td>
+							<span>
+								着払い
+							</span>
+						</td>
+						<td  class="text">
+							2500
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/18">
+								2018-03-23
+							</a>
+						</td>
+						<td>
+							<span>
+								着払い
+							</span>
+						</td>
+						<td  class="text">
+							8080
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/19">
+								2018-03-23
+							</a>
+						</td>
+						<td>
+							<span>
+								電子マネー
+							</span>
+						</td>
+						<td  class="text">
+							810
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/15">
+								2018-03-22
+							</a>
+						</td>
+						<td>
+							<span>
+								着払い
+							</span>
+						</td>
+						<td  class="text">
+							7260
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/14">
+								2018-03-20
+							</a>
+						</td>
+						<td>
+							<span>
+								着払い
+							</span>
+						</td>
+						<td  class="text">
+							2700
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="/shared_shop/order/detail/13">
+								2018-03-13
+							</a>
+						</td>
+						<td>
+							<span>
+								コンビニ決済
+							</span>
+						</td>
+						<td  class="text">
+							2000
+						</td>
+					</tr>
+				</table>
+
+	</body>
 </html>

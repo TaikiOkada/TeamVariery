@@ -6,178 +6,57 @@
 			注文一覧 | シェアードショップ
 		</title>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+
 	</head>
 	<body class="user order_list">
+			<h2 class="title">注文一覧</h2>
+				<div th:if="${#lists.isEmpty(orders)}">
+			<p th:text="#{orderListAdmin.none}"></p>
+		</div>
+		<div class="list" th:if="!${#lists.isEmpty(orders)}">
+			<table class="list_table order">
+				<tr>
+					<th>会員氏名</th>
+					<th>注文日時</th>
+					<th>支払い方法</th>
+					<th>合計金額</th>
+				</tr>
 
-				<h2 class="title">
-					注文一覧
-				</h2>
-				<table class="list_table order">
-					<tr>
-						<th>
-							注文日時
-						</th>
-						<th>
-							支払い方法
-						</th>
-						<th>
-							合計金額
-						</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/27">
-								2018-12-19
-							</a>
-						</td>
-						<td>
-							<span>
-								クレジットカード
-							</span>
-						</td>
-						<td  class="text">
-							7055
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/26">
-								2018-11-09
-							</a>
-						</td>
-						<td>
-							<span>
-								銀行振り込み
-							</span>
-						</td>
-						<td  class="text">
-							450
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/25">
-								2018-10-25
-							</a>
-						</td>
-						<td>
-							<span>
-								着払い
-							</span>
-						</td>
-						<td  class="text">
-							1100
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/21">
-								2018-03-27
-							</a>
-						</td>
-						<td>
-							<span>
-								クレジットカード
-							</span>
-						</td>
-						<td  class="text">
-							450
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/22">
-								2018-03-27
-							</a>
-						</td>
-						<td>
-							<span>
-								着払い
-							</span>
-						</td>
-						<td  class="text">
-							2500
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/18">
-								2018-03-23
-							</a>
-						</td>
-						<td>
-							<span>
-								着払い
-							</span>
-						</td>
-						<td  class="text">
-							8080
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/19">
-								2018-03-23
-							</a>
-						</td>
-						<td>
-							<span>
-								電子マネー
-							</span>
-						</td>
-						<td  class="text">
-							810
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/15">
-								2018-03-22
-							</a>
-						</td>
-						<td>
-							<span>
-								着払い
-							</span>
-						</td>
-						<td  class="text">
-							7260
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/14">
-								2018-03-20
-							</a>
-						</td>
-						<td>
-							<span>
-								着払い
-							</span>
-						</td>
-						<td  class="text">
-							2700
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="/shared_shop/order/detail/13">
-								2018-03-13
-							</a>
-						</td>
-						<td>
-							<span>
-								コンビニ決済
-							</span>
-						</td>
-						<td  class="text">
-							2000
-						</td>
-					</tr>
-				</table>
+				<tr th:each="order: ${orders}">
+					<td>
+						<a th:href="@{/order/detail/{id}(id=${order.id})}" th:text="${order.userName}"></a>
+					</td>
+					<td th:text="${order.insertDate}"></td>
+					<td th:switch="${order.payMethod}">
+						<span th:case="1">クレジットカード</span>
+						<span th:case="2">銀行振り込み</span>
+						<span th:case="3">着払い</span>
+						<span th:case="4">電子マネー</span>
+						<span th:case="5">コンビニ決済</span></td>
+					<td th:text="${order.total}"></td>
+				</tr>
+			</table>
+			<!--/* ページリンク */-->
+			<ul class="paging"  th:if="!${#lists.isEmpty(orders)}">
+				<li th:class="${pages.first} ? 'disabled':''" >
+					<span th:if="${pages.first}">&lt;&lt;</span>
+					<a th:if="${not pages.first}" th:href="@{${url}(page=0)}">&lt;&lt;</a>
+				</li>
+				<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}'
+					th:class="(${i}==${pages.number})? 'active' : ''" >
+					<span th:if='${i}==${pages.number}' th:text='${i+1}'>1</span>
+					<a th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}">
+						<span th:text='${i+1}'>1</span>
+					</a>
+				</li>
+				<li th:class="${pages.last} ? 'disabled':''" >
+					<span th:if="${pages.last}">&gt;&gt;</span>
+					<a th:if="${not pages.last}"
+						th:href="@{${url}(page=(${pages.totalPages}-1))}">&gt;&gt;</a>
+				</li>
+			</ul>
+		</div>
 
-	</body>
+</body>
+
 </html>

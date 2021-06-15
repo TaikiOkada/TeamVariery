@@ -160,6 +160,7 @@ p {
 	font-size: 1.1em;
 }
 
+
 /* ---- 入力フォーム(検索、登録、変更、削除) ---- */
 .emp_form {
 	margin: 0px auto 30px;
@@ -412,7 +413,7 @@ select {
 
 /* ---- テーブル ---- */
 .list_table{
-	width: 200px;;
+	width: 200px;
 }
 /* ---- 共通 ---- */
 .list_table,
@@ -680,3 +681,4 @@ p.link_center {
 .err {
 	color: #FF0000;
 }
+

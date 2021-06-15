@@ -27,22 +27,21 @@
 					在庫
 				</th>
 			</tr>
-			<tr>
-				<td th:text="${session.user.name}">
-					<a href="/shared_shop/item/detail/6">
-						人間失格
-					</a>
+			<tr th:each="basket: ${session.baskets}">
+				<td th:text="${basket.name}">
+<!--				<a href="/shared_shop/item/detail/6">
+					</a> -->
 				</td>
 				<td>
 					1
 				</td>
 				<td>
 					<form action="/shared_shop/basket/delete" method="post">
-						<input type="hidden" name="id" value="6" />
+						<input type="hidden" name="id" th:value="${basket.id}" />
 						<input type="submit" value="削除" class="delete"/>
 					</form>
 				</td>
-				<td>
+				<td th:text="${basket.stock}">
 					4
 				</td>
 			</tr>
@@ -56,7 +55,7 @@
 				</span>
 				<input type="submit" value="ご注文のお手続き" />
 			</form>
-			<form action="/shared_shop/basket/allDelete/" method="post">
+			<form action="/shared_shop/basket/allDelete" method="post">
 				<input type="submit" value="買い物かごを空にする" class="delete" />
 			</form>
 		</div>

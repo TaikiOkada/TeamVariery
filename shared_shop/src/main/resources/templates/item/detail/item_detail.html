@@ -34,7 +34,9 @@
 			</div>
 
 			<div class="detail_button_area">
-				<form th:action="@{/basket/list}">
+				<form method="post" th:action="@{/basket/add}">
+					<input type="hidden" name="id" th:value="${item.id}" />
+					<input type="hidden" name="orderNum" value=1 />
 				    <input type="submit"  value="買い物かごに入れる" />
 				</form>
 

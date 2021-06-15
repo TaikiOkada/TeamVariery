@@ -27,13 +27,8 @@ public class BasketCustomerController {
 	@Autowired
 	ItemRepository itemRepository;
 
-//	List<Item> basketItems = new ArrayList<Item>();
-
 	/** 買い物かご */
 	List<BasketBean> basketItems = new ArrayList<BasketBean>();
-
-	int cnt = 1;
-
 
 	/**
 	 * 買い物かごに追加
@@ -42,6 +37,7 @@ public class BasketCustomerController {
 	 */
 	@RequestMapping(path = "/basket/add", method = RequestMethod.POST)
 	public String addItem(@ModelAttribute BasketForm form,Model model) {
+		int orderNum = 1;
 		System.out.println("id = " + form.getId());
 		System.out.println("メソッド開始");
 		// 警告出さないようにしてるだけのアノテーション
@@ -57,12 +53,29 @@ public class BasketCustomerController {
 		if (basketBeanList == null) {
 			basketBeanList = new ArrayList<BasketBean>();
 			System.out.println("新規リスト");
+		} else {
+			// 同じ商品がカゴに入っているか確認
+			for (BasketBean bean: basketBeanList) {
+				if (bean.getId() == item.getId()) {
+					orderNum += bean.getOrderNum();
+					System.out.println("重複 = " + orderNum);
+
+//					BasketBean basketBean = new BasketBean();
+//					basketBean.setId(item.getId());
+//					basketBean.setName(item.getName());
+//					basketBean.setStock(item.getStock());
+//					basketBean.setOrderNum(orderNum);
+//
+					return basketList();
+				}
+			}
 		}
+
 		BasketBean basketBean = new BasketBean();
 		basketBean.setId(item.getId());
 		basketBean.setName(item.getName());
 		basketBean.setStock(item.getStock());
-		basketBean.setOrderNum(1);
+		basketBean.setOrderNum(orderNum);
 
 		basketBeanList.add(basketBean);
 
@@ -78,8 +91,9 @@ public class BasketCustomerController {
 	 * @return basket/shopping_basket 買い物かご画面
 	 */
 	@RequestMapping(path = "/basket/delete", method = RequestMethod.POST)
-	public String deleteItem(int id) {
+	public String deleteItem(@ModelAttribute BasketForm form,Model model) {
 //		basketItems.remove(basketItems.indexOf(id));
+		ItemBean item = BeanCopy.copyEntityToBean(itemRepository.getOne(form.getId()));
 		System.out.println(basketItems);
 		sessionSetAttribute();
 		return basketList();
@@ -109,7 +123,6 @@ public class BasketCustomerController {
 //		if (session.getAttribute("basket") == null) {
 //			session.setAttribute("basket", itemRepository.getOne(1));
 //		}
-		cnt = 1;
 		return "basket/shopping_basket";
 	}
 

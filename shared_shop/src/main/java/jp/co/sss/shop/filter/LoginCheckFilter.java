@@ -67,6 +67,8 @@ public class LoginCheckFilter implements Filter {
 				&& !requestURL.endsWith("/user/regist/input")
 				&& !requestURL.endsWith("/user/regist/check")
 				&& !requestURL.endsWith("/user/regist/complete")
+
+				//未ログイン時の買い物カゴをチェック対象
 				&& requestURL.endsWith("/basket/list")
 
 

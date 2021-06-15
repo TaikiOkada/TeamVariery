@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,9 +64,17 @@ public class OrderShowCustomerController {
 
 
 		// セッションから会員の情報取ってきて、UserBean型で定義
-				UserBean userBean = ((UserBean) session.getAttribute("user"));
-				// 注文情報とってくる
-				List<Order> orderList = orderRepository.findByUserIdOrderByInsertDateDescIdAsc(userBean.getId());
+		UserBean userBean = ((UserBean) session.getAttribute("user"));
+
+		// すべての注文情報を取得
+		Page<Order> orderPageList = orderRepository.findByUserIdOrderByInsertDateDesc(userBean.getId(), pageable);
+
+
+
+		// 注文情報とってくる
+		List<Order> orderList = orderPageList.getContent();
+			//↑上のorderPageListから取ってくる
+
 
 		// 注文情報リストを生成
 		List<OrderBean> orderBeanList = new ArrayList<OrderBean>();
@@ -93,8 +102,9 @@ public class OrderShowCustomerController {
 			orderBeanList.add(orderBean);
 		}
 
+
 		// 注文情報リストをViewへ渡す
-		model.addAttribute("pages", orderList);
+		model.addAttribute("pages", orderPageList);
 		model.addAttribute("orders", orderBeanList);
 		model.addAttribute("url", "/order/list");
 

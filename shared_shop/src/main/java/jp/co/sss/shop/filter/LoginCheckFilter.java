@@ -70,8 +70,7 @@ public class LoginCheckFilter implements Filter {
 
 				//未ログイン時の買い物カゴをチェック対象
 				&& requestURL.endsWith("/basket/list")
-
-
+				|| requestURL.endsWith("/basket/add")
 
 				//未ログイン時の送料詳細のチェック回避
 				&& !requestURL.endsWith("/confirm")

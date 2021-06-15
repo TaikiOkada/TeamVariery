@@ -13,7 +13,7 @@
 			<form th:if="${sortType == null}" th:action="@{/item/list/category/1}">
 				<select name="categoryId">
 					<option th:each="category: ${categories}"
-						th:value="${category.id}" th:text="${category.name}"></option>
+						th:value="${category.id}" th:text="${category.name}" th:selected="${category.id == categoryId}"></option>
 				</select> <input type="submit" value="検索" />
 			</form>
 			<!-- 商品一覧画面上で表示 -->

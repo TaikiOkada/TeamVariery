@@ -65,6 +65,7 @@ public class ItemShowCustomerController {
 		  Category category = new Category();
 		  category.setId(categoryId);
 		  model.addAttribute("items", itemRepository.findByCategory(category));
+		  model.addAttribute("categoryId",categoryId);
 		  return "/item/list/item_list";
 	  }
 

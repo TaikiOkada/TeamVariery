@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.OrderBean;
 import jp.co.sss.shop.bean.OrderItemBean;
+import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.form.OrderShowForm;
@@ -25,7 +25,7 @@ import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.util.PriceCalc;
 
 /**
- * 注文管理 一覧表示機能(用)のコントローラクラス
+ * 注文管理 一覧表示機能(運用管理者用)のコントローラクラス
  *
  * @author SystemShared
  */
@@ -44,8 +44,6 @@ public class OrderShowCustomerController {
 	@Autowired
 	HttpSession session;
 
-
-
 	/**
 	 * 注文情報一覧表示処理
 	 *
@@ -57,16 +55,17 @@ public class OrderShowCustomerController {
 	 *            セッション情報
 	 * @param pageable
 	 *            ページング情報
-	 *
-	 *
 	 * @return "order/list/order_list" 注文情報 一覧画面へ
 	 */
 	@RequestMapping(path = "/order/list", method = RequestMethod.GET)
 	public String showOrderList(Model model, @ModelAttribute OrderShowForm form,
-	         Pageable pageable) {
+	        Pageable pageable) {
 
-		// ログイン中のユーザーのすべての注文情報を取得
-		Page<Order> orderList = orderRepository.findAllOrderByInsertDateDesc(pageable);
+
+		// セッションから会員の情報取ってきて、UserBean型で定義
+				UserBean userBean = ((UserBean) session.getAttribute("user"));
+				// 注文情報とってくる
+				List<Order> orderList = orderRepository.findByUserIdOrderByInsertDateDescIdAsc(userBean.getId());
 
 		// 注文情報リストを生成
 		List<OrderBean> orderBeanList = new ArrayList<OrderBean>();

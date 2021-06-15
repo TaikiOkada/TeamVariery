@@ -1,19 +1,39 @@
 package jp.co.sss.shop.controller.basket;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.bean.BasketBean;
+import jp.co.sss.shop.bean.ItemBean;
+import jp.co.sss.shop.form.BasketForm;
 import jp.co.sss.shop.repository.ItemRepository;
+import jp.co.sss.shop.util.BeanCopy;
 
 @Controller
 public class BasketCustomerController {
 
+	@Autowired
 	HttpSession session;
 
+	@Autowired
 	ItemRepository itemRepository;
+
+//	List<Item> basketItems = new ArrayList<Item>();
+
+	/** 買い物かご */
+	List<BasketBean> basketItems = new ArrayList<BasketBean>();
+
+	int cnt = 1;
+
 
 	/**
 	 * 買い物かごに追加
@@ -21,12 +41,34 @@ public class BasketCustomerController {
 	 * @return basket/shopping_basket 買い物かご画面
 	 */
 	@RequestMapping(path = "/basket/add", method = RequestMethod.POST)
-	public String addItem() {
-		// 買い物かごがまだ用意されていない場合
-		if (session.getAttribute("basket") == null) {
-			session.setAttribute("basket", itemRepository.getOne(1));
+	public String addItem(@ModelAttribute BasketForm form,Model model) {
+		System.out.println("id = " + form.getId());
+		System.out.println("メソッド開始");
+		// 警告出さないようにしてるだけのアノテーション
+		@SuppressWarnings("unchecked")
+		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
+
+		System.out.println("セッション情報をリストにコピー");
+		// フォームで追加された商品情報（BasketForm のゲッター使ってID取ってきて、商品情報をDBから取って来てる。）
+		// その後でItemBean 型に成形してitemって変数で値を保持
+		ItemBean item = BeanCopy.copyEntityToBean(itemRepository.getOne(form.getId()));
+
+		// 買い物かごが空だった場合、新しくリストを作る。（セッションに詰める用）
+		if (basketBeanList == null) {
+			basketBeanList = new ArrayList<BasketBean>();
+			System.out.println("新規リスト");
 		}
-		System.out.println("買い物add");
+		BasketBean basketBean = new BasketBean();
+		basketBean.setId(item.getId());
+		basketBean.setName(item.getName());
+		basketBean.setStock(item.getStock());
+		basketBean.setOrderNum(1);
+
+		basketBeanList.add(basketBean);
+
+		session.setAttribute("baskets", basketBeanList);
+		System.out.println("メソッド終了");
+
 		return basketList();
 	}
 
@@ -36,8 +78,10 @@ public class BasketCustomerController {
 	 * @return basket/shopping_basket 買い物かご画面
 	 */
 	@RequestMapping(path = "/basket/delete", method = RequestMethod.POST)
-	public String deleteItem() {
-		System.out.println("買い物delete");
+	public String deleteItem(int id) {
+//		basketItems.remove(basketItems.indexOf(id));
+		System.out.println(basketItems);
+		sessionSetAttribute();
 		return basketList();
 	}
 
@@ -48,7 +92,9 @@ public class BasketCustomerController {
 	 */
 	@RequestMapping(path = "/basket/allDelete", method = RequestMethod.POST)
 	public String allDelete() {
-		System.out.println("買い物allDelete");
+		// セッションから削除
+		basketItems.clear();
+		sessionSetAttribute();
 		return basketList();
 	}
 
@@ -63,7 +109,7 @@ public class BasketCustomerController {
 //		if (session.getAttribute("basket") == null) {
 //			session.setAttribute("basket", itemRepository.getOne(1));
 //		}
-
+		cnt = 1;
 		return "basket/shopping_basket";
 	}
 
@@ -76,6 +122,13 @@ public class BasketCustomerController {
 	public String basketList() {
 
 		return "basket/shopping_basket";
+	}
+
+	/**
+	 * セッションに保存
+	 */
+	public void sessionSetAttribute() {
+		session.setAttribute("baskets", basketItems);
 	}
 
 }

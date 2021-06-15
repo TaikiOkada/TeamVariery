@@ -493,6 +493,17 @@ select {
 	border-bottom: 1px solid #f0f8fb;
 }
 
+/* ---- 送料画面--- */
+
+ .fee {
+ 	text-align: center;
+	width:50%;
+	background-color: #fff;
+	border-collapse: collapse;
+	margin: 40px auto 20px;
+
+}
+
 /* ---- 会員一覧 ---- */
 .sign_up_form {
 	display: block;
@@ -536,13 +547,22 @@ select {
 /* ---- 注文最終確認 ---- */
 .list_table.item_detail td:first-of-type{
 	width: 20%;
+
 }
 /*画像の大きさ調整*/
  .list_table.item_detail img{
-	height: 70px;
-	width: auto;
-	vertical-align:middle;
+	 max-width: 70px;     /* 最大幅 */
+	 max-height: 70px;
+    margin-right: auto;
+    margin-left : auto;
 }
+.item_image_area img{
+	 max-width: 200px;  /* 最大幅 */
+	 max-height: 250px;
+    margin-right: auto;
+    margin-left : auto;
+}
+
 
 .detail_table.address,
 .detail_table.pay {

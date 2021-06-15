@@ -413,7 +413,7 @@ select {
 
 /* ---- テーブル ---- */
 .list_table{
-	width: 200px;;
+	width: 200px;
 }
 /* ---- 共通 ---- */
 .list_table,
@@ -681,3 +681,4 @@ p.link_center {
 .err {
 	color: #FF0000;
 }
+

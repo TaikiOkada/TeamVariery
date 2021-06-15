@@ -1,12 +1,20 @@
 package jp.co.sss.shop.controller.order;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.form.OrderShowForm;
+import jp.co.sss.shop.repository.OrderRepository;
+
 @Controller
 public class OrderRegistCustomerController {
-
+	@Autowired
+	OrderRepository orderRepository;
 	/**
 	 * 届け先入力画面表示
 	 *
@@ -35,8 +43,13 @@ public class OrderRegistCustomerController {
 	* @return order/regist/order_check 画面
 	*/
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
-	public String checkOrder() {
-
+	public String checkOrder(@ModelAttribute OrderShowForm form) {
+		//登録情報の生成
+		Item items = new Item();
+		//入力値を登録情報にコピーする
+		BeanUtils.copyProperties(form, items);
+		//登録情報を保存
+		//orderRepository.save(items);
 		return "order/regist/order_check";
 	}
 

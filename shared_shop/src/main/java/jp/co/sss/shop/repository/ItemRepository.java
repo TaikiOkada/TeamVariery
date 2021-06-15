@@ -26,9 +26,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
 	List<Item> findAllByOrderByInsertDateDesc(Pageable pageable);
 
+	//商品情報を売れ筋順で検索　在庫の数ではかる
 	List<Item> findAllByOrderByStockAsc(Pageable pageable);
-	//DropDownList作成時の検索機能
-	//@Query("SELECT i FROM Item i WHERE i.categories.Id = :category_Id")
-	//List<Item> findByCategoty_Id(@Param("category_Id")Integer category_Id);
-	//Page<Item> findByItem(Item item, Pageable pageable);
+
+	//カテゴリ別検索
+	List<Item> findByCategory(Category category);
 }

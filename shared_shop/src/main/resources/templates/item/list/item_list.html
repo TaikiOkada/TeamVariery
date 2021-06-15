@@ -14,9 +14,14 @@
 				<h2 class="title">
 					商品一覧
 				</h2>
-				<div class="sorted_by">
-					<span>
 
+				<!-- 検索にかからない場合のメッセージ表示 -->
+				<th:block th:if="${#lists.isEmpty(items)}">
+					<p th:text="#{itemListAdmin.none}"></p>
+				</th:block>
+
+				<div class="sorted_by" th:if="!${#lists.isEmpty(items)}">
+					<span>
 					<a href="/shared_shop/item/list/neworder">
 					新着順
 					</a>
@@ -26,7 +31,8 @@
 						売れ筋順
 					</a>
 				</div>
-				<table class="list_table item_detail">
+
+				<table class="list_table item_detail" th:if="!${#lists.isEmpty(items)}">
 					<tr>
 						<th width="20px" >
 							商品画像
@@ -43,10 +49,15 @@
 
 					 </tr>
 					 <tr th:each = "item:${items}">
-						<td><img th:src="'../../img/' + ${item.image}"/></td>
+						<th:block th:if="${item.image != null}">
+							<td><img th:src="@{/img/{image}(image=${item.image})}"></img></td>
+						</th:block>
+						<th:block th:if="${item.image == null}">
+							<td><img th:src="@{/img/common/no_image.jpg}"></img></td>
+						</th:block>
 
 						<td><a th:href="@{/item/detail/{id} (id=${item.id})}" th:text="${item.name}"></a></td>
-						
+
 						<td th:text="${item.price}"></td>
 						<td th:text="${item.category.name}"></td>
 						<!-- <td th:text="${item.category.category_id}"></td> -->

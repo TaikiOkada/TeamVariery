@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sss.shop.bean.ItemBean;
+import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.repository.ItemRepository;
@@ -50,7 +51,7 @@ public class ItemShowCustomerController {
 		return "index";
 	}
 	/*メニューバーの処理*/
-	/*トップ画面→新着一覧への遷移*/
+	/*トップ画面→商品一覧への遷移*/
 	  @RequestMapping(path = "/item/list/1")
 	  public String item_list(Model model,  Pageable pageable) {
 		  //全件表示
@@ -58,12 +59,12 @@ public class ItemShowCustomerController {
 		  return "/item/list/item_list";
 	  }
 	  /*サイドバーの処理*/
-	  /*ドロップダウンリスト*/
+	  /*カテゴリ別検索*/
 	  @RequestMapping("/item/list/category/1")
-	  public String item_listDropdown(Integer category_id,Model model, Pageable pageable) {
-		  System.out.println("ドロップダウンリスト");
-			  model.addAttribute("items", itemRepository.findAll());
-			  model.addAttribute("errorMessage", "閲覧できる書籍はありません");
+	  public String item_listDropdown(Integer categoryId,Model model, Pageable pageable) {
+		  Category category = new Category();
+		  category.setId(categoryId);
+		  model.addAttribute("items", itemRepository.findByCategory(category));
 		  return "/item/list/item_list";
 	  }
 

@@ -20,7 +20,7 @@
 					<p th:text="#{itemListAdmin.none}"></p>
 				</th:block>
 
-				<div class="sorted_by">
+				<div class="sorted_by" th:if="!${#lists.isEmpty(items)}">
 					<span>
 					<a href="/shared_shop/item/list/neworder" >
 					新着順

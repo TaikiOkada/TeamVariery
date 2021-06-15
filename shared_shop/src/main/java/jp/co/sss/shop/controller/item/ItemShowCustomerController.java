@@ -4,6 +4,8 @@ import java.util.Date;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,8 +36,11 @@ public class ItemShowCustomerController {
 	 */
 	@Autowired
 	ItemRepository itemRepository;
+
+	@Autowired
 	OrderItemRepository orderitemRepository;
 
+	EntityManager entityManager;
 
 
 	/**
@@ -69,6 +74,8 @@ public class ItemShowCustomerController {
 		  return "/item/list/item_list";
 	  }
 
+
+
 	  /*テーブルの処理*/
 	  /*新着順に並び替え*/
 	  @RequestMapping(path = "/item/list/neworder")
@@ -81,8 +88,7 @@ public class ItemShowCustomerController {
 	  /*売れ筋順に並びえ*/
 	  @RequestMapping(path = "/item/list/2")
 	   public String showItemOrderBySale(Model model, Pageable pageable) {
-		  model.addAttribute("items", itemRepository.findAllByOrderByStockAsc(pageable));
-
+		  model.addAttribute("items", itemRepository.findAllByOrderByQuantityDesc());
 			return "/item/list/item_list";
 		}
 

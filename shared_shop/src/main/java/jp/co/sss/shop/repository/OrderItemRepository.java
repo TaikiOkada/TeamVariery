@@ -3,6 +3,7 @@ package jp.co.sss.shop.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import jp.co.sss.shop.entity.Category;
@@ -15,5 +16,5 @@ import jp.co.sss.shop.entity.OrderItem;
  * @author System Shared
  */
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
-	//<Quantity> List<OrderItem> findByQuantity(Quantity quantity);
+
 }

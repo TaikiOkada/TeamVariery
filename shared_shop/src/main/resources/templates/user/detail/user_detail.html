@@ -40,10 +40,6 @@
 				<input type="hidden" name="id" th:value="${user.id}" />
 				<input type="submit" value="変更" />
 			</form>
-			<form th:action="@{/user/update/input}" method="post" th:if="${user.authority == 0 and session.user.authority == 0}">
-				<input type="hidden" name="id" th:value="${user.id}" />
-				<input type="submit" value="変更" />
-			</form>
 			<form th:action="@{/user/delete/check}" method="post" th:if="${user.authority != 0}" >
 				<input type="hidden" name="id" th:value="${user.id}" />
 				<input type="submit" value="退会"class="delete" />

@@ -159,6 +159,9 @@ p {
 	margin-top: 23px;
 	font-size: 1.1em;
 }
+.link2{
+	pointer-events: none;
+}
 
 
 /* ---- 入力フォーム(検索、登録、変更、削除) ---- */
@@ -659,6 +662,8 @@ form.delete {
 p.link_center {
 	text-align: center;
 }
+
+
 
 /* ---- 一覧表示全般 ---- */
 .paging {

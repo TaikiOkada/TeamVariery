@@ -56,11 +56,12 @@ public class ItemShowCustomerController {
 		return "index";
 	}
 	/*メニューバーの処理*/
-	/*トップ画面→商品一覧への遷移*/
+	/*トップ画面→商品一覧への遷移*/	  /*新着順に並び替え*/
 	  @RequestMapping(path = "/item/list/1")
 	  public String item_list(Model model,  Pageable pageable) {
 		  //全件表示
 		  model.addAttribute("items", itemRepository.findAll());
+		  model.addAttribute("flag",0);
 		  return "/item/list/item_list";
 	  }
 	  /*サイドバーの処理*/
@@ -77,19 +78,14 @@ public class ItemShowCustomerController {
 
 
 	  /*テーブルの処理*/
-	  /*新着順に並び替え*/
-	  @RequestMapping(path = "/item/list/neworder")
-	   public String findByDeleteFlagOrderByInsertDateDesc(Model model, Pageable pageable) {
-		  model.addAttribute("items", itemRepository.findAllByOrderByInsertDateDesc(pageable));
-		  	return "/item/list/item_list";
-		}
 
 
 	  /*売れ筋順に並びえ*/
 	  @RequestMapping(path = "/item/list/2")
 	   public String showItemOrderBySale(Model model, Pageable pageable) {
 		  model.addAttribute("items", itemRepository.findAllByOrderByQuantityDesc());
-			return "/item/list/item_list";
+		  model.addAttribute("flag",1);
+		  return "/item/list/item_list";
 		}
 
 	  /*商品詳細検索*/

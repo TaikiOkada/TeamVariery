@@ -43,7 +43,10 @@ public class OrderRegistCustomerController {
 	* @return order/regist/order_check 画面
 	*/
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
-	public String checkOrder(@ModelAttribute OrderShowForm form) {
+	public String checkOrder(@ModelAttribute OrderShowForm form ,Integer stock) {
+		if(stock == 0) {
+			
+		}
 		//登録情報の生成
 		Item items = new Item();
 		//入力値を登録情報にコピーする

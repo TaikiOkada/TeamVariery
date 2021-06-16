@@ -26,7 +26,7 @@ import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.util.PriceCalc;
 
 /**
- * 注文管理 一覧表示機能(運用管理者用)のコントローラクラス
+ * 注文管理 一覧表示機能(一般会員用)のコントローラクラス
  *
  * @author SystemShared
  */
@@ -66,12 +66,12 @@ public class OrderShowCustomerController {
 		// セッションから会員の情報取ってきて、UserBean型で定義
 		UserBean userBean = ((UserBean) session.getAttribute("user"));
 
-		// すべての注文情報を取得
+		// ログイン中のユーザーのすべての注文情報を取得
 		Page<Order> orderPageList = orderRepository.findByUserIdOrderByInsertDateDesc(userBean.getId(), pageable);
 
 
 
-		// 注文情報とってくる
+		// 注文情報を取ってくる
 		List<Order> orderList = orderPageList.getContent();
 			//↑上のorderPageListから取ってくる
 

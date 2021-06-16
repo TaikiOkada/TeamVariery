@@ -1,7 +1,6 @@
 package jp.co.sss.shop.controller.user;
 
 import javax.servlet.http.HttpSession;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
@@ -45,7 +44,7 @@ public class UserRegistCustomerController {
 	 * @return "user/regist/user_regist_input" 会員情報 登録入力画面へ
 	 */
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.GET)
-	public String registInput(UserForm form) {
+	public String registInput(@ModelAttribute UserForm form) {
 
 		return "user/regist/user_regist_input";
 	}
@@ -63,7 +62,10 @@ public class UserRegistCustomerController {
 
 		model.addAttribute("userForm", userForm);
 
-		return "user/regist/user_regist_input";
+		//入力画面に戻る時に、入力した値を保持する。
+		return registInput(userForm);
+		//入力画面に戻る時に、入力した値を捨てる。。
+		//return "user/regist/user_regist_input";
 	}
 
 	/**

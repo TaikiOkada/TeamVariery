@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.OrderItem;
@@ -24,7 +25,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	// 商品情報を新着順で検索
 	Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
-	List<Item> findAllByOrderByInsertDateDesc(Pageable pageable);
+	Page<Item> findAllByOrderByInsertDateDesc(Pageable pageable);
+
+
 
 	//商品情報を売れ筋順で検索　
 	//OrderItemのQuantityを昇順で並べる→Itemテーブルに反映させる処理
@@ -33,5 +36,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	  public List<Item>findAllByOrderByQuantityDesc();
 
 	//カテゴリ別検索
-	List<Item> findByCategory(Category category);
+	Page<Item> findByCategoryOrderByInsertDateDesc(Category category, Pageable pageable);
+
+	//価格帯別検索
+	Page<Item> findAllByOrderByPriceAsc(Pageable pageable);
 }

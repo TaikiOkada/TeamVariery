@@ -19,50 +19,53 @@
 				</p>
 			</div>
 		</th:block>
-		<table class="list_table basket">
-			<tr>
-				<th>
-					商品名
-				</th>
-				<th>
-					数
-				</th>
-				<th>
-					操作
-				</th>
-				<th>
-					在庫
-				</th>
-			</tr>
-			<tr th:each="basket: ${session.baskets}">
-				<td th:text="${basket.name}">
-<!--				<a href="/shared_shop/item/detail/6">
-					</a> -->
-				</td>
-				<td th:text="${basket.orderNum}">
-				</td>
-				<td>
-					<form action="/shared_shop/basket/delete" method="post">
-						<input type="hidden" name="id" th:value="${basket.id}" />
-						<input type="submit" value="削除" class="delete"/>
-					</form>
-				</td>
-				<td th:text="${basket.stock}">
-				</td>
-			</tr>
-		</table>
+		<th:block th:if="${session.baskets != null}">
+			<table class="list_table basket">
+				<tr>
+					<th>
+						商品名
+					</th>
+					<th>
+						数
+					</th>
+					<th>
+						操作
+					</th>
+					<th>
+						在庫
+					</th>
+				</tr>
+				<tr th:each="basket: ${session.baskets}">
+					<td><a th:href="@{/item/detail/{id} (id=${basket.id})}" th:text="${basket.name}"></a>
+					</td>
+					<td th:text="${basket.orderNum}">
+					</td>
+					<td>
+						<form action="/shared_shop/basket/delete" method="post">
+							<input type="hidden" name="id" th:value="${basket.id}" />
+							<input type="submit" value="削除" class="delete"/>
+						</form>
+					</td>
+					<td th:text="${basket.stock}">
+					</td>
+				</tr>
+			</table>
 
-		<div class="user_info_form_area">
-			<form action="/shared_shop/address/input" method="post">
-				<span>
-					<input type="hidden" name="itemId" value="6" />
-					<input type="hidden" name="orderNum" value="1" />
-				</span>
-				<input type="submit" value="ご注文のお手続き" />
-			</form>
-			<form action="/shared_shop/basket/allDelete" method="post">
-				<input type="submit" value="買い物かごを空にする" class="delete" />
-			</form>
-		</div>
+			<div class="user_info_form_area">
+				<form action="/shared_shop/address/input" method="post">
+					<span>
+						<input type="hidden" name="itemId" value="6" />
+						<input type="hidden" name="orderNum" value="1" />
+					</span>
+					<input type="submit" value="ご注文のお手続き" />
+				</form>
+				<form action="/shared_shop/basket/allDelete" method="post">
+					<input type="submit" value="買い物かごを空にする" class="delete" />
+				</form>
+			</div>
+		</th:block>
+		<th:block th:if="${session.baskets == null}">
+			<p>現在、お客様の買い物かごには商品がありません。商品をお選びください。</p>
+		</th:block>
 	</body>
 </html>

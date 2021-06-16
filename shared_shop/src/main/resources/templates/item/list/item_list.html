@@ -22,16 +22,21 @@
 
 				<div class="sorted_by" th:if="!${#lists.isEmpty(items)}">
 					<span>
-					<a href="/shared_shop/item/list/neworder" >
-					新着順
-					</a>
+						<th:block th:if="${flag == 0}">
+							<span>新着順</span>
+							<a href="/shared_shop/item/list/2">売れ筋順</a>
+						</th:block>
+						<th:block th:if="${flag == 1}">
+							<a href="/shared_shop/item/list/1">新着順</a>
+							<span>売れ筋順</span>
+						</th:block>
+						<th:block th:if="${flag != 0 AND flag != 1}">
+							<a href="/shared_shop/item/list/1">新着順</a>
+							<a href="/shared_shop/item/list/2">売れ筋順</a>
+						</th:block>
+
 					</span>
-
-					<a href="/shared_shop/item/list/2">
-						売れ筋順
-					</a>
 				</div>
-
 				<table class="list_table item_detail" th:if="!${#lists.isEmpty(items)}">
 					<tr>
 						<th width="20px" >

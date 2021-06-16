@@ -12,6 +12,13 @@
 		<h2 class="title">
 			買い物かご
 		</h2>
+		<th:block th:if="${basketNum != null}">
+	 		<div th:if="${basketNum.orderNum >= basketNum.stock}">
+				<p class="err">
+					※<th:block th:text="${basketNum.name}"></th:block>は、在庫不足のため、数を増やすことができません。
+				</p>
+			</div>
+		</th:block>
 		<table class="list_table basket">
 			<tr>
 				<th>

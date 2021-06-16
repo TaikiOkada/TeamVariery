@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.UserRepository;
@@ -95,13 +96,18 @@ public class UserRegistCustomerController {
 	public String registComplete(@ModelAttribute UserForm form) {
 		// 会員情報の生成
 		User user = new User();
+		UserBean userBean= new UserBean();
 
 		// 入力値を会員情報にコピー
 		BeanUtils.copyProperties(form, user);
 
+
 		// 会員情報を保存
 		userRepository.save(user);
 
+		BeanUtils.copyProperties(user, userBean);
+
+		session.setAttribute("user", userBean);
 		return "redirect:/user/regist/complete";
 	}
 
@@ -113,6 +119,7 @@ public class UserRegistCustomerController {
 	 */
 	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.GET)
 	public String registComplete(Model model) {
+
 
 		return "user/regist/user_regist_complete";
 	}

@@ -74,6 +74,10 @@ public class LoginCheckFilter implements Filter {
 
 
 
+//				&& !requestURL.endsWith("/user/detail/")
+
+
+
 				//未ログイン時の送料詳細のチェック回避
 				&& !requestURL.endsWith("/confirm")
 				) {

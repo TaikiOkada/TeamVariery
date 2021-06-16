@@ -33,13 +33,13 @@ public class BeanCopy {
 
 
 		bean.setId(Integer.parseInt(form.getId()));
-		
-		
+
+
 		bean.setPrice(Integer.parseInt(form.getPrice()));
-		
-		
+
+
 		bean.setCategoryId(Integer.parseInt(form.getCategoryId()));
-		
+
 		bean.setStock(Integer.parseInt(form.getStock()));
 
 		return bean;
@@ -136,4 +136,16 @@ public class BeanCopy {
 
 		return beanList;
 	}
+
+	//UserBean
+//	public static UserBean copyEntityToUserBean(User entity) {
+//		UserBean bean = new UserBean();
+//
+//		BeanUtils.copyProperties(entity, bean);
+//
+//		bean.setId(entity.getId());
+//		bean.setName(entity.getName());
+//
+//		return bean;
 }
+

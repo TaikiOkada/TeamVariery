@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.bean.OrderItemBean;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.form.OrderShowForm;
 import jp.co.sss.shop.repository.OrderRepository;
@@ -44,9 +45,8 @@ public class OrderRegistCustomerController {
 	*/
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
 	public String checkOrder(@ModelAttribute OrderShowForm form ,Integer stock) {
-		if(stock == 0) {
-			
-		}
+		OrderItemBean orderItemBean = new OrderItemBean();
+
 		//登録情報の生成
 		Item items = new Item();
 		//入力値を登録情報にコピーする

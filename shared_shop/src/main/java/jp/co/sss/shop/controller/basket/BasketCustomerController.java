@@ -1,3 +1,10 @@
+/* ----------------------------------------------------------------------------------- *
+
+                 BasketCustomerController : 買い物かごコントローラー
+
+ * ----------------------------------------------------------------------------------- */
+
+
 package jp.co.sss.shop.controller.basket;
 
 import java.util.ArrayList;
@@ -102,6 +109,10 @@ public class BasketCustomerController {
 					basketBeanList.set(myIndex, bean);
 				} else {	// 1つしかない場合
 					basketBeanList.remove(myIndex);
+					if (basketBeanList.isEmpty()){
+						// セッション情報を消す
+						session.removeAttribute("baskets");;
+					}
 				}
 				return basketList();
 			}
@@ -116,11 +127,8 @@ public class BasketCustomerController {
 	 */
 	@RequestMapping(path = "/basket/allDelete", method = RequestMethod.POST)
 	public String allDelete() {
-		// 全削除用リスト
-		List<BasketBean> basketItems = new ArrayList<BasketBean>();
-		// セッションから削除
-		basketItems.clear();
-		session.setAttribute("baskets", basketItems);
+		// セッション情報を消す
+		session.removeAttribute("baskets");;
 
 		return basketList();
 	}

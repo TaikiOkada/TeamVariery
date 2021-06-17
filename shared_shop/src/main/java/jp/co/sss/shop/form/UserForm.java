@@ -50,6 +50,11 @@ public class UserForm {
 	private String	postalCode;
 
 	/**
+	 * 都道府県
+	 * */
+	private Integer prefectureId;
+
+	/**
 	 * 住所
 	 */
 	@NotBlank
@@ -69,7 +74,7 @@ public class UserForm {
 	 */
 	private Integer authority;
 
-	
+
 	/**
 	 * 削除フラグ 0:未削除、1:削除済み
 	 */
@@ -121,6 +126,14 @@ public class UserForm {
 		this.postalCode = postalCode;
 	}
 
+	public Integer getPrefectureId() {
+		return prefectureId;
+	}
+
+	public void setPrefectureId(Integer prefectureId) {
+		this.prefectureId = prefectureId;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -145,7 +158,7 @@ public class UserForm {
 		this.authority = authority;
 	}
 
-	
+
 
 	public Integer getDeleteFlag() {
 		return deleteFlag;

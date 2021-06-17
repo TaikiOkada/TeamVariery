@@ -27,6 +27,11 @@ public class OrderForm {
 	private String	postalCode;
 
 	/**
+	 * 都道府県
+	 * */
+	private Integer prefectureId;
+
+	/**
 	 * 送付先住所
 	 */
 	@NotBlank
@@ -62,7 +67,7 @@ public class OrderForm {
 	 * 注文時点合計金額
 	 */
 	private Integer price;
-	
+
 
 
 	public Integer getId() {
@@ -79,6 +84,14 @@ public class OrderForm {
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	public Integer getPrefectureId() {
+		return prefectureId;
+	}
+
+	public void setPrefectureId(Integer prefectureId) {
+		this.prefectureId = prefectureId;
 	}
 
 	public String getAddress() {
@@ -128,6 +141,6 @@ public class OrderForm {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	
-	
+
+
 }

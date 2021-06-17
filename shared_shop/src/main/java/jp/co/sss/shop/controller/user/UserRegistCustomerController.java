@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.UserBean;
+import jp.co.sss.shop.entity.Prefecture;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.PrefectureRepository;
@@ -51,12 +52,6 @@ public class UserRegistCustomerController {
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.GET)
 	public String registInput(@ModelAttribute UserForm form, Model model) {
 
-//		List<Prefecture> list = prefectureRepository.findAll();
-//
-//		for (Prefecture p : list) {
-//			System.out.println(p.getName());
-//		}
-
 		model.addAttribute("prefectures",prefectureRepository.findAll());
 		return "user/regist/user_regist_input";
 	}
@@ -74,6 +69,7 @@ public class UserRegistCustomerController {
 
 		model.addAttribute("userForm", userForm);
 
+		model.addAttribute("prefectures",prefectureRepository.findAll());
 		//入力画面に戻る時に、入力した値を保持する。
 		return registInput(userForm,model);
 		//入力画面に戻る時に、入力した値を捨てる。。
@@ -89,9 +85,9 @@ public class UserRegistCustomerController {
 	 *         入力値エラーなし："user/regist/user_regist_check" 会員情報 登録確認画面へ
 	 */
 	@RequestMapping(path = "/user/regist/check", method = RequestMethod.POST)
-	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result) {
-
+	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute("prefectures",prefectureRepository.findAll());
 			return "user/regist/user_regist_input";
 		}
 		return "user/regist/user_regist_check";
@@ -105,13 +101,24 @@ public class UserRegistCustomerController {
 	 */
 	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.POST)
 	public String registComplete(@ModelAttribute UserForm form) {
+
+		System.out.println("メソッド開始");
+
 		// 会員情報の生成
 		User user = new User();
 		UserBean userBean= new UserBean();
 
+		System.out.println("データベース前");
+
+		Prefecture prefecture = prefectureRepository.getOne(form.getPrefectureId());
+
+		System.out.println("name = " + prefecture.getName());
 		// 入力値を会員情報にコピー
 		BeanUtils.copyProperties(form, user);
 
+		user.setPrefectureId(prefecture);
+
+		System.out.println("user = " + user.getPrefectureId());
 
 		// 会員情報を保存
 		userRepository.save(user);

@@ -27,6 +27,10 @@ public class UserBean {
 	 */
 	private String	postalCode;
 	/**
+	 * 都道府県
+	 */
+	private Integer prefectureId;
+	/**
 	 * 住所
 	 */
 	private String	address;
@@ -39,7 +43,7 @@ public class UserBean {
 	 */
 	private Integer	authority;
 
-	
+
 	/**
 	 * 削除フラグ 0:未削除、1:削除済み
 	 */
@@ -87,6 +91,14 @@ public class UserBean {
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	public Integer getPrefectureId() {
+		return prefectureId;
+	}
+
+	public void setPrefectureId(Integer prefectureId) {
+		this.prefectureId = prefectureId;
 	}
 
 	public String getAddress() {

@@ -33,6 +33,11 @@ public class OrderBean {
 	private String	postalCode;
 
 	/**
+	 * 都道府県
+	 */
+	private Integer prefectureId;
+
+	/**
 	 * 送付先住所
 	 */
 	private String	address;
@@ -90,6 +95,14 @@ public class OrderBean {
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	public Integer getPrefectureId() {
+		return prefectureId;
+	}
+
+	public void setPrefectureId(Integer prefectureId) {
+		this.prefectureId = prefectureId;
 	}
 
 	public String getAddress() {

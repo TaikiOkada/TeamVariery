@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -51,6 +53,15 @@ public class User {
 	 */
 	@Column
 	private String	postalCode;
+
+
+	/**
+	 * 都道府県ID
+	 */
+	@ManyToOne
+	@JoinColumn(name = "prefecture_id", referencedColumnName = "id")
+	private Prefecture prefectureId;
+
 
 	/**
 	 * 住所
@@ -122,6 +133,14 @@ public class User {
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	public Prefecture getPrefectureId() {
+		return prefectureId;
+	}
+
+	public void setPrefectureId(Prefecture prefectureId) {
+		this.prefectureId = prefectureId;
 	}
 
 	public String getAddress() {

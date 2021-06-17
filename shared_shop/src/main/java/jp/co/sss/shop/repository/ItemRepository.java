@@ -24,7 +24,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 
 	// 商品情報を新着順で検索
-	Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
+	public Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
 	Page<Item> findAllByOrderByInsertDateDesc(Pageable pageable);
 
 
@@ -33,7 +33,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	//OrderItemのQuantityを昇順で並べる→Itemテーブルに反映させる処理
 	//SELECT Quantity FROM order_items
 	  @Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item ORDER BY oi.quantity DESC")//INNERを省略をしてる
-	  public List<Item>findAllByOrderByQuantityDesc();
+	  public Page<Item>findAllByOrderByQuantityDesc(Pageable pageable);
 
 	//カテゴリ別検索
 	Page<Item> findByCategoryOrderByInsertDateDesc(Category category, Pageable pageable);

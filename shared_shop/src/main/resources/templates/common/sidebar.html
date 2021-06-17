@@ -26,6 +26,13 @@
 		</div>
 	</div>
 
+	   <h2 class="title">価格帯別検索</h2>
+	   <input type="text" class="price" name="priceForm" th:value="${priceForm}"/>
+	   ～<input type="text" class="price" name="priceTo" th:value="${priceTo}"/>
+	   <input type="submit" value="検索" />
+
+
+
 	<!--/* メニュー(運用管理者、及びシステム管理者用) */-->
 	<div th:if="${session.user != null and session.user.authority != 2}">
 		<h2 class="title">メニュー</h2>

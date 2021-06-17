@@ -1,5 +1,7 @@
 package jp.co.sss.shop.controller.item;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +51,8 @@ public class ItemShowCustomerController {
 	@Autowired
 	HttpSession session;
 
-
+	BigDecimal priceFrom;
+	BigDecimal priceTo;
 	/**
 	 * トップ画面 表示処理
 	 *
@@ -64,21 +68,17 @@ public class ItemShowCustomerController {
 	/*メニューバーの処理*/
 	/*トップ画面→新着一覧への遷移*//*新着順に並び替え*/
 	  @RequestMapping(path = "/item/list/1")
-	  public String item_list( Model model,  Pageable pageable, ItemForm form) {
-		  System.out.println(9);
+	  public String item_list( Model model,  Pageable pageable, @ModelAttribute ItemForm form) {
 		  //全件表示
 		  model.addAttribute("items", itemRepository.findAllByOrderByInsertDateDesc(pageable));
 		  model.addAttribute("flag",0);
 		  //ページング
-		  //ItemBean itemBean = ((ItemBean)session.getAttribute("items"));
 		  Page<Item> ItemPageList = itemRepository.findAllByOrderByInsertDateDesc(pageable);
+		  List<Item> itemList = ItemPageList.getContent();
 
-		  // エンティティ内の検索結果をJavaBeansにコピー
-		  //List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean((ItemPageList).getContent());
-			// 商品情報をViewへ渡す
+		  // 商品情報をViewへ渡す
 			model.addAttribute("pages", ItemPageList);
-			//model.addAttribute("items", itemBeanList);
-			System.out.println(4);
+			model.addAttribute("items", itemList);
 		  return "/item/list/item_list";
 	  }
 	  /*サイドバーの処理*/
@@ -91,21 +91,20 @@ public class ItemShowCustomerController {
 		  model.addAttribute("categoryId",categoryId);
 		  model.addAttribute("flag",0);
 		  //ページング
-		  //ItemBean itemBean = ((ItemBean)session.getAttribute("items"));
-		  Page<Item> ItemPageList = itemRepository.findAllByOrderByInsertDateDesc(pageable);
-
-		  // エンティティ内の検索結果をJavaBeansにコピー
-		  //List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean((ItemPageList).getContent());
-			// 商品情報をViewへ渡す
-			model.addAttribute("pages", ItemPageList);
-			//model.addAttribute("items", itemBeanList);
+		  Page<Item> ItemPageList = itemRepository.findByCategoryOrderByInsertDateDesc(category, pageable);
+		  List<Item> itemList = ItemPageList.getContent();
+		  model.addAttribute("pages", ItemPageList);
+		  model.addAttribute("items", itemList);
 		  return "/item/list/item_list";
 	  }
 
 	  /*価格帯別検索*/
 	  @PostMapping("item/list/price/{sortType}?min={下限金額}&max={上限金額}")
-	  public String price_search(Model model,Pageable pageable){
+	  public String price_search(BigDecimal priceFrom, BigDecimal priceTo, Integer price,Model model,Pageable pageable){
 		  model.addAttribute("items", itemRepository.findAllByOrderByPriceAsc(pageable));
+		  model.addAttribute("priceFrom", priceFrom);
+		  model.addAttribute(pageable);
+
 		  return "/item/list/item_list";
 	  }
 
@@ -113,18 +112,15 @@ public class ItemShowCustomerController {
 	  /*売れ筋順に並びかえ*/
 	  @RequestMapping(path = "/item/list/2")
 	   public String showItemOrderBySale(Model model, Pageable pageable) {
-		  model.addAttribute("items", itemRepository.findAllByOrderByQuantityDesc());
+		  model.addAttribute("items", itemRepository.findAllByOrderByQuantityDesc(pageable));
 		  model.addAttribute("flag",1);
 
-		  //ページング
-		  //ItemBean itemBean = ((ItemBean)session.getAttribute("items"));
-		  Page<Item> ItemPageList = itemRepository.findAllByOrderByInsertDateDesc(pageable);
 
-		  // エンティティ内の検索結果をJavaBeansにコピー
-		  //List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean((ItemPageList).getContent());
-			// 商品情報をViewへ渡す
-			model.addAttribute("pages", ItemPageList);
-			//model.addAttribute("items", itemBeanList);
+		//ページング
+		  Page<Item> ItemPageList = itemRepository.findAllByOrderByQuantityDesc(pageable);
+		  List<Item> itemList = ItemPageList.getContent();
+		  model.addAttribute("pages", ItemPageList);
+		  model.addAttribute("items", itemList);
 		  return "/item/list/item_list";
 		}
 

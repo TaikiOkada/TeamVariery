@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
+import jp.co.sss.shop.repository.FeeRepository;
 import jp.co.sss.shop.repository.UserRepository;
 
 @Controller
@@ -26,6 +27,9 @@ public class UserUpdateCustomerController {
 	 */
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	FeeRepository feeRepository;
 
 	/**
 	 * セッション
@@ -42,6 +46,11 @@ public class UserUpdateCustomerController {
 	 **/
 	@RequestMapping(path = "/user/update/input", method = RequestMethod.POST)
 	public String updateCustomerInput(boolean backFlg, Model model, @ModelAttribute UserForm form) {
+
+		//ドロップダウン
+
+//		model.addAttribute("prefecture",feeRepository.findAll());
+
 
 		// 戻るボタンかどうかを判定
 		if (!backFlg) {

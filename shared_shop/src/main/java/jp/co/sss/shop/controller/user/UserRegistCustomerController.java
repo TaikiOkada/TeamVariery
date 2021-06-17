@@ -89,9 +89,10 @@ public class UserRegistCustomerController {
 	 *         入力値エラーなし："user/regist/user_regist_check" 会員情報 登録確認画面へ
 	 */
 	@RequestMapping(path = "/user/regist/check", method = RequestMethod.POST)
-	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result) {
+	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
+			model.addAttribute("prefectures",prefectureRepository.findAll());
 			return "user/regist/user_regist_input";
 		}
 		return "user/regist/user_regist_check";

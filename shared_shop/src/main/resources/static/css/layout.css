@@ -240,11 +240,11 @@ aside.admin_menu {
 /*user側のトップページ*/
 .mainuser{
 	float: right;
-	width: 76%;
+	width: 100%;
 	padding-bottom: 80px;
 	position: relative;
-	right: 200px;
-	}
+}
+
 .topuser{
 	float: right;
 	width: 76%;

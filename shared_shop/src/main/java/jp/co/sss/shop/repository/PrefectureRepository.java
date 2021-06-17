@@ -6,4 +6,6 @@ import jp.co.sss.shop.entity.Prefecture;
 
 public interface PrefectureRepository extends JpaRepository<Prefecture, Integer> {
 
+
+
 }

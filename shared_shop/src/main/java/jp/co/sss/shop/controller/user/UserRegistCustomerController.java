@@ -86,6 +86,10 @@ public class UserRegistCustomerController {
 	 */
 	@RequestMapping(path = "/user/regist/check", method = RequestMethod.POST)
 	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result, Model model) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> e77bad5e67e18311d672e35248b36d151b02247a
 		if (result.hasErrors()) {
 			model.addAttribute("prefectures",prefectureRepository.findAll());
 			return "user/regist/user_regist_input";

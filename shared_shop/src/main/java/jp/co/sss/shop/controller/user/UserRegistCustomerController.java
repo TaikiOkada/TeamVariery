@@ -91,7 +91,13 @@ public class UserRegistCustomerController {
 			model.addAttribute("prefectures",prefectureRepository.findAll());
 			return "user/regist/user_regist_input";
 		}
+
+		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId()));
+
+
 		return "user/regist/user_regist_check";
+
+
 	}
 
 	/**

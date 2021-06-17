@@ -16,12 +16,14 @@ public class Prefecture {
 	 */
 
 	@Id
-
 	private Integer id;
 
+//	地域ID
 	@ManyToOne
 	@JoinColumn(name = "region_id", referencedColumnName = "id")
 	private Fee regionId;
+
+//	都道府県名
 
 	@Column
 	private String name;
@@ -38,9 +40,16 @@ public class Prefecture {
 		return regionId;
 	}
 
-	public Fee setRegionId(Fee regionId) {
-		return this.regionId = regionId;
+	public void setRegionId(Fee regionId) {
+		this.regionId = regionId;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }

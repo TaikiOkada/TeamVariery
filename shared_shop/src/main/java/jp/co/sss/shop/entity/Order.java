@@ -36,6 +36,14 @@ public class Order {
 	@Column
 	private String			postalCode;
 
+
+	/**
+	 *都道府県ID
+	 **/
+	@ManyToOne
+	@JoinColumn(name = "prefecture_id", referencedColumnName = "id")
+	private Prefecture prefectureId;
+
 	/**
 	 * 送付先住所
 	 */
@@ -94,6 +102,14 @@ public class Order {
 
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
+	}
+
+	public Prefecture getPrefectureId() {
+		return prefectureId;
+	}
+
+	public void setPrefectureId(Prefecture prefectureId) {
+		this.prefectureId = prefectureId;
 	}
 
 	public String getAddress() {

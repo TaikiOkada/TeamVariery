@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.shop.bean.BasketBean;
 import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.bean.OrderItemBean;
+import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.form.OrderShowForm;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.repository.OrderRepository;
+import jp.co.sss.shop.repository.PrefectureRepository;
+import jp.co.sss.shop.repository.UserRepository;
 import jp.co.sss.shop.util.BeanCopy;
 
 @Controller
@@ -26,13 +29,26 @@ public class OrderRegistCustomerController {
 	OrderRepository orderRepository;
 	@Autowired
 	ItemRepository itemRepository;
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	PrefectureRepository prefectureRepository;
+
 	/**
 	 * 届け先入力画面表示
 	 *
 	 * @return order_address_input 届け先入力画面
 	 */
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
-	public String inputAddress() {
+	public String inputAddress(Model model, HttpSession session) {
+		Integer id = ((UserBean) session.getAttribute("user")).getId();
+		model.addAttribute("user", userRepository.getOne(id));
+
+		model.addAttribute("prefectures", prefectureRepository.findAll());
+//		List<Prefecture> list = prefectureRepository.findAll();
+//		for (Prefecture p : list) {
+//			System.out.println(p.getName());
+//		}
 
 		return "order/regist/order_address_input";
 	}
@@ -69,8 +85,6 @@ public class OrderRegistCustomerController {
 
 		// 商品情報の生成
 		ItemBean itemBean = new ItemBean();
-		//入力値を登録情報にコピーする
-//		BeanUtils.copyProperties(form, items);
 
 		// 買い物かごリストの中身を注文リストにコピーする
 		for (BasketBean basketBean : basketBeanList) {

@@ -21,7 +21,7 @@
 							<span class="input_title">
 								郵便番号
 							</span>
-							<input type="text" name="postalCode" value=""/>
+							<input type="text" name="postalCode" th:value="${user.postalCode}"/>
 						</label>
 					</li>
 					<li>
@@ -29,42 +29,10 @@
 							<span class="input_title">
 								都道府県
 							</span>
-							<select name="categoryId">
-								<option value="1">
-									北海道
-								</option>
-								<option value="2">
-									東北
-								</option>
-								<option value="3">
-									乗り物
-								</option>
-								<option value="5">
-									文房具
-								</option>
-								<option value="6">
-									掃除用具
-								</option>
-								<option value="7">
-									食器
-								</option>
-								<option value="8">
-									ネットワーク機器
-								</option>
-								<option value="9">
-									飲み物
-								</option>
-								<option value="10">
-									OA用品
-								</option>
-								<option value="12">
-									手芸用品
-								</option>
-								<option value="13">
-									アクセサリ
-								</option>
-								<option value="15">
-									キッチン用品
+							<select name="prefectureId">
+								<option th:each="prefecture: ${prefectures}"
+								th:value="${user.prefectureId.id}" th:selected="${user.prefectureId.id == prefecture.id}"
+								th:text="${prefecture.name}">
 								</option>
 							</select>
 						</label>
@@ -74,7 +42,7 @@
 							<span class="input_title">
 								市区町村
 							</span>
-							<textarea name="address" rows="6"></textarea>
+							<textarea name="address" rows="6" th:text="${user.address}"></textarea>
 						</label>
 					</li>
 					<li>
@@ -82,7 +50,7 @@
 							<span class="input_title">
 								氏名
 							</span>
-							<input type="text" name="name" value=""/>
+							<input type="text" name="name" th:value="${user.name}"/>
 						</label>
 					</li>
 					<li>
@@ -90,7 +58,7 @@
 							<span class="input_title">
 								電話番号
 							</span>
-							<input type="text" name="phoneNumber" value=""/>
+							<input type="text" name="phoneNumber" th:value="${user.phoneNumber}"/>
 						</label>
 					</li>
 				</ul>

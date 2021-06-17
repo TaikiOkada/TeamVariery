@@ -31,7 +31,7 @@
 							</span>
 							<select name="prefectureId">
 								<option th:each="prefecture: ${prefectures}"
-								th:value="${user.prefectureId.id}" th:selected="${user.prefectureId.id == prefecture.id}"
+								th:value="${prefecture.id}" th:selected="${user.prefectureId.id == prefecture.id}"
 								th:text="${prefecture.name}">
 								</option>
 							</select>

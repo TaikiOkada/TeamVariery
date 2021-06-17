@@ -18,6 +18,7 @@ import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.FeeRepository;
+import jp.co.sss.shop.repository.PrefectureRepository;
 import jp.co.sss.shop.repository.UserRepository;
 
 @Controller
@@ -30,6 +31,9 @@ public class UserUpdateCustomerController {
 
 	@Autowired
 	FeeRepository feeRepository;
+
+	@Autowired
+	PrefectureRepository prefectureRepository;
 
 	/**
 	 * セッション
@@ -45,12 +49,10 @@ public class UserUpdateCustomerController {
 	 * @return "user/update/user_update_input" 会員情報 変更入力画面へ
 	 **/
 	@RequestMapping(path = "/user/update/input", method = RequestMethod.POST)
-	public String updateCustomerInput(boolean backFlg, Model model, @ModelAttribute UserForm form) {
+	public String updateCustomerInput(boolean backFlg, Model model, @ModelAttribute UserForm form, HttpSession session) {
 
-		//ドロップダウン
 
-//		model.addAttribute("prefecture",feeRepository.findAll());
-
+		model.addAttribute("prefectures", prefectureRepository.findAll());
 
 		// 戻るボタンかどうかを判定
 		if (!backFlg) {
@@ -65,6 +67,8 @@ public class UserUpdateCustomerController {
 			// 会員情報をViewに渡す
 			model.addAttribute("user", userBean);
 
+//			Integer id = ((UserBean) session.getAttribute("user")).getId();
+//			model.addAttribute("user", userRepository.getOne(id));
 		} else {
 
 			UserBean userBean = new UserBean();
@@ -118,25 +122,33 @@ public class UserUpdateCustomerController {
 
 		// 変更対象の会員情報を取得
 		User user = userRepository.findById(form.getId()).orElse(null);
+		System.out.println(1);
 
 		// 会員情報の削除フラグを取得
 		Integer deleteFlag = user.getDeleteFlag();
+		System.out.println(2);
 		// 会員情報の登録日付を取得
 		Date insertDate = user.getInsertDate();
+		System.out.println(3);
 
 		// 入力値をUserエンティティの各フィールドにコピー
 		BeanUtils.copyProperties(form, user);
+		System.out.println(4);
 
 		// 削除フラグをセット
 		user.setDeleteFlag(deleteFlag);
+		System.out.println(5);
 		// 登録日付をセット
 		user.setInsertDate(insertDate);
+		System.out.println(user.getPrefectureId());
 
 //		// 会員情報を保存
 		userRepository.save(user);
+		System.out.println(7);
 
 		// セッションからログインユーザーの情報を取得
 		UserBean userBean = (UserBean) session.getAttribute("user");
+		System.out.println(8);
 		// 変更対象の会員が、ログインユーザと一致していた場合セッション情報を変更
 		if (user.getId().equals(userBean.getId())) {
 			// Userエンティティの各フィールドの値をUserBeanにコピー

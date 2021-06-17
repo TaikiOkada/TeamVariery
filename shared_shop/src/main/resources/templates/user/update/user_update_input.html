@@ -45,11 +45,12 @@
 					<li>
 					<label>
 						<span class="input_title">都道府県</span>
-						<select name="prefecture_id">
-							<option  th:each="prefecture: ${prefectures}" th:value="${prefecture.id}"
-										th:text="${prefecture.name}">
-							</option>
-						</select>
+							<select name="prefectureId">
+								<option th:each="prefecture: ${prefectures}"
+								th:value="${prefecture.id}" th:selected="${user.prefectureId.id == prefecture.id}"
+								th:text="${prefecture.name}">
+								</option>
+							</select>
 					</label>
 					</li>
 

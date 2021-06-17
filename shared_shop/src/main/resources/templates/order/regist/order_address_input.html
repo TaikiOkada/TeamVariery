@@ -6,7 +6,6 @@
 			お届け先入力 | シェアードショップ
 		</title>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	</head>
 	<body class="user order_address_input">
 		<h2 class="title">
@@ -14,43 +13,7 @@
 		</h2>
 		<div class="user_info_form_area">
 			<form method="post" action="/shared_shop/payment/input">
-				<ul class="error_list">
-					<li>
-						<span>
-							郵便番号は正しい形式で入力してください。
-						</span>
-					</li>
-					<li>
-						<span>
-							電話番号は正しい形式で入力してください。
-						</span>
-					</li>
-					<li>
-						<span>
-							電話番号は10文字以上11文字以内で入力してください。
-						</span>
-					</li>
-					<li>
-						<span>
-							氏名は必須項目です。
-						</span>
-					</li>
-					<li>
-						<span>
-							氏名は1文字以上30文字以内で入力してください。
-						</span>
-					</li>
-					<li>
-						<span>
-							住所は1文字以上150文字以内で入力してください。
-						</span>
-					</li>
-					<li>
-						<span>
-							郵便番号は7文字以上8文字以内で入力してください。
-						</span>
-					</li>
-				</ul>
+
 				<br />
 				<ul class="input_list">
 					<li>
@@ -64,7 +27,7 @@
 					<li>
 						<label>
 							<span class="input_title">
-								地域
+								都道府県
 							</span>
 							<select name="categoryId">
 								<option value="1">
@@ -109,7 +72,7 @@
 					<li>
 						<label>
 							<span class="input_title">
-								住所
+								市区町村
 							</span>
 							<textarea name="address" rows="6"></textarea>
 						</label>

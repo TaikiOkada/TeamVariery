@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
+import jp.co.sss.shop.repository.PrefectureRepository;
 import jp.co.sss.shop.repository.UserRepository;
 
 /**
@@ -36,6 +37,9 @@ public class UserRegistCustomerController {
 	UserRepository userRepository;
 
 	@Autowired
+	PrefectureRepository prefectureRepository;
+
+	@Autowired
 	HttpSession session;
 
 	/**
@@ -45,8 +49,15 @@ public class UserRegistCustomerController {
 	 * @return "user/regist/user_regist_input" 会員情報 登録入力画面へ
 	 */
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.GET)
-	public String registInput(@ModelAttribute UserForm form) {
+	public String registInput(@ModelAttribute UserForm form, Model model) {
 
+//		List<Prefecture> list = prefectureRepository.findAll();
+//
+//		for (Prefecture p : list) {
+//			System.out.println(p.getName());
+//		}
+
+		model.addAttribute("prefectures",prefectureRepository.findAll());
 		return "user/regist/user_regist_input";
 	}
 
@@ -64,7 +75,7 @@ public class UserRegistCustomerController {
 		model.addAttribute("userForm", userForm);
 
 		//入力画面に戻る時に、入力した値を保持する。
-		return registInput(userForm);
+		return registInput(userForm,model);
 		//入力画面に戻る時に、入力した値を捨てる。。
 		//return "user/regist/user_regist_input";
 	}

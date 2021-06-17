@@ -41,6 +41,16 @@
 				</li>
 				<li>
 					<label>
+						<span class="input_title">都道府県</span>
+						<select name="prefecture_id">
+							<option  th:each="prefecture: ${prefectures}" th:value="${prefecture.id}"
+										th:text="${prefecture.name}">
+							</option>
+						</select>
+					</label>
+				</li>
+				<li>
+					<label>
 						<span class="input_title">住所</span>
 						<textarea name="address" rows="6" th:text="${userForm.address}"></textarea>
 					</label>

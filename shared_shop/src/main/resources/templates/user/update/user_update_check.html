@@ -26,6 +26,14 @@
 					<span class="input_title">郵便番号</span>
 					<span class="input_value" th:text="${userForm.postalCode}"></span>
 				</li>
+
+
+				<li>
+					<span class="input_title">都道府県</span>
+					<span class="input_value" th:text="${userForm.prefectureId.name}"></span>
+				</li>
+
+
 				<li>
 					<span class="input_title">住所</span>
 					<span class="input_value" th:text="${userForm.address}"></span>
@@ -43,6 +51,11 @@
 				<input type="hidden" name="password" th:value="${userForm.password}" />
 				<input type="hidden" name="name" th:value="${userForm.name}" />
 				<input type="hidden" name="postalCode" th:value="${userForm.postalCode}" />
+
+
+				<input type="hidden" name="prefectureId" th:value="${userForm.prefectureId.id}" />
+
+
 				<input type="hidden" name="address" th:value="${userForm.address}" />
 				<input type="hidden" name="phoneNumber" th:value="${userForm.phoneNumber}" />
 				<input type="hidden" name="authority" th:value="${userForm.authority}" />
@@ -55,6 +68,9 @@
 				<input type="hidden" name="password" th:value="${userForm.password}" />
 				<input type="hidden" name="name" th:value="${userForm.name}" />
 				<input type="hidden" name="postalCode" th:value="${userForm.postalCode}" />
+
+				<input type="hidden" name="prefectureId" th:value="${userForm.prefectureId.id}" />
+
 				<input type="hidden" name="address" th:value="${userForm.address}" />
 				<input type="hidden" name="phoneNumber" th:value="${userForm.phoneNumber}" />
 				<input type="hidden" name="authority" th:value="${userForm.authority}" />

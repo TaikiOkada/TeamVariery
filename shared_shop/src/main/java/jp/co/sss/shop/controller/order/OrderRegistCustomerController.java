@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import jp.co.sss.shop.bean.BasketBean;
 import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.bean.OrderItemBean;
 import jp.co.sss.shop.bean.UserBean;
+import jp.co.sss.shop.form.OrderForm;
 import jp.co.sss.shop.form.OrderShowForm;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.repository.OrderRepository;
@@ -33,6 +36,8 @@ public class OrderRegistCustomerController {
 	UserRepository userRepository;
 	@Autowired
 	PrefectureRepository prefectureRepository;
+	@Autowired
+	HttpSession session;
 
 	/**
 	 * 届け先入力画面表示
@@ -40,15 +45,11 @@ public class OrderRegistCustomerController {
 	 * @return order_address_input 届け先入力画面
 	 */
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
-	public String inputAddress(Model model, HttpSession session) {
+	public String inputAddress(Model model, @ModelAttribute OrderForm orderForm) {
 		Integer id = ((UserBean) session.getAttribute("user")).getId();
 		model.addAttribute("user", userRepository.getOne(id));
 
 		model.addAttribute("prefectures", prefectureRepository.findAll());
-//		List<Prefecture> list = prefectureRepository.findAll();
-//		for (Prefecture p : list) {
-//			System.out.println(p.getName());
-//		}
 
 		return "order/regist/order_address_input";
 	}
@@ -59,7 +60,14 @@ public class OrderRegistCustomerController {
 	 * @return order_Payment_input 支払方法画面
 	 */
 	@RequestMapping(path = "/payment/input", method = RequestMethod.POST)
-	public String inputPayment() {
+	public String inputPayment(@Valid @ModelAttribute OrderForm orderForm, BindingResult result
+			,Model model) {
+		// 入力内容にエラーがあった場合
+		if (result.hasErrors()) {
+			System.out.println("err");
+//			return "redirect:/address/input";
+			return inputAddress(model,orderForm);
+		}
 
 		return "order/regist/order_payment_input";
 	}

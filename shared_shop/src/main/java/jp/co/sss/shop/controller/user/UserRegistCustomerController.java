@@ -94,8 +94,6 @@ public class UserRegistCustomerController {
 
 		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId().getId()));
 
-		System.out.println("check");
-
 		return "user/regist/user_regist_check";
 
 
@@ -110,23 +108,16 @@ public class UserRegistCustomerController {
 	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.POST)
 	public String registComplete(@ModelAttribute UserForm form) {
 
-		System.out.println("メソッド開始");
-
 		// 会員情報の生成
 		User user = new User();
 		UserBean userBean= new UserBean();
 
-		System.out.println("データベース前");
-
 		Prefecture prefecture = prefectureRepository.getOne(form.getPrefectureId().getId());
 
-		System.out.println("name = " + prefecture.getName());
 		// 入力値を会員情報にコピー
 		BeanUtils.copyProperties(form, user);
 
 		user.setPrefectureId(prefecture);
-
-		System.out.println("user = " + user.getPrefectureId());
 
 		// 会員情報を保存
 		userRepository.save(user);

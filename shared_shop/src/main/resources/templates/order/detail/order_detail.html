@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<th>送付先住所</th>
-				<td th:text=" ${order.address}"></td>
+				<td th:text="${order.prefectureId.name} + ${order.address}"></td>
 			</tr>
 			<tr>
 				<th>送付先氏名</th>
@@ -57,18 +57,18 @@
 			</tr>
 			<tr>
 				<td colspan="2"></td>
-				<td>合計</td>
+				<td>商品合計</td>
 				<td th:text="${total}"></td>
 			</tr>
 			<tr>
 				<td colspan="2"></td>
 				<td>送料</td>
-				<td ></td>
+				<td th:text="${order.prefectureId.regionId.fee}"></td>
 			</tr>
 			<tr>
 				<td colspan="2"></td>
-				<td>合計</td>
-				<td>いくら</td>
+				<td>合計(送料込み)</td>
+				<td th:text="${feeTotal}"></td>
 			</tr>
 		</table>
 		<form th:action="@{/order/list}"  class="detail_button_area">

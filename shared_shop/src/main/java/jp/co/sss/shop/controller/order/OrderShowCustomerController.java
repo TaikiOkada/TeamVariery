@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.OrderBean;
 import jp.co.sss.shop.bean.OrderItemBean;
-import jp.co.sss.shop.bean.PrefectureBean;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
-import jp.co.sss.shop.form.OrderForm;
 import jp.co.sss.shop.form.OrderShowForm;
 import jp.co.sss.shop.repository.FeeRepository;
 import jp.co.sss.shop.repository.OrderRepository;
@@ -110,12 +108,12 @@ public class OrderShowCustomerController {
 				//購入時単価 * 買った個数をもとめて、合計に加算
 				total += ( orderItem.getPrice() * orderItem.getQuantity() );
 			}
-			//Orderに改めて注文時点の単価をセット
-			orderBean.setTotal(total);
 
+			int feeTotal = total + order.getPrefectureId().getRegionId().getFee();
+			//Orderに改めて注文時点の単価をセット
+			orderBean.setTotal(feeTotal);
 			orderBeanList.add(orderBean);
 		}
-
 
 		// 注文情報リストをViewへ渡す
 		model.addAttribute("pages", orderPageList);
@@ -139,7 +137,7 @@ public class OrderShowCustomerController {
 	 */
 	@RequestMapping(path = "/order/detail/{id}")
 	public String showOrder(@PathVariable int id, Model model,
-			@ModelAttribute OrderShowForm form ,OrderForm orderForm ,PrefectureBean prefectureBean) {
+			@ModelAttribute OrderShowForm form ) {
 
 		// 送料とってくる
 	//	Fee fee = feeRepository.getOne(prefectureBean.getRegionId());
@@ -178,11 +176,14 @@ public class OrderShowCustomerController {
 
 		// 合計金額を算出
 		int total = PriceCalc.orderItemPriceTotal(orderItemBeanList);
+		// 合計金額を算出(送料込み)
+		int feeTotal = total + orderBean.getPrefectureId().getRegionId().getFee();
 
 		// 注文情報をViewへ渡す
 		model.addAttribute("order", orderBean);
 		model.addAttribute("orderItemBeans", orderItemBeanList);
 		model.addAttribute("total", total);
+		model.addAttribute("feeTotal", feeTotal);
 
 
 		return "order/detail/order_detail";

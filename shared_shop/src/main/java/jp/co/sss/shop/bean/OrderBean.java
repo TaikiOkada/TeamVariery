@@ -1,5 +1,7 @@
 package jp.co.sss.shop.bean;
 
+import jp.co.sss.shop.entity.Prefecture;
+
 /**
  * 注文情報クラス
  *
@@ -35,7 +37,7 @@ public class OrderBean {
 	/**
 	 * 都道府県
 	 */
-	private Integer prefectureId;
+	private Prefecture prefectureId;
 
 	/**
 	 * 送付先住所
@@ -97,11 +99,11 @@ public class OrderBean {
 		this.postalCode = postalCode;
 	}
 
-	public Integer getPrefectureId() {
+	public Prefecture getPrefectureId() {
 		return prefectureId;
 	}
 
-	public void setPrefectureId(Integer prefectureId) {
+	public void setPrefectureId(Prefecture prefectureId) {
 		this.prefectureId = prefectureId;
 	}
 

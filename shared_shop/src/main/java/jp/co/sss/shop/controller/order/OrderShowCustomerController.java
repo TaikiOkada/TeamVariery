@@ -18,11 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.OrderBean;
 import jp.co.sss.shop.bean.OrderItemBean;
+import jp.co.sss.shop.bean.PrefectureBean;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
+import jp.co.sss.shop.form.OrderForm;
 import jp.co.sss.shop.form.OrderShowForm;
+import jp.co.sss.shop.repository.FeeRepository;
 import jp.co.sss.shop.repository.OrderRepository;
+import jp.co.sss.shop.repository.PrefectureRepository;
+import jp.co.sss.shop.repository.UserRepository;
 import jp.co.sss.shop.util.PriceCalc;
 
 /**
@@ -38,6 +43,15 @@ public class OrderShowCustomerController {
 	 */
 	@Autowired
 	OrderRepository orderRepository;
+
+	@Autowired
+	PrefectureRepository prefectureRepository;
+
+	@Autowired
+	FeeRepository feeRepository;
+
+	@Autowired
+	UserRepository userRepository;
 
 	/**
 	 * セッション
@@ -124,10 +138,17 @@ public class OrderShowCustomerController {
 	 * @return "/order/detail/order_detail" 注文情報 詳細画面へ
 	 */
 	@RequestMapping(path = "/order/detail/{id}")
-	public String showOrder(@PathVariable int id, Model model, @ModelAttribute OrderShowForm form) {
+	public String showOrder(@PathVariable int id, Model model,
+			@ModelAttribute OrderShowForm form ,OrderForm orderForm ,PrefectureBean prefectureBean) {
+
+		// 送料とってくる
+	//	Fee fee = feeRepository.getOne(prefectureBean.getRegionId());
+
 
 		// 選択された注文情報に該当する情報を取得
 		Order order = orderRepository.findById(form.getId()).orElse(null);
+
+
 
 		// 表示する注文情報を生成
 		OrderBean orderBean = new OrderBean();
@@ -162,6 +183,7 @@ public class OrderShowCustomerController {
 		model.addAttribute("order", orderBean);
 		model.addAttribute("orderItemBeans", orderItemBeanList);
 		model.addAttribute("total", total);
+
 
 		return "order/detail/order_detail";
 	}

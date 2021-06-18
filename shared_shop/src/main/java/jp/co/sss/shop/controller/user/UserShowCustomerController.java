@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
+import jp.co.sss.shop.repository.PrefectureRepository;
 import jp.co.sss.shop.repository.UserRepository;
 
 @Controller
@@ -20,6 +21,9 @@ public class UserShowCustomerController {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	PrefectureRepository prefectureRepository;
 
 	/**
 	 * 会員詳細表示処理
@@ -40,6 +44,8 @@ public class UserShowCustomerController {
 
 		// 会員情報をViewに渡す
 		model.addAttribute("user", userBean);
+
+
 
 		return "user/detail/user_detail";
 	}

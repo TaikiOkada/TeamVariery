@@ -2,6 +2,8 @@ package jp.co.sss.shop.repository;
 
 import java.util.List;
 
+import javax.persistence.PersistenceContext;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +22,8 @@ import jp.co.sss.shop.entity.OrderItem;
  * @author System Shared
  */
 @Repository
+@PersistenceContext
+
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 
@@ -39,5 +43,15 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	Page<Item> findByCategoryOrderByInsertDateDesc(Category category, Pageable pageable);
 
 	//価格帯別検索
-	Page<Item> findAllByOrderByPriceAsc(Pageable pageable);
+	//新着順
+	public Page<Item> findByPriceBetweenOrderByInsertDateDesc(Integer min, Integer max, Pageable pageable);
+
+	//売れ筋順
+	 @Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item WHERE i.price BETWEEN :price_min AND :price_max ORDER BY oi.quantity DESC")//INNERを省略をしてる
+	  public Page<Item>findBetweenByOrderByQuantityDesc(@Param("price_min") Integer min,@Param("price_max")Integer max,Pageable pageable);
+
+
+	@Query("SELECT i FROM Item i WHERE (i.price = :price_max AND :price_max <= i.price) OR i.price <= :price_min")
+	public Page<Item> findAllByOrderByPriceAsc(@Param("price_max") int price_max , @Param("price_min") int price_min,Pageable pageable);
+	//Page<Item> findAllByOrderByPriceAsc(@Param("price_max") int price_max , @Param("price_min") int price_min, Pageable pageable);
 }

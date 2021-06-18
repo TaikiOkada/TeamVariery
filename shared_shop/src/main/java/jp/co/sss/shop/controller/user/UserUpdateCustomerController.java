@@ -54,6 +54,8 @@ public class UserUpdateCustomerController {
 
 		model.addAttribute("prefectures", prefectureRepository.findAll());
 
+
+
 		// 戻るボタンかどうかを判定
 		if (!backFlg) {
 
@@ -67,6 +69,8 @@ public class UserUpdateCustomerController {
 			// 会員情報をViewに渡す
 			model.addAttribute("user", userBean);
 
+
+
 //			Integer id = ((UserBean) session.getAttribute("user")).getId();
 //			model.addAttribute("user", userRepository.getOne(id));
 		} else {
@@ -78,7 +82,11 @@ public class UserUpdateCustomerController {
 			// 会員情報をViewに渡す
 			model.addAttribute("user", userBean);
 
+
+
+
 		}
+
 		return "user/update/user_update_input";
 	}
 
@@ -104,8 +112,12 @@ public class UserUpdateCustomerController {
 			// 会員情報をViewに渡す
 			model.addAttribute("user", userBean);
 
+
+
 			return "user/update/user_update_input";
 		}
+
+		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId().getId()));
 
 		return "user/update/user_update_check";
 	}
@@ -122,6 +134,7 @@ public class UserUpdateCustomerController {
 
 		// 変更対象の会員情報を取得
 		User user = userRepository.findById(form.getId()).orElse(null);
+		System.out.println(user.getPrefectureId());
 		System.out.println(1);
 
 		// 会員情報の削除フラグを取得
@@ -142,7 +155,7 @@ public class UserUpdateCustomerController {
 		user.setInsertDate(insertDate);
 		System.out.println(user.getPrefectureId());
 
-//		// 会員情報を保存
+		// 会員情報を保存
 		userRepository.save(user);
 		System.out.println(7);
 

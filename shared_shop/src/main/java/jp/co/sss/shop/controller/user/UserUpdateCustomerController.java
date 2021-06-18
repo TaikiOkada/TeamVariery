@@ -122,6 +122,7 @@ public class UserUpdateCustomerController {
 
 		// 変更対象の会員情報を取得
 		User user = userRepository.findById(form.getId()).orElse(null);
+		System.out.println(user.getPrefectureId());
 		System.out.println(1);
 
 		// 会員情報の削除フラグを取得
@@ -142,7 +143,7 @@ public class UserUpdateCustomerController {
 		user.setInsertDate(insertDate);
 		System.out.println(user.getPrefectureId());
 
-//		// 会員情報を保存
+		// 会員情報を保存
 		userRepository.save(user);
 		System.out.println(7);
 

@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.form.ItemForm;
+import jp.co.sss.shop.form.PriceForm;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.repository.OrderItemRepository;
 import jp.co.sss.shop.util.BeanCopy;
@@ -105,26 +107,41 @@ public class ItemShowCustomerController {
 	  }
 
 	  /*価格帯別検索*/
+	  @RequestMapping(path = "/item/list/price/" , method = RequestMethod.GET)
+	  public String item_list(@ModelAttribute PriceForm form){
+		  return "/item/list/item_list";
+	  }
 	  @PostMapping(path = "/item/list/price/")
-	  public String price_search(Integer max, Integer min,Model model,Pageable pageable){
-			 model.addAttribute("max", max);
-			 model.addAttribute("min", min);
-			 price_max = max;
-			 price_min = min;
-
-			 priceFlag = 1;
-			 //ページング
-		  Page<Item> ItemPageList = itemRepository. findByPriceBetweenOrderByInsertDateDesc(min,max,pageable);
+	  public String price_search(@Valid @ModelAttribute PriceForm form,BindingResult result,
+			  HttpSession session,Model model,Pageable pageable){
+		  System.out.println("メソッド開始");
+		  // 入力エラー発生時
+		  if(result.hasErrors()) {
+			  System.out.println("err");
+			  return item_list(form);
+		  }
+		  System.out.println(form.getMax());
+		  System.out.println(form.getMin());
+		  price_max = form.getMax();
+		  price_min = form.getMin();
+		  priceFlag = 1;
+		  model.addAttribute("max", form.getMax());
+		  model.addAttribute("min", form.getMin());
+		  session.setAttribute("min", form.getMin());
+		  session.setAttribute("max", form.getMax());
+		  //ページング
+		  Page<Item> ItemPageList = itemRepository. findByPriceBetweenOrderByInsertDateDesc(form.getMin(),form.getMax(),pageable);
 		  List<Item>itemList = ItemPageList.getContent();
 		  model.addAttribute("pages",ItemPageList);
 		  model.addAttribute("items", itemList);
+
 		  return "/item/list/item_list";
 	  }
 
 	  /*テーブルの処理*/
 	  /*売れ筋順に並びかえ*/
 	  @RequestMapping(path = "/item/list/2")
-	   public String showItemOrderBySale(Integer categoryId,Model model, Pageable pageable) {
+	   public String showItemOrderBySale(@Valid @ModelAttribute PriceForm form,HttpSession session,Integer categoryId,Model model, Pageable pageable) {
 		  if(categoryFlag == 1) {//カテゴリ検索
 			  System.out.println(categoryId);
 			  Category category = new Category();
@@ -144,10 +161,12 @@ public class ItemShowCustomerController {
 			  System.out.println(price_min);
 			  model.addAttribute("max", price_max);
 			  model.addAttribute("min", price_min);
-			priceFlag = 0;
-				  System.out.println("価格別検索");
-				  System.out.println("price_max = " + price_max);
-				  System.out.println("price_min = " + price_min);
+			  session.setAttribute("min", form.getMin());
+			  session.setAttribute("max", form.getMax());
+			  priceFlag = 0;
+			  System.out.println("価格別検索");
+			  System.out.println("price_max = " + price_max);
+			  System.out.println("price_min = " + price_min);
 				 //ページング
 			  Page<Item> ItemPageList = itemRepository. findBetweenByOrderByQuantityDesc(price_min,price_max,pageable);
 			  List<Item>itemList = ItemPageList.getContent();

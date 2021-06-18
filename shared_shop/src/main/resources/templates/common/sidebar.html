@@ -30,9 +30,8 @@
 	   <form method="post" action="/shared_shop/item/list/price/">
 	   		  <input type="text" class="price" name="min" th:value="${min}"/>
 	   		～<input type="text" class="price" name="max" th:value="${max}"/>
-	   		<!-- <span th:errors="*{price_max} *{price_min}"></span> -->
-	   		 <input type="submit" value="検索" />
-
+	   		  <!-- <span th:errors="*{price_max} + *{price_min}"></span> -->
+	   		  <input type="submit" value="検索" />
 	   </form>
 
 

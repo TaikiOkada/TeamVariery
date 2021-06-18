@@ -92,8 +92,9 @@ public class UserRegistCustomerController {
 			return "user/regist/user_regist_input";
 		}
 
-		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId()));
+		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId().getId()));
 
+		System.out.println("check");
 
 		return "user/regist/user_regist_check";
 
@@ -117,7 +118,7 @@ public class UserRegistCustomerController {
 
 		System.out.println("データベース前");
 
-		Prefecture prefecture = prefectureRepository.getOne(form.getPrefectureId());
+		Prefecture prefecture = prefectureRepository.getOne(form.getPrefectureId().getId());
 
 		System.out.println("name = " + prefecture.getName());
 		// 入力値を会員情報にコピー

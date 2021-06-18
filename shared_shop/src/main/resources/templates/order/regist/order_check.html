@@ -62,33 +62,25 @@
 					<th>
 						郵便番号
 					</th>
-					<td>
-						1111111
-					</td>
+					<td th:text="${orderBean.postalCode}"></td>
 				</tr>
 				<tr>
 					<th>
 						住所
 					</th>
-					<td>
-						東京都台東区4-5-6 ABCマンション5階
-					</td>
-				</tr>
+				<td th:text="${orderBean.prefectureId.name}+${orderBean.address}"></td>
+			</tr>
 				<tr>
 					<th>
 						氏名
 					</th>
-					<td>
-						一般三郎
-					</td>
+					<td th:text="${orderBean.name}"></td>
 				</tr>
 				<tr>
 					<th>
 						電話番号
 					</th>
-					<td>
-						0123456789
-					</td>
+					<td th:text="${orderBean.phoneNumber}"></td>
 				</tr>
 			</table>
 			<table class="detail_table pay">
@@ -100,26 +92,24 @@
 						お支払い方法
 					</th>
 					<td>
-						<span>
-							クレジットカード
-						</span>
+						<span th:text="${payMethod}"></span>
 					</td>
 				</tr>
 			</table>
 			<form method="post" action="/shared_shop/order/complete" >
-				<input type="hidden" name="postalCode" value="1111111"/>
-				<input type="hidden" name="address" value="東京都台東区4-5-6 ABCマンション5階"/>
-				<input type="hidden" name="name" value="一般三郎"/>
-				<input type="hidden" name="phoneNumber" value="0123456789"/>
-				<input type="hidden" name="payMethod" value="1"/>
+				<input type="hidden" name="postalCode" th:value="${orderBean.postalCode}"/>
+				<input type="hidden" name="address" th:value="${orderBean.address}"/>
+				<input type="hidden" name="name" th:value="${orderBean.name}"/>
+				<input type="hidden" name="phoneNumber" th:value="${orderBean.phoneNumber}"/>
+				<input type="hidden" name="payMethod" th:value="${orderBean.payMethod}"/>
 				<input class="send_button" type="submit" value="ご注文の確定" />
 			</form>
 			<form method="post" action="/shared_shop/payment/input" class="update">
-				<input type="hidden" name="postalCode" value="1111111"/>
-				<input type="hidden" name="address" value="東京都台東区4-5-6 ABCマンション5階"/>
-				<input type="hidden" name="name" value="一般三郎"/>
-				<input type="hidden" name="phoneNumber" value="0123456789"/>
-				<input type="hidden" name="payMethod" value="1"/>
+				<input type="hidden" name="postalCode" th:value="${orderBean.postalCode}"/>
+				<input type="hidden" name="address" th:value="${orderBean.address}"/>
+				<input type="hidden" name="name" th:value="${orderBean.name}"/>
+				<input type="hidden" name="phoneNumber" th:value="${orderBean.phoneNumber}"/>
+				<input type="hidden" name="payMethod" th:value="${orderBean.payMethod}"/>
 				<input type="hidden" name="backflg" value="true" />
 				<input class="back_button" type="submit" value="戻る" />
 			</form>

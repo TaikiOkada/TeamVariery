@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import jp.co.sss.shop.entity.Prefecture;
+
 
 
 /**
@@ -29,7 +31,7 @@ public class OrderForm {
 	/**
 	 * 都道府県
 	 * */
-	private Integer prefectureId;
+	private Prefecture prefectureId;
 
 	/**
 	 * 送付先住所
@@ -86,11 +88,11 @@ public class OrderForm {
 		this.postalCode = postalCode;
 	}
 
-	public Integer getPrefectureId() {
+	public Prefecture getPrefectureId() {
 		return prefectureId;
 	}
 
-	public void setPrefectureId(Integer prefectureId) {
+	public void setPrefectureId(Prefecture prefectureId) {
 		this.prefectureId = prefectureId;
 	}
 

@@ -141,7 +141,7 @@ public class UserRegistCustomerController {
 	 * 会員情報完了画面表示処理
 	 *
 	 * @param form 会員情報
-	 * @return "user/regist/user_regist_complete_admin" 会員情報 登録完了画面へ
+	 * @return "user/regist/user_regist_complete" 会員情報 登録完了画面へ
 	 */
 	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.GET)
 	public String registComplete(Model model) {

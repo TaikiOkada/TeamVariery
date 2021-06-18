@@ -26,17 +26,9 @@
 					<span class="input_title">郵便番号</span>
 					<span class="input_value" th:text="${userForm.postalCode}"></span>
 				</li>
-
-
-				<li>
-					<span class="input_title">都道府県</span>
-					<span class="input_value" th:text="${userForm.prefectureId.name}"></span>
-				</li>
-
-
 				<li>
 					<span class="input_title">住所</span>
-					<span class="input_value" th:text="${userForm.address}"></span>
+					<span class="input_value" th:text="${prefecture.name}+${userForm.address}" ></span>
 				</li>
 				<li>
 					<span class="input_title">電話番号</span>

@@ -48,10 +48,6 @@ public class OrderRegistCustomerController {
 	OrderBean orderBean = new OrderBean();
 	OrderItemBean orderItemBean = new OrderItemBean();
 
-	// 買い物かごの中身をリストに代入
-	@SuppressWarnings("unchecked")
-	List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
-
 	/**
 	 * 届け先入力画面表示
 	 *
@@ -103,6 +99,9 @@ public class OrderRegistCustomerController {
 		// 表示用リスト
 		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
 
+		// 買い物かごの中身をリストに代入
+		@SuppressWarnings("unchecked")
+		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
 
 		// 商品情報の生成
 		ItemBean itemBean = new ItemBean();
@@ -172,7 +171,8 @@ public class OrderRegistCustomerController {
 	*/
 	@RequestMapping(path = "/order/complete", method = RequestMethod.POST)
 	public String completeOrder(@ModelAttribute OrderForm orderForm) {
-		//登録情報を保存
+
+		// 注文登録情報を保存
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
 		order.setPrefectureId(orderBean.getPrefectureId());
@@ -182,6 +182,15 @@ public class OrderRegistCustomerController {
 		user=userRepository.getOne(id);
 		order.setUser(user);
 
+		orderRepository.save(order);
+
+//		OrderItem orderItem = new OrderItem();
+//		ItemBean itemBean = new ItemBean();
+//
+//		// 買い物かごの中身をリストに代入
+//		@SuppressWarnings("unchecked")
+//		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
+//
 //		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
 //		BeanUtils.copyProperties(orderItemBean, orderItem);
 //		orderItem.setQuantity(orderItemBean.getOrderNum());
@@ -203,7 +212,6 @@ public class OrderRegistCustomerController {
 //		System.out.println(orderItem.getQuantity());
 //
 //		orderItemRepository.save(orderItem);
-		orderRepository.save(order);
 
 		return "order/regist/order_complete";
 	}

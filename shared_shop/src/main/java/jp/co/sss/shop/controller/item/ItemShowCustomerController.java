@@ -8,14 +8,17 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,8 +54,10 @@ public class ItemShowCustomerController {
 	@Autowired
 	HttpSession session;
 
-	BigDecimal priceFrom;
-	BigDecimal priceTo;
+	int price_max = 0;
+	int price_min = 0;
+	int priceFlag = 0;//1のとき→価格帯別検索
+	int categoryFlag = 0;//１のとき→カテゴリ検索
 	/**
 	 * トップ画面 表示処理
 	 *
@@ -83,44 +88,81 @@ public class ItemShowCustomerController {
 	  }
 	  /*サイドバーの処理*/
 	  /*カテゴリ別検索*/
-	  @RequestMapping("/item/list/category/{sortType}")
+	  @RequestMapping("/item/list/category")
 	  public String item_listDropdown(Integer categoryId,Model model, Pageable pageable) {
 		  Category category = new Category();
 		  category.setId(categoryId);
-		  model.addAttribute("items", itemRepository.findByCategoryOrderByInsertDateDesc(category, pageable));
 		  model.addAttribute("categoryId",categoryId);
 		  model.addAttribute("flag",0);
+		  categoryFlag = 1;
 		  //ページング
 		  Page<Item> ItemPageList = itemRepository.findByCategoryOrderByInsertDateDesc(category, pageable);
 		  List<Item> itemList = ItemPageList.getContent();
 		  model.addAttribute("pages", ItemPageList);
 		  model.addAttribute("items", itemList);
+		  model.addAttribute("url", "/item/list/category");
 		  return "/item/list/item_list";
 	  }
 
 	  /*価格帯別検索*/
-	  @PostMapping("item/list/price/{sortType}?min={下限金額}&max={上限金額}")
-	  public String price_search(BigDecimal priceFrom, BigDecimal priceTo, Integer price,Model model,Pageable pageable){
-		  model.addAttribute("items", itemRepository.findAllByOrderByPriceAsc(pageable));
-		  model.addAttribute("priceFrom", priceFrom);
-		  model.addAttribute(pageable);
+	  @PostMapping(path = "/item/list/price/")
+	  public String price_search(Integer max, Integer min,Model model,Pageable pageable){
+			 model.addAttribute("max", max);
+			 model.addAttribute("min", min);
+			 price_max = max;
+			 price_min = min;
 
+			 priceFlag = 1;
+			 //ページング
+		  Page<Item> ItemPageList = itemRepository. findByPriceBetweenOrderByInsertDateDesc(min,max,pageable);
+		  List<Item>itemList = ItemPageList.getContent();
+		  model.addAttribute("pages",ItemPageList);
+		  model.addAttribute("items", itemList);
 		  return "/item/list/item_list";
 	  }
 
 	  /*テーブルの処理*/
 	  /*売れ筋順に並びかえ*/
 	  @RequestMapping(path = "/item/list/2")
-	   public String showItemOrderBySale(Model model, Pageable pageable) {
-		  model.addAttribute("items", itemRepository.findAllByOrderByQuantityDesc(pageable));
-		  model.addAttribute("flag",1);
-
-
-		//ページング
-		  Page<Item> ItemPageList = itemRepository.findAllByOrderByQuantityDesc(pageable);
-		  List<Item> itemList = ItemPageList.getContent();
-		  model.addAttribute("pages", ItemPageList);
-		  model.addAttribute("items", itemList);
+	   public String showItemOrderBySale(Integer categoryId,Model model, Pageable pageable) {
+		  if(categoryFlag == 1) {//カテゴリ検索
+			  System.out.println(categoryId);
+			  Category category = new Category();
+			  category.setId(categoryId);
+			  model.addAttribute("categoryId",categoryId);
+			  model.addAttribute("flag",0);
+			  System.out.println("カテゴリ検索");
+			  categoryFlag = 0;
+			  //ページング
+			  Page<Item> ItemPageList = itemRepository.findByCategoryOrderByInsertDateDesc(category, pageable);
+			  List<Item> itemList = ItemPageList.getContent();
+			  model.addAttribute("pages", ItemPageList);
+			  model.addAttribute("items", itemList);
+			  model.addAttribute("url", "/item/list/category");
+		  }else if(priceFlag == 1){//価格帯別検索
+			  System.out.println(price_max);
+			  System.out.println(price_min);
+			  model.addAttribute("max", price_max);
+			  model.addAttribute("min", price_min);
+			priceFlag = 0;
+				  System.out.println("価格別検索");
+				  System.out.println("price_max = " + price_max);
+				  System.out.println("price_min = " + price_min);
+				 //ページング
+			  Page<Item> ItemPageList = itemRepository. findBetweenByOrderByQuantityDesc(price_min,price_max,pageable);
+			  List<Item>itemList = ItemPageList.getContent();
+			  model.addAttribute("pages",ItemPageList);
+			  model.addAttribute("items", itemList);
+		  }else {//通常検索
+			  model.addAttribute("items", itemRepository.findAllByOrderByQuantityDesc(pageable));
+			  model.addAttribute("flag",1);
+			  System.out.println("通常検索");
+			//ページング
+			  Page<Item> ItemPageList = itemRepository.findAllByOrderByQuantityDesc(pageable);
+			  List<Item> itemList = ItemPageList.getContent();
+			  model.addAttribute("pages", ItemPageList);
+			  model.addAttribute("items", itemList);
+		  }
 		  return "/item/list/item_list";
 		}
 

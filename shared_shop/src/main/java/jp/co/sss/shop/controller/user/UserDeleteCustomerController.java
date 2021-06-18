@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
+import jp.co.sss.shop.repository.PrefectureRepository;
 import jp.co.sss.shop.repository.UserRepository;
 import jp.co.sss.shop.util.Constant;
 
@@ -23,6 +24,9 @@ public class UserDeleteCustomerController {
 	 */
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	PrefectureRepository prefectureRepository;
 
 	/**
 	 * 会員情報削除確認処理

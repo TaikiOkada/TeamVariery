@@ -114,14 +114,10 @@ public class ItemShowCustomerController {
 	  @PostMapping(path = "/item/list/price/")
 	  public String price_search(@Valid @ModelAttribute PriceForm form,BindingResult result,
 			  HttpSession session,Model model,Pageable pageable){
-		  System.out.println("メソッド開始");
 		  // 入力エラー発生時
 		  if(result.hasErrors()) {
-			  System.out.println("err");
-			  return item_list(form);
+				  return item_list(form);
 		  }
-		  System.out.println(form.getMax());
-		  System.out.println(form.getMin());
 		  price_max = form.getMax();
 		  price_min = form.getMin();
 		  priceFlag = 1;

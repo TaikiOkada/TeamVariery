@@ -14,12 +14,10 @@
 				<h2 class="title">
 					商品一覧
 				</h2>
-
 				<!-- 検索にかからない場合のメッセージ表示 -->
 				<th:block th:if="${#lists.isEmpty(items)}">
 					<p th:text="#{itemListAdmin.none}"></p>
 				</th:block>
-
 				<div class="sorted_by" th:if="!${#lists.isEmpty(items)}">
 					<span>
 						<th:block th:if="${flag == 0}">
@@ -51,9 +49,8 @@
 						<th width="20px">
 							カテゴリ
 						</th>
-
-					 </tr>
-					 <tr th:each = "item:${items}">
+					</tr>
+					<tr th:each = "item:${items}">
 						<th:block th:if="${item.image != null}">
 							<td><img th:src="@{/img/{image}(image=${item.image})}"></img></td>
 						</th:block>
@@ -73,27 +70,32 @@
 						<p th:text="${errorMessage}"></p>
 					</div>
 
+
 					<ul class="paging" th:if="!${#lists.isEmpty(items)}">
 						<li th:class="${pages.first} ? 'disabled':''" >
 							<span th:if="${pages.first}">&lt;&lt;</span>
-							<a th:if="${not pages.first}" th:href="@{${url}(page=0)}">&lt;&lt;</a>
+							<div th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
+								<a th:if="${not pages.first}" th:href="@{${currentUrl} (page=0)}">&lt;&lt;</a>
+							</div>
 						</li>
-						<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}'
-							th:class="(${i}==${pages.number})? 'active' : ''" >
+						<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}'th:class="(${i}==${pages.number})? 'active' : ''" >
 							<span th:if='${i}==${pages.number}' th:text='${i+1}'>1</span>
-							<a th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}">
-								<span th:text='${i+1}'>1</span>
-							</a>
+							<div th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
+							<a th:if="${not pages.first}" th:href="@{${currentUrl} (page=${i})}">
+							<span th:text='${i+1}'>1</span>
+								</a>
+							</div>
 						</li>
 						<li th:class="${pages.last} ? 'disabled':''" >
 							<span th:if="${pages.last}">&gt;&gt;</span>
-							<a th:if="${not pages.last}"
-								th:href="@{${url}(page=(${pages.totalPages}-1))}">&gt;&gt;</a>
+							<div th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
+								<a th:if="${not pages.last}"
+								 th:href="@{${currentUrl} (page=0)}">&lt;&lt;</a>
+							</div>
 						</li>
 					</ul>
+
+
 			</article>
-
-
-
 	</body>
 </html>

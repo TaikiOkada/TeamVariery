@@ -98,6 +98,8 @@ public class OrderRegistCustomerController {
 		int totalNum = 0;
 		int subTotalNum = 0;
 
+		System.out.println("check start");
+
 		// 表示用リスト
 		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
 
@@ -134,6 +136,7 @@ public class OrderRegistCustomerController {
 		orderBean.setPayMethod(orderForm.getPayMethod());
 		model.addAttribute("orderBean",orderBean);
 
+//System.out.println("name = " + orderForm.getPrefectureId().getName());
 		switch(orderBean.getPayMethod()) {
 			case 1:
 				model.addAttribute("payMethod","クレジットカード");
@@ -211,15 +214,20 @@ public class OrderRegistCustomerController {
 			orderItemBean.setImage(itemBean.getImage());			// 画像
 			orderItemBean.setSubtotal(itemBean.getPrice() * basketBean.getOrderNum());	// 小計
 
-			// リストに追加 ここに在庫数チェック？
-			orderItemBeanList.add(orderItemBean);
-
 			orderItem = new OrderItem();
 			orderItem.setQuantity(orderItemBean.getOrderNum());
 			orderItem.setOrder(order);
 			orderItem.setPrice(orderItemBean.getPrice());
 			orderItem.setItem(item);
 			orderItemRepository.save(orderItem);
+
+			// 在庫数減らす
+//			System.out.println(item.getCategory().getName());
+//			item.setStock(item.getStock() - orderItem.getQuantity());
+//			itemRepository.save(item);
+
+			// 買い物かごの中身削除
+			session.removeAttribute("baskets");
 		}
 
 		return "order/regist/order_complete";

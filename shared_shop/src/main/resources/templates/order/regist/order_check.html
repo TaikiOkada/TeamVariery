@@ -98,6 +98,7 @@
 			</table>
 			<form method="post" action="/shared_shop/order/complete" >
 				<input type="hidden" name="postalCode" th:value="${orderBean.postalCode}"/>
+				<input type="hidden" name="address" th:value="${orderBean.prefectureId}"/>
 				<input type="hidden" name="address" th:value="${orderBean.address}"/>
 				<input type="hidden" name="name" th:value="${orderBean.name}"/>
 				<input type="hidden" name="phoneNumber" th:value="${orderBean.phoneNumber}"/>
@@ -106,6 +107,7 @@
 			</form>
 			<form method="post" action="/shared_shop/payment/input" class="update">
 				<input type="hidden" name="postalCode" th:value="${orderBean.postalCode}"/>
+				<input type="hidden" name="address" th:value="${orderBean.prefectureId}"/>
 				<input type="hidden" name="address" th:value="${orderBean.address}"/>
 				<input type="hidden" name="name" th:value="${orderBean.name}"/>
 				<input type="hidden" name="phoneNumber" th:value="${orderBean.phoneNumber}"/>

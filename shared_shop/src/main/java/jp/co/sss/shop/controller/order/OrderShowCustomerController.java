@@ -1,6 +1,8 @@
 package jp.co.sss.shop.controller.order;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -150,7 +152,7 @@ public class OrderShowCustomerController {
 		// 会員名を注文情報に設定
 		orderBean.setUserName(order.getUser().getName());
 
-		// 注文商品情報を取得
+        // 注文商品情報を取得
 		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
 		for (OrderItem orderItem : order.getOrderItemsList()) {
 			OrderItemBean orderItemBean = new OrderItemBean();
@@ -172,6 +174,21 @@ public class OrderShowCustomerController {
 		int total = PriceCalc.orderItemPriceTotal(orderItemBeanList);
 		// 合計金額を算出(送料込み)
 		int feeTotal = total + orderBean.getPrefectureId().getRegionId().getFee();
+
+        // 現在の時間取得
+		Date nowTime = new Date();
+		// 登録時の時間取得
+        Date time = order.getInsertDate();
+		// Date型の値を設定しなおすためのオブジェクト
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(time);
+
+        calendar.add(Calendar.MINUTE, OrderRegistCustomerController.canCanselTime);
+        Date canselTime = calendar.getTime();
+        // キャンセル可能時間外になったとき
+        if (canselTime.compareTo(nowTime) != 1) {
+        	model.addAttribute("canselFlg", 1);
+        }
 
 		// 注文情報をViewへ渡す
 		model.addAttribute("order", orderBean);

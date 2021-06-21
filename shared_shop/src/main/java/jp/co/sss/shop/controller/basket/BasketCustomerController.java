@@ -71,6 +71,14 @@ public class BasketCustomerController {
 				}
 			}
 		}
+		// 買い物かごが空で在庫がない場合
+		if (item.getStock() <= 0) {
+			BasketBean bean = new BasketBean();
+			bean.setName(item.getName());
+			model.addAttribute("basketNum",bean);
+			return basketList();
+		}
+
 		// 新しくリストに追加するためのBean設定
 		BasketBean basketBean = new BasketBean();
 		basketBean.setId(item.getId());

@@ -74,5 +74,16 @@
 		<form th:action="@{/order/list}"  class="detail_button_area">
 		    <input type="submit" value="戻る" />
 		</form>
+		<th:block th:if="${canselFlg != 1}">
+			<form method="post" action="/shared_shop/order/cancel"  class="detail_button_area">
+	 			<input type="hidden" name="postalCode" th:value="${order.postalCode}"/>
+				<input type="hidden" name="address" th:value="${order.address}"/>
+				<input type="hidden" name="name" th:value="${order.name}"/>
+				<input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}"/>
+				<input type="hidden" name="payMethod" th:value="${order.payMethod}"/>
+				<input type="hidden" name="id" th:value="${order.id}"/>
+			    <input type="submit" value="キャンセル" />
+			</form>
+		</th:block>
 </body>
 </html>

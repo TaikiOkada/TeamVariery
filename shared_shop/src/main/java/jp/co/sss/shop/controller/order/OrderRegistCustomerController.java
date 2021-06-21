@@ -1,6 +1,8 @@
 package jp.co.sss.shop.controller.order;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -31,6 +33,7 @@ import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.repository.PrefectureRepository;
 import jp.co.sss.shop.repository.UserRepository;
 import jp.co.sss.shop.util.BeanCopy;
+import jp.co.sss.shop.util.PriceCalc;
 
 @Controller
 public class OrderRegistCustomerController {
@@ -49,6 +52,8 @@ public class OrderRegistCustomerController {
 
 	OrderBean orderBean = new OrderBean();
 	OrderItemBean orderItemBean = new OrderItemBean();
+
+	static final int canCanselTime = 5;
 
 	/**
 	 * 届け先入力画面表示
@@ -190,35 +195,22 @@ public class OrderRegistCustomerController {
 
 		// 注文商品テーブルへ情報を保存
 		OrderItem orderItem = new OrderItem();
-		ItemBean itemBean = new ItemBean();
 		Item item = new Item();
 
 		// 買い物かごの中身をリストに代入
 		@SuppressWarnings("unchecked")
 		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
 
-		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
 		BeanUtils.copyProperties(orderItemBean, orderItem);
 		// 買い物かごの中身数分 回す
 		for (BasketBean basketBean : basketBeanList) {
 			item = new Item();
-//			itemBean = BeanCopy.copyEntityToBean(itemRepository.getOne(basketBean.getId()));
 			item = itemRepository.getOne(basketBean.getId());
-//			BeanUtils.copyProperties(itemBean, item);
-			BeanUtils.copyProperties(item, itemBean);
-			orderItemBean = new OrderItemBean();
-
-			orderItemBean.setId(basketBean.getId());				// ID
-			orderItemBean.setName(basketBean.getName());			// 名前
-			orderItemBean.setOrderNum(basketBean.getOrderNum());	// 注文数
-			orderItemBean.setPrice(itemBean.getPrice());			// 値段
-			orderItemBean.setImage(itemBean.getImage());			// 画像
-			orderItemBean.setSubtotal(itemBean.getPrice() * basketBean.getOrderNum());	// 小計
 
 			orderItem = new OrderItem();
-			orderItem.setQuantity(orderItemBean.getOrderNum());
+			orderItem.setQuantity(basketBean.getOrderNum());
 			orderItem.setOrder(order);
-			orderItem.setPrice(orderItemBean.getPrice());
+			orderItem.setPrice(item.getPrice());
 			orderItem.setItem(item);
 			orderItemRepository.save(orderItem);
 
@@ -231,5 +223,100 @@ public class OrderRegistCustomerController {
 		}
 
 		return "order/regist/order_complete";
+	}
+
+	/**
+	* 注文キャンセル確認画面表示
+	*
+	* @return order/regist/order_cansel 注文キャンセル確認画面
+	*/
+	@RequestMapping(path = "/order/cancel", method = RequestMethod.POST)
+	public String canselOrder(@ModelAttribute OrderForm orderForm, Model model) {
+		Order order = orderRepository.findById(orderForm.getId()).orElse(null);
+
+		// 表示する注文情報を生成
+		OrderBean orderBean = new OrderBean();
+		BeanUtils.copyProperties(order, orderBean);
+		orderBean.setInsertDate(order.getInsertDate().toString());
+
+		// 会員名を注文情報に設定
+		orderBean.setUserName(order.getUser().getName());
+
+		// 注文商品情報を取得
+		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
+		for (OrderItem orderItem : order.getOrderItemsList()) {
+			OrderItemBean orderItemBean = new OrderItemBean();
+
+			orderItemBean.setName(orderItem.getItem().getName());
+			orderItemBean.setPrice(orderItem.getPrice());
+			orderItemBean.setOrderNum(orderItem.getQuantity());
+
+			//購入時単価の合計値を計算
+			//※OrderItemのItemフィールドからgetPriceを利用すると、購入時ではなく現在の単価になってしまう。
+			int subtotal = orderItem.getPrice() * orderItem.getQuantity();
+
+			orderItemBean.setSubtotal(subtotal);
+
+			orderItemBeanList.add(orderItemBean);
+		}
+
+		// 合計金額を算出
+		int total = PriceCalc.orderItemPriceTotal(orderItemBeanList);
+		// 合計金額を算出(送料込み)
+		int feeTotal = total + orderBean.getPrefectureId().getRegionId().getFee();
+
+		// 注文情報をViewへ渡す
+		model.addAttribute("order", orderBean);
+		model.addAttribute("orderItemBeans", orderItemBeanList);
+		model.addAttribute("total", total);
+		model.addAttribute("feeTotal", feeTotal);
+
+		model.addAttribute("order", orderBean);
+
+		return "order/regist/order_cansel";
+	}
+
+	/**
+	* 注文キャンセル完了画面表示
+	*
+	* @return order/regist/order_cansel_complete 注文完了画面
+	*/
+	@RequestMapping(path = "/order/cansel/complete", method = RequestMethod.POST)
+	public String canselComplete(@ModelAttribute OrderForm orderForm, Model model) {
+
+		Order order = orderRepository.findById(orderForm.getId()).orElse(null);
+
+        // 現在の時間取得
+		Date nowTime = new Date();
+		// 登録時の時間取得
+        Date time = order.getInsertDate();
+		// Date型の値を設定しなおすためのオブジェクト
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(time);
+
+        calendar.add(Calendar.MINUTE, canCanselTime);
+        Date canselTime = calendar.getTime();
+
+		// キャンセル時間内の場合
+		if (canselTime.compareTo(nowTime) == 1) {
+
+			// 注文商品テーブル削除
+			List<OrderItem> orderItems = orderItemRepository.findByOrder(order);
+			for (OrderItem orderItem : orderItems) {
+				// 在庫を元に戻す
+				Item item = new Item();
+				item = itemRepository.getOne(orderItem.getItem().getId());
+				item.setStock(item.getStock() + orderItem.getQuantity());
+
+				orderItemRepository.deleteById(orderItem.getId());
+			}
+
+			// 注文テーブル削除
+			orderRepository.deleteById(orderForm.getId());
+		} else {
+			model.addAttribute("canselFlg", 1);
+		}
+
+		return "order/regist/order_cansel_complete";
 	}
 }

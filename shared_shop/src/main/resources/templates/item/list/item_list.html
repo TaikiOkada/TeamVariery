@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
@@ -32,7 +31,7 @@
 							<a href="/shared_shop/item/list/1">新着順</a>
 							<a href="/shared_shop/item/list/2">売れ筋順</a>
 						</th:block>
-
+​
 					</span>
 				</div>
 				<table class="list_table item_detail" th:if="!${#lists.isEmpty(items)}">
@@ -57,9 +56,9 @@
 						<th:block th:if="${item.image == null}">
 							<td><img th:src="@{/img/common/no_image.jpg}"></img></td>
 						</th:block>
-
+​
 						<td><a th:href="@{/item/detail/{id} (id=${item.id})}" th:text="${item.name}"></a></td>
-
+​
 						<td th:text="${item.price}"></td>
 						<td th:text="${item.category.name}"></td>
 						<!-- <td th:text="${item.category.category_id}"></td> -->
@@ -69,8 +68,8 @@
 					<div class="error">
 						<p th:text="${errorMessage}"></p>
 					</div>
-
-
+​
+​
 					<ul class="paging" th:if="!${#lists.isEmpty(items)}">
 						<li th:class="${pages.first} ? 'disabled':''" >
 							<span th:if="${pages.first}">&lt;&lt;</span>
@@ -81,7 +80,7 @@
 						<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}'th:class="(${i}==${pages.number})? 'active' : ''" >
 							<span th:if='${i}==${pages.number}' th:text='${i+1}'>1</span>
 							<div th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
-							<a th:if="${not pages.first}" th:href="@{${currentUrl} (page=${i})}">
+							<a th:if="${i} !=${pages.number}" th:href="@{${currentUrl} (page=${i})}">
 							<span th:text='${i+1}'>1</span>
 								</a>
 							</div>
@@ -90,12 +89,12 @@
 							<span th:if="${pages.last}">&gt;&gt;</span>
 							<div th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
 								<a th:if="${not pages.last}"
-								 th:href="@{${currentUrl} (page=0)}">&lt;&lt;</a>
+								 th:href="@{${currentUrl} (page=0)}">&gt;&gt;</a>
 							</div>
 						</li>
 					</ul>
-
-
+​
+​
 			</article>
 	</body>
 </html>

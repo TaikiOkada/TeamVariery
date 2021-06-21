@@ -25,16 +25,24 @@
 			</form>
 		</div>
 	</div>
-
+​
 	   <h2 class="title">価格帯別検索</h2>
-	   <form method="post" action="/shared_shop/item/list/price/">
+		<!-- 新着順とトップ画面の時 -->
+		<form th:if="${sortType == null}" th:action="@{/item/list/price/1}">
 	   		  <input type="text" class="price" name="min" th:value="${min}"/>
 	   		～<input type="text" class="price" name="max" th:value="${max}"/>
 	   		  <!-- <span th:errors="*{price_max} + *{price_min}"></span> -->
 	   		  <input type="submit" value="検索" />
 	   </form>
-
-
+		<!-- 売れ筋順の時 -->
+		<form th:if="${sortType != null}" th:action="@{/item/list/price/} +  ${SortType}}">
+	   		  <input type="text" class="price" name="min" th:value="${min}"/>円 以上
+	   		～<input type="text" class="price" name="max" th:value="${max}"/>円 以下
+	   		  <!-- <span th:errors="*{price_max} + *{price_min}"></span> -->
+	   		  <input type="submit" value="検索" />
+	   </form>
+​
+​
 	<!--/* メニュー(運用管理者、及びシステム管理者用) */-->
 	<div th:if="${session.user != null and session.user.authority != 2}">
 		<h2 class="title">メニュー</h2>
@@ -56,3 +64,4 @@
 </aside>
 </body>
 </html>
+

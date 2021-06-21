@@ -72,15 +72,16 @@ public class OrderRegistCustomerController {
 	 */
 	@RequestMapping(path = "/payment/input", method = RequestMethod.POST)
 	public String inputPayment(@Valid @ModelAttribute OrderForm orderForm, BindingResult result
-			,Model model) {
+			,Model model, boolean backflg) {
 		// 入力内容にエラーがあった場合
 		if (result.hasErrors()) {
-			System.out.println("err");
-//			return "redirect:/address/input";
 			return inputAddress(model,orderForm);
 		}
 
-		BeanUtils.copyProperties(orderForm, orderBean);
+		// 確認画面から戻ってきていない場合
+		if (backflg != true) {
+			BeanUtils.copyProperties(orderForm, orderBean);
+		}
 
 		model.addAttribute("payMethod", orderForm.getPayMethod());
 
@@ -98,7 +99,7 @@ public class OrderRegistCustomerController {
 		int totalNum = 0;
 		int subTotalNum = 0;
 
-		// 表示用リスト
+		// 商品表示用リスト
 		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
 
 		// 買い物かごの中身をリストに代入
@@ -128,12 +129,13 @@ public class OrderRegistCustomerController {
 		for (OrderItemBean bean : orderItemBeanList) {
 			subTotalNum += bean.getSubtotal();
 		}
-		totalNum = subTotalNum;
+		totalNum = subTotalNum + orderBean.getPrefectureId().getRegionId().getFee();	// 送料込み合計
 
 		//Beanへコピー
 		orderBean.setPayMethod(orderForm.getPayMethod());
 		model.addAttribute("orderBean",orderBean);
 
+		// 支払方法場合分け
 		switch(orderBean.getPayMethod()) {
 			case 1:
 				model.addAttribute("payMethod","クレジットカード");
@@ -200,8 +202,10 @@ public class OrderRegistCustomerController {
 		// 買い物かごの中身数分 回す
 		for (BasketBean basketBean : basketBeanList) {
 			item = new Item();
-			itemBean = BeanCopy.copyEntityToBean(itemRepository.getOne(basketBean.getId()));
-			BeanUtils.copyProperties(itemBean, item);
+//			itemBean = BeanCopy.copyEntityToBean(itemRepository.getOne(basketBean.getId()));
+			item = itemRepository.getOne(basketBean.getId());
+//			BeanUtils.copyProperties(itemBean, item);
+			BeanUtils.copyProperties(item, itemBean);
 			orderItemBean = new OrderItemBean();
 
 			orderItemBean.setId(basketBean.getId());				// ID
@@ -211,15 +215,19 @@ public class OrderRegistCustomerController {
 			orderItemBean.setImage(itemBean.getImage());			// 画像
 			orderItemBean.setSubtotal(itemBean.getPrice() * basketBean.getOrderNum());	// 小計
 
-			// リストに追加 ここに在庫数チェック？
-			orderItemBeanList.add(orderItemBean);
-
 			orderItem = new OrderItem();
 			orderItem.setQuantity(orderItemBean.getOrderNum());
 			orderItem.setOrder(order);
 			orderItem.setPrice(orderItemBean.getPrice());
 			orderItem.setItem(item);
 			orderItemRepository.save(orderItem);
+
+			// 在庫数減らす
+			item.setStock(item.getStock() - orderItem.getQuantity());
+			itemRepository.save(item);
+
+			// 買い物かごの中身削除
+			session.removeAttribute("baskets");
 		}
 
 		return "order/regist/order_complete";

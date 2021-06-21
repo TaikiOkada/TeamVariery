@@ -139,14 +139,8 @@ public class OrderShowCustomerController {
 	public String showOrder(@PathVariable int id, Model model,
 			@ModelAttribute OrderShowForm form ) {
 
-		// 送料とってくる
-	//	Fee fee = feeRepository.getOne(prefectureBean.getRegionId());
-
-
 		// 選択された注文情報に該当する情報を取得
 		Order order = orderRepository.findById(form.getId()).orElse(null);
-
-
 
 		// 表示する注文情報を生成
 		OrderBean orderBean = new OrderBean();

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+	<head>
+		<title>
+			注文完了 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		<th:block th:if="${canselFlg != 1}">
+			<h2 class="title">
+				キャンセル完了
+			</h2>
+			<p class="complete_message">
+				キャンセル手続きが完了しました。
+			</p>
+			<p class="complete_link">
+				<a href="/shared_shop/">
+					トップへ戻る
+				</a>
+			</p>
+		</th:block>
+		<th:block th:if="${canselFlg == 1}">
+			<h2 class="title">
+				キャンセル失敗
+			</h2>
+			<p class="complete_message">
+				キャンセル可能時間を超えたためキャンセル出来ません。
+			</p>
+			<p class="complete_link">
+				<a href="/shared_shop/">
+					トップへ戻る
+				</a>
+			</p>
+		</th:block>
+	</body>
+</html>
+

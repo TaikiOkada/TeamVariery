@@ -1,10 +1,5 @@
 package jp.co.sss.shop.controller.item;
 
-import java.math.BigDecimal;
-
-import java.util.ArrayList;
-import java.util.Date;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,8 +10,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,13 +22,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
-import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.form.ItemForm;
 import jp.co.sss.shop.form.PriceForm;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.repository.OrderItemRepository;
-import jp.co.sss.shop.util.BeanCopy;
-import jp.co.sss.shop.util.Constant;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -179,13 +169,15 @@ public class ItemShowCustomerController {
 			System.out.println("カテゴリ検索→価格帯別検索");
 
 		}else {//通常検索
-			/*
-			 * model.addAttribute("items", itemRepository.findByQuantityDesc(pageable));
-			 * model.addAttribute("flag",1); System.out.println("通常検索"); //ページング Page<Item>
-			 * ItemPageList = itemRepository.findByQuantityDesc(pageable); List<Item>
-			 * itemList = ItemPageList.getContent(); model.addAttribute("pages",
-			 * ItemPageList); model.addAttribute("items", itemList);
-			 */
+
+			model.addAttribute("items", itemRepository.findByQuantityDesc(pageable));
+			model.addAttribute("flag",1);
+			System.out.println("通常検索");
+			//ページング
+			Page<Item> ItemPageList = itemRepository.findByQuantityDesc(pageable);
+			List<Item> itemList = ItemPageList.getContent();
+			model.addAttribute("pages",ItemPageList);
+			model.addAttribute("items", itemList);
         }
 		/*
 			 * else {//通常検索 System.out.println("通常検索");

@@ -1,7 +1,5 @@
 package jp.co.sss.shop.repository;
 
-import java.util.List;
-
 import javax.persistence.PersistenceContext;
 
 import org.springframework.data.domain.Page;
@@ -11,10 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
-import jp.co.sss.shop.entity.OrderItem;
 
 /**
  * itemsテーブル用リポジトリ
@@ -32,7 +28,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	Page<Item> findAllByOrderByInsertDateDesc(Pageable pageable);
 
 	//商品情報を売れ筋順で検索　
-	 //@Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item   ORDER BY oi.quantity ")//INNERを省略をしてる
+	// @Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item   ORDER BY oi.quantity ")//INNERを省略をしてる
 
 	/*
 	 * @Query ("SELECT new Item(i.id,i.name,i.description,i.image,i.price, c.id) " +
@@ -46,9 +42,10 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * +"FROM Item INNER JOIN OrderItem oi ON i.id = oi.item"
 	 * +"INNER JOIN i.category c ON i.category = c.id " +"WHERE i.deleteFlag = 0"
 	 * +"GROUP BY i.id,i.name,i.price,i.description, i.image,c.name"
-	 * +"ORDER BY SUM(oi.quantity) DESC") public
-	 * Page<Item>findByQuantityDesc(Pageable pageable);
+	 * +"ORDER BY SUM(oi.quantity) DESC")
 	 */
+	 public Page<Item>findByQuantityDesc(Pageable pageable);
+
 
 
 
@@ -57,6 +54,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * "FROM Item i INNER JOIN i.category c INNER JOIN OrderItem oi ON i.id = oi.item.id "
 	 * + "GROUP BY i.id, i.name, i.price, i.description, i.image" +
 	 * "ORDER BY SUM(oi.quantity) DESC")
+	 *
+	 *SELECT
 	 */
 
 

@@ -27,24 +27,27 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
                 + "WHERE i.deleteFlag = 0 GROUP BY i.id, i.name, i.price,i.description, i.image, c.name "
                 + "ORDER BY SUM(oi.quantity) DESC,i.id ASC")
     public Page<Item> findByQuantityDescQuery(Pageable pageable);
-    // @Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item   ORDER BY oi.quantity ")//INNERを省略をしてる
-     //カテゴリ別検索(新着順)
-    /*
-     * @Query ("SELECT new Item(i.id,i.name,i.price,i.description, i.image,c.name)"
-     * +"FROM Item INNER JOIN OrderItem oi ON i.id = oi.item"
-     * +"INNER JOIN i.category c ON i.category = c.id " +"WHERE i.deleteFlag = 0"
-     * +"GROUP BY i.id,i.name,i.price,i.description, i.image,c.name"
-     * +"ORDER BY SUM(oi.quantity) DESC")
-     */
+
     //カテゴリ別検索(新着順)
     Page<Item> findByCategoryOrderByInsertDateDesc(Category category, Pageable pageable);
     //売れ筋順に並び替え(カテゴリ検索後→売れ筋順に並び替え)
-    @Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item WHERE i.category.id = :category_Id ORDER BY oi.quantity DESC")//INNERを省略をしてる
+    //@Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item WHERE i.category.id = :category_Id ORDER BY oi.quantity DESC")
+    @Query     ("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
+            + "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList oi "
+            + "WHERE i.category.id = :category_Id"
+            + " GROUP BY i.id, i.name, i.price,i.description, i.image, c.name "
+            + "ORDER BY SUM(oi.quantity) DESC,i.id ASC")
     public Page<Item>findByCategoryOrderByQuantityDesc(@Param("category_Id")Integer categoryId,Pageable pageable);
+
     //価格帯別検索
     //新着順
     public Page<Item> findByPriceBetweenOrderByInsertDateDesc(Integer min, Integer max, Pageable pageable);
     //売れ筋順
-    @Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item WHERE i.price BETWEEN :price_min AND :price_max ORDER BY oi.quantity DESC")//INNERを省略をしてる
+    //@Query("SELECT i FROM Item i JOIN OrderItem oi ON i.id = oi.item WHERE i.price BETWEEN :price_min AND :price_max ORDER BY oi.quantity DESC")
+    @Query     ("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
+            + "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList oi "
+            + "WHERE i.price BETWEEN :price_min AND :price_max"
+            + " GROUP BY i.id, i.name, i.price,i.description, i.image, c.name "
+            + "ORDER BY SUM(oi.quantity) DESC,i.id ASC")
     public Page<Item>findBetweenByOrderByQuantityDesc(@Param("price_min") Integer min,@Param("price_max")Integer max,Pageable pageable);
     }

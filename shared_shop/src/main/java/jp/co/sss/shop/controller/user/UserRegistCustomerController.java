@@ -52,6 +52,8 @@ public class UserRegistCustomerController {
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.GET)
 	public String registInput(@ModelAttribute UserForm form, Model model) {
 
+		UserForm userForm = new UserForm();
+
 		model.addAttribute("prefectures",prefectureRepository.findAll());
 		return "user/regist/user_regist_input";
 	}

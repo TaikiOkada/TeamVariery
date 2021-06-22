@@ -11,6 +11,10 @@
 			注文内容最終確認
 		</h2>
 		<br />
+		<th:block th:if="${itemStock} == 0">
+			<>
+			<br />
+		</th:block>
 		<table class="list_table item_detail">
 			<tr>
 				<th>

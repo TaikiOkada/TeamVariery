@@ -314,7 +314,8 @@ p {
 	margin-right: 100px;
 	position: relative;
 	left: 200px;
-
+	text-align: center;
+	font-size: 1.2em;
 }
 .detail_button_area form{
 	display: inline-block;
@@ -330,7 +331,7 @@ p {
 	text-align: left;
 }
 .detail_button_area [type="submit"]{
-	padding: 0.6em 1.8em;
+	text-align: center;
 	font-size: 1.2em;
 }
 
@@ -338,9 +339,7 @@ p {
 .detail_button_area_cancel {
 	display: block;
 	width: 100%;
-	margin-top:60px;
 	display: inline;
-	margin-right: 100px;
 	position: relative;
 	left: 200px;
 }
@@ -357,11 +356,15 @@ p {
 	text-align: left;
 }
 .detail_button_area_cancel [type="submit"]{
-	padding: 0.6em 1.8em;
+	padding: 0.3em 1.5em;
 	font-size: 1.2em;
 }
 
-
+.delete{
+	text-align: center;
+	padding: 0.6em 1.8em;
+	font-size: 1.2em;
+}
 .card_info {
 	padding-top: 10px;
 	border-top: 1px solid #e8e8e8;
@@ -703,8 +706,11 @@ form.delete {
 .flex-item{
 	box-sizing: border-box;
 }
+/*買い物カゴない時のメッセージ*/
+.noitemMessage{
+	font-size: 20px;
 
-
+}
 /* ---- 商品画像(詳細、編集、削除) ---- */
 .value img {
 	width: 100%;

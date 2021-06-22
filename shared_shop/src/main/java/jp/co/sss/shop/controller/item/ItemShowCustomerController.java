@@ -165,6 +165,7 @@ public class ItemShowCustomerController {
             List<Item> itemList = ItemPageList.getContent();
             model.addAttribute("pages", ItemPageList);
             model.addAttribute("items", itemList);
+            model.addAttribute("flag",1);
         } else if (priceFlag == 1) {// 価格帯別検索
             model.addAttribute("max", price_max);
             model.addAttribute("min", price_min);
@@ -176,6 +177,7 @@ public class ItemShowCustomerController {
             List<Item> itemList = ItemPageList.getContent();
             model.addAttribute("pages", ItemPageList);
             model.addAttribute("items", itemList);
+            model.addAttribute("flag",1);
             System.out.println("カテゴリ検索→価格帯別検索");
         }else {//通常検索
         	model.addAttribute("items", itemRepository.findByQuantityDescQuery(pageable));

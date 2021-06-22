@@ -112,7 +112,7 @@ public class OrderRegistCustomerController {
 		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
 
 		// エラーメッセージ用リスト
-		List<String> errNameList = new ArrayList();
+		List<ItemBean> stockErrList = new ArrayList<ItemBean>();
 
 		// 商品情報の生成
 		ItemBean itemBean = new ItemBean();
@@ -136,12 +136,17 @@ public class OrderRegistCustomerController {
 			// 在庫数が足りない場合
 			if (item.getStock() < orderItemBean.getOrderNum()) {
 				orderItemBean.setOrderNum(item.getStock());	// 注文数を在庫数までに置き換える
-				model.addAttribute("itemStock",item.getStock());
+
+				stockErrList.add(itemBean);
 			}
 
-			// リストに追加 ここに在庫数チェック？
-			orderItemBeanList.add(orderItemBean);
+			// リストに追加 ここに在庫数チェック
+			if (orderItemBean.getOrderNum() > 0) {
+				orderItemBeanList.add(orderItemBean);
+			}
 		}
+		// エラーメッセージ用の情報を保存
+		model.addAttribute("itemStocks",stockErrList);
 
 		// 注文リストの商品値段の合計
 		for (OrderItemBean bean : orderItemBeanList) {

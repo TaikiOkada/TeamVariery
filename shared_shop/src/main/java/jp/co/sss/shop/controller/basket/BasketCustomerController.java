@@ -57,27 +57,27 @@ public class BasketCustomerController {
 			for (BasketBean bean: basketBeanList) {
 				if (bean.getId() == item.getId()) {
 					// 在庫より注文数が少なければ
-//					if (bean.getOrderNum() < bean.getStock()) {
+					if (bean.getOrderNum() < bean.getStock()) {
 						// 数量追加
 						int myIndex = basketBeanList.indexOf(bean);		// リストの要素を取得
 						bean.setOrderNum(bean.getOrderNum() + 1);
 						basketBeanList.set(myIndex, bean);
-//					} else {	// 在庫数を超えてしまう場合
+					} else {	// 在庫数を超えてしまう場合
 						// Beanの情報を送る
-//						model.addAttribute("basketNum",bean);
-//					}
+						model.addAttribute("basketNum",bean);
+					}
 
 					return basketList();
 				}
 			}
 		}
 		// 買い物かごが空で在庫がない場合
-//		if (item.getStock() <= 0) {
-//			BasketBean bean = new BasketBean();
-//			bean.setName(item.getName());
-//			model.addAttribute("basketNum",bean);
-//			return basketList();
-//		}
+		if (item.getStock() <= 0) {
+			BasketBean bean = new BasketBean();
+			bean.setName(item.getName());
+			model.addAttribute("basketNum",bean);
+			return basketList();
+		}
 
 		// 新しくリストに追加するためのBean設定
 		BasketBean basketBean = new BasketBean();

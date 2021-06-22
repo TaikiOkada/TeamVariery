@@ -11,6 +11,19 @@
 			注文内容最終確認
 		</h2>
 		<br />
+		<th:block th:each="itemStock : ${itemStocks}">
+			<th:block th:if="${itemStock.stock} == 0">
+				<p class="err">
+				※<th:block th:text="${itemStock.name}"></th:block>は、在庫切れのため注文ができません。
+				</p>
+			</th:block>
+			<th:block th:if="${itemStock.stock} != 0">
+				<p class="err">
+				※<th:block th:text="${itemStock.name}"></th:block>は、在庫数分のみ注文できます。
+				</p>
+			</th:block>
+			<br />
+		</th:block>
 		<table class="list_table item_detail">
 			<tr>
 				<th>

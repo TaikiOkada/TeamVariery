@@ -111,12 +111,19 @@ public class OrderRegistCustomerController {
 		@SuppressWarnings("unchecked")
 		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
 
+		// エラーメッセージ用リスト
+		List<ItemBean> stockErrList = new ArrayList<ItemBean>();
+
 		// 商品情報の生成
 		ItemBean itemBean = new ItemBean();
+		// 在庫数取得用
+		Item item = new Item();
 
 		// 買い物かごリストの中身を注文リストにコピーする
 		for (BasketBean basketBean : basketBeanList) {
 			itemBean = BeanCopy.copyEntityToBean(itemRepository.getOne(basketBean.getId()));
+			item = itemRepository.getOne(basketBean.getId());
+
 			orderItemBean = new OrderItemBean();
 
 			orderItemBean.setId(basketBean.getId());				// ID
@@ -126,9 +133,20 @@ public class OrderRegistCustomerController {
 			orderItemBean.setImage(itemBean.getImage());			// 画像
 			orderItemBean.setSubtotal(itemBean.getPrice() * basketBean.getOrderNum());	// 小計
 
-			// リストに追加 ここに在庫数チェック？
-			orderItemBeanList.add(orderItemBean);
+			// 在庫数が足りない場合
+			if (item.getStock() < orderItemBean.getOrderNum()) {
+				orderItemBean.setOrderNum(item.getStock());	// 注文数を在庫数までに置き換える
+
+				stockErrList.add(itemBean);
+			}
+
+			// リストに追加 ここに在庫数チェック
+			if (orderItemBean.getOrderNum() > 0) {
+				orderItemBeanList.add(orderItemBean);
+			}
 		}
+		// エラーメッセージ用の情報を保存
+		model.addAttribute("itemStocks",stockErrList);
 
 		// 注文リストの商品値段の合計
 		for (OrderItemBean bean : orderItemBeanList) {
@@ -228,10 +246,10 @@ public class OrderRegistCustomerController {
 	/**
 	* 注文キャンセル確認画面表示
 	*
-	* @return order/regist/order_cansel 注文キャンセル確認画面
+	* @return order/regist/order_cancel 注文キャンセル確認画面
 	*/
 	@RequestMapping(path = "/order/cancel", method = RequestMethod.POST)
-	public String canselOrder(@ModelAttribute OrderForm orderForm, Model model) {
+	public String cancelOrder(@ModelAttribute OrderForm orderForm, Model model) {
 		Order order = orderRepository.findById(orderForm.getId()).orElse(null);
 
 		// 表示する注文情報を生成
@@ -273,16 +291,16 @@ public class OrderRegistCustomerController {
 
 		model.addAttribute("order", orderBean);
 
-		return "order/regist/order_cansel";
+		return "order/regist/order_cancel";
 	}
 
 	/**
 	* 注文キャンセル完了画面表示
 	*
-	* @return order/regist/order_cansel_complete 注文完了画面
+	* @return order/regist/order_cancel_complete 注文完了画面
 	*/
 	@RequestMapping(path = "/order/cansel/complete", method = RequestMethod.POST)
-	public String canselComplete(@ModelAttribute OrderForm orderForm, Model model) {
+	public String cancelComplete(@ModelAttribute OrderForm orderForm, Model model) {
 
 		Order order = orderRepository.findById(orderForm.getId()).orElse(null);
 
@@ -317,6 +335,6 @@ public class OrderRegistCustomerController {
 			model.addAttribute("canselFlg", 1);
 		}
 
-		return "order/regist/order_cansel_complete";
+		return "order/regist/order_cancel_complete";
 	}
 }

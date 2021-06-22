@@ -72,8 +72,6 @@ public class UserRegistCustomerController {
 		model.addAttribute("prefectures",prefectureRepository.findAll());
 		//入力画面に戻る時に、入力した値を保持する。
 		return registInput(userForm,model);
-		//入力画面に戻る時に、入力した値を捨てる。。
-		//return "user/regist/user_regist_input";
 	}
 
 	/**

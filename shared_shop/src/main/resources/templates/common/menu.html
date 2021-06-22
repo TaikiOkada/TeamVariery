@@ -4,13 +4,11 @@
 <meta charset="UTF-8" />
 </head>
 <body>
-<ul th:fragment="layout-menu" class="navi_menu"><!--/*
-	*/-->
+<ul th:fragment="layout-menu" class="navi_menu">
 	<li><a href="/shared_shop/">トップ</a></li>
-	<!--/*
-	*/--><li><a href="/shared_shop/item/list/1">新着一覧</a></li><!--/*
-	*/--><li><a href="/shared_shop/basket/list">買い物かご</a></li><!--/*
-	*/--><th:block th:if="${session.user != null}"><li><a th:href="@{/order/list}">注文一覧</a></li></th:block><!--/*
-	*/--></ul>
+	<li><a href="/shared_shop/item/list/1">新着一覧</a></li>
+	<li><a href="/shared_shop/basket/list">買い物かご</a></li>
+	<th:block th:if="${session.user != null}"><li><a th:href="@{/order/list}">注文一覧</a></li></th:block>
+	</ul>
 </body>
 </html>

@@ -57,7 +57,7 @@
 			</tr>
 			<tr>
 				<td colspan="2"></td>
-				<td>商品合計</td>
+				<td >商品合計</td>
 				<td th:text="${total}"></td>
 			</tr>
 			<tr>
@@ -67,8 +67,8 @@
 			</tr>
 			<tr>
 				<td colspan="2"></td>
-				<td>合計(送料込み)</td>
-				<td th:text="${feeTotal}"></td>
+				<td  class="total">合計</td>
+				<td th:text="${feeTotal}"  class="total"></td>
 			</tr>
 		</table>
 		<form th:action="@{/order/list}"  class="detail_button_area">

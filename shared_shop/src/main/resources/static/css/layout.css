@@ -263,7 +263,15 @@ aside.admin_menu {
 	position: relative;
 	font-size: 1.5rem;
 	}
-.main .title::before,
+.main .title::before {
+	position: absolute;
+	content: '';
+	top: 100%;
+	left: 0;
+	border: none;
+	border-bottom: solid 10px transparent;
+	border-right: solid 20px rgb(149, 158, 155);
+}
 .admin .main .title::before {
 	position: absolute;
 	content: '';

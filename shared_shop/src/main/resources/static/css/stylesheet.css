@@ -578,10 +578,10 @@ select {
 
 /* ---- 買物カゴ ---- */
 .list_table.basket th:first-of-type {
-	width: 45%;
+	width: 46%;
 }
 .list_table.basket th:last-of-type {
-	width: 42%;
+	width: 23%;
 }
 .list_table.basket td:first-of-type {
 	padding-left: 20px;
@@ -639,6 +639,7 @@ select {
 
 form.add {
 	margin-left: 15px;
+	float: left;
 }
 
 form.delete {

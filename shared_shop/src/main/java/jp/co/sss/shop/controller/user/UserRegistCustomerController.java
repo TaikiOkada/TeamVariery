@@ -63,9 +63,7 @@ public class UserRegistCustomerController {
 	 * @return "user/regist/user_regist_input" 会員情報 登録入力画面へ
 	 */
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.POST)
-	public String registInput(Model model) {
-
-		UserForm userForm = new UserForm();
+	public String registInput(Model model ,UserForm userForm) {
 
 		model.addAttribute("userForm", userForm);
 
@@ -96,7 +94,6 @@ public class UserRegistCustomerController {
 
 		return "user/regist/user_regist_check";
 
-
 	}
 
 	/**
@@ -111,7 +108,6 @@ public class UserRegistCustomerController {
 		// 会員情報の生成
 		User user = new User();
 		UserBean userBean= new UserBean();
-
 		Prefecture prefecture = prefectureRepository.getOne(form.getPrefectureId().getId());
 
 		// 入力値を会員情報にコピー

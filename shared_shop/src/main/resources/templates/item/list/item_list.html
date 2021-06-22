@@ -6,7 +6,6 @@
 			商品一覧 | シェアードショップ
 		</title>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	</head>
 	<body class="user item_list">
 	<article class="mainuser">
@@ -36,16 +35,16 @@
 				</div>
 				<table class="list_table item_detail" th:if="!${#lists.isEmpty(items)}">
 					<tr>
-						<th width="20px" >
+						<th width="20px"  class="total">
 							商品画像
 						</th>
-						<th width="50px">
+						<th width="50px"  class="total">
 							商品名
 						</th>
-						<th width="10px">
+						<th width="10px"  class="total">
 							価格
 						</th>
-						<th width="20px">
+						<th width="20px"  class="total">
 							カテゴリ
 						</th>
 					</tr>

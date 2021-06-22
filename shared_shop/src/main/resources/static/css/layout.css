@@ -31,6 +31,12 @@ h3 {
 	margin: 0;
 	padding: 0;
 }
+h3{
+	text-decoration: underline;
+	position: relative;
+	top: 30px;
+	color: red;
+}
 
 /* スキルアップテクニック2
  * displayプロパティでは表示方式を変更することができます。

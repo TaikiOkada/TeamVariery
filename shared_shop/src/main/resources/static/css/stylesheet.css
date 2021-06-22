@@ -310,12 +310,18 @@ p {
 	display: block;
 	width: 100%;
 	margin-top:60px;
+	display: inline;
+	margin-right: 100px;
+	position: relative;
+	left: 200px;
+
 }
 .detail_button_area form{
 	display: inline-block;
 	width:33%;
 	margin-left:-1%;
 	text-align: center;
+
 }
 .detail_button_area form:first-of-type{
 	text-align: right;
@@ -327,6 +333,35 @@ p {
 	padding: 0.6em 1.8em;
 	font-size: 1.2em;
 }
+
+/*キャンセルボタン*/
+.detail_button_area_cancel {
+	display: block;
+	width: 100%;
+	margin-top:60px;
+	display: inline;
+	margin-right: 100px;
+	position: relative;
+	left: 200px;
+}
+.detail_button_area_cancel form{
+	display: inline-block;
+	width:33%;
+	margin-left:-1%;
+	text-align: center;
+}
+.detail_button_area_cancel form:first-of-type{
+	text-align: right;
+}
+.detail_button_area_cancel form:last-of-type{
+	text-align: left;
+}
+.detail_button_area_cancel [type="submit"]{
+	padding: 0.6em 1.8em;
+	font-size: 1.2em;
+}
+
+
 .card_info {
 	padding-top: 10px;
 	border-top: 1px solid #e8e8e8;

@@ -186,6 +186,17 @@ p {
 	display: block;
 	width: 50%;
 	margin: 50px auto 0;
+	position: relative;
+	left: 0px;
+}
+.user_info_form_area1{
+	display: block;
+	width: 50%;
+	margin: 50px auto 0;
+	position: relative;
+	left: 150px;
+
+
 }
 .item_info_form_area {
 	margin: 50px auto 0;
@@ -639,7 +650,6 @@ select {
 
 form.add {
 	margin-left: 15px;
-	float: left;
 }
 
 form.delete {
@@ -650,6 +660,15 @@ form.delete {
 	float: left;
 	margin-right: 10px;
 }
+
+.flex-container{
+	display: flex;
+}
+
+.flex-item{
+	box-sizing: border-box;
+}
+
 
 /* ---- 商品画像(詳細、編集、削除) ---- */
 .value img {

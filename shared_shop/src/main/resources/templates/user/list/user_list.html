@@ -15,7 +15,7 @@
 				<th>会員氏名</th>
 				<th>メールアドレス</th>
 				<th>操作</th>
-				
+
 			</tr>
 			<tr th:each="user: ${users}">
 				<td><a th:href="@{/user/detail/admin/{id}(id=${user.id})}"

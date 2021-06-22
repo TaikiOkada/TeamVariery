@@ -137,6 +137,7 @@ header {
 	padding: 5px 8px;
 	color: #fff;
 	text-shadow: 1px 1px 1px #12526d;
+	z-index: 2;
 }
 
 
@@ -263,24 +264,29 @@ aside.admin_menu {
 	position: relative;
 	font-size: 1.5rem;
 	}
-.main .title::before {
+
+/*  .admin .main .title:before {
 	position: absolute;
+	z-index: -1;
 	content: '';
 	top: 100%;
 	left: 0;
 	border: none;
 	border-bottom: solid 10px transparent;
 	border-right: solid 20px rgb(149, 158, 155);
-}
-.admin .main .title::before {
-	position: absolute;
+} */
+
+.main .title::before{
+	position: relative;
+	z-index: -1;
 	content: '';
-	top: 100%;
-	left: 0;
+	top: 5px;
+	right: 8px;
 	border: none;
 	border-bottom: solid 10px transparent;
 	border-right: solid 20px rgb(149, 158, 155);
 }
+
 .admin .main .title.no_shadow::before {
 	display: none;
 }

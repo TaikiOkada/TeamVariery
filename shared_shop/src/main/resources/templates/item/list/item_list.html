@@ -88,7 +88,7 @@
 							<span th:if="${pages.last}">&gt;&gt;</span>
 							<div th:with="currentUrl=(${@currentUrlWithoutParam.apply('page')})">
 								<a th:if="${not pages.last}"
-								 th:href="@{${currentUrl} (page=0)}">&gt;&gt;</a>
+								 th:href="@{${currentUrl} (page=${pages.totalPages}-1)}">&gt;&gt;</a>
 							</div>
 						</li>
 					</ul>

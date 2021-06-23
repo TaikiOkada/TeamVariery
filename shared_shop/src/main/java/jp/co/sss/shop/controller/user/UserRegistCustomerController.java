@@ -133,7 +133,6 @@ public class UserRegistCustomerController {
 	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.GET)
 	public String registComplete(Model model) {
 
-
 		return "user/regist/user_regist_complete";
 	}
 }

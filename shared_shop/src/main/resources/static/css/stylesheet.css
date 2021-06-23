@@ -307,7 +307,10 @@ p {
 .shopping_basket .user_info_form_area {
 	width: 100%;
 }
-
+.detail_button_area .back_button{
+	position: relative;
+	top: 15px;
+}
 
 .detail_button_area {
 	display: block;
@@ -325,7 +328,8 @@ p {
 	width:33%;
 	margin-left:-1%;
 	text-align: center;
-
+	position: relative;
+	right: 150px;
 }
 .detail_button_area form:first-of-type{
 	text-align: right;

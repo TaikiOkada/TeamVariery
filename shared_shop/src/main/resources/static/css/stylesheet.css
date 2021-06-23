@@ -298,6 +298,9 @@ p {
 .item_info_form_area .back_button {
 	background: #ddd;
 }
+.back_button{
+	font-size: 20px;
+}
 .order_check .user_info_form_area {
 	width: 80%;
 }
@@ -472,8 +475,8 @@ select {
 	color: #fff;
 	text-shadow: 1px 1px 1px #616161;
 	position:relative;
-	bottom:35px;
-	left:30px;
+	bottom:40px;
+	left:0px;
 }
 
 /* ---- テーブル ---- */

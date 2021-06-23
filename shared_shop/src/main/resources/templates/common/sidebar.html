@@ -29,17 +29,17 @@
 	   <h2 class="title">価格帯別検索</h2>
 		<!-- 新着順とトップ画面の時 -->
 		<form th:if="${sortType == null}" th:action="@{/item/list/price/1}">
-	   		  <input type="text" class="price" name="min" th:value="${min}"/>
-	   		～<input type="text" class="price" name="max" th:value="${max}"/>
-	   		  <!-- <span th:errors="*{price_max} + *{price_min}"></span> -->
-	   		  <input type="submit" value="検索" />
+			<input type="text" class="price1" name="min" th:value="${min}"/><span class="blank">円以上</span>
+			<input type="text" class="price1" name="max" th:value="${max}"/><span class="blank">円未満</span>
+			<!-- <span th:errors="*{price_max} + *{price_min}"></span> -->
+	   		<input type="submit" value="検索" />
 	   </form>
 		<!-- 売れ筋順の時 -->
 		<form th:if="${sortType != null}" th:action="@{/item/list/price/} +  ${SortType}}">
 	   		  <input type="text" class="price" name="min" th:value="${min}"/>円 以上
 	   		～<input type="text" class="price" name="max" th:value="${max}"/>円 以下
 	   		  <!-- <span th:errors="*{price_max} + *{price_min}"></span> -->
-	   		  <input type="submit" value="検索" />
+	   		  <input type="submit" value="検索"  class="aaa"/>
 	   </form>
 ​
 ​

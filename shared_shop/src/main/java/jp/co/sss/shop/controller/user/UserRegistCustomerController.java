@@ -55,13 +55,11 @@ public class UserRegistCustomerController {
 	public String registInput(@ModelAttribute UserForm form, Model model, boolean backflag) {
 		if(backflag == true) {
 			UserForm userForm = new UserForm();
-			System.out.println("会員情報登録true");
 			model.addAttribute("prefectures",prefectureRepository.findAll());
 			model.addAttribute("userForm",form);
 		}else {
 			UserForm userForm = new UserForm();
 			Prefecture PrefectureId = prefectureRepository.getOne(1);
-			System.out.println("会員情報登録false");
 			form.setPrefectureId(PrefectureId);
 			model.addAttribute("prefectures",prefectureRepository.findAll());
 
@@ -96,14 +94,10 @@ public class UserRegistCustomerController {
 	public String registCheck(@Valid @ModelAttribute UserForm form, BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
-			System.out.println(form.getPrefectureId().getId());
-			System.out.println("PWエラーあり");
 			model.addAttribute("prefectures",prefectureRepository.findAll());
 			model.addAttribute("prefecture.id", form.getPrefectureId().getId());
 			return "user/regist/user_regist_input";
 		}
-		System.out.println(form.getPrefectureId().getId());
-		System.out.println("PWエラーなし");
 		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId().getId()));
 		model.addAttribute("prefecture.id",form.getPrefectureId().getId());
 		return "user/regist/user_regist_check";

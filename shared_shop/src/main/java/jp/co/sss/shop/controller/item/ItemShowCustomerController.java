@@ -61,16 +61,9 @@ public class ItemShowCustomerController {
     /* 新着一覧への遷移 *//* 新着順に並び替え */
     @RequestMapping(path = "/item/list/1")
     public String item_list(Model model, Pageable pageable, @ModelAttribute ItemForm form) {
-        // 全件表示
-        // model.addAttribute("items",
-        // itemRepository.findAllByOrderByInsertDateDesc(pageable));
-        // ページング
         Page<Item> ItemPageList = itemRepository.findAllByOrderByInsertDateDesc(pageable);
         List<Item> itemList = ItemPageList.getContent();
-        // List<ItemBean> itemBeanList =
-        // BeanCopy.copyEntityToItemBean(ItemPageList.getContent());
         // 商品情報をViewへ渡す
-        System.out.println("新着順");
         model.addAttribute("flag", 0);
         model.addAttribute("pages", ItemPageList);
         model.addAttribute("items", itemList);
@@ -85,8 +78,6 @@ public class ItemShowCustomerController {
         category.setId(categoryId);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("flag", 0);
-        System.out.println(categoryId);
-        System.out.println("カテゴリ検索だけだよ");
         categoryFlag = 1;
         // ページング
         categorySave = categoryId;
@@ -103,10 +94,8 @@ public class ItemShowCustomerController {
             Model model, Pageable pageable) {
         // 入力エラー発生時
         if (result.hasErrors()) {
-            System.out.println("エラーが発生");
             return "item/list/item_list";
         }
-        System.out.println("エラーが発生していません");
         price_max = form.getMax();
         price_min = form.getMin();
         priceFlag = 1;
@@ -130,10 +119,8 @@ public class ItemShowCustomerController {
             Model model, Pageable pageable) {
         // 入力エラー発生時
         if (result.hasErrors()) {
-            System.out.println("エラーが発生売れ筋順");
             return "/item/list/item_list";
         }
-        System.out.println("エラーが発生していません売れ筋順");
         price_max = form.getMax();
         price_min = form.getMin();
         priceFlag = 1;
@@ -157,8 +144,6 @@ public class ItemShowCustomerController {
             Pageable pageable) {
         if (categoryFlag == 1) {// カテゴリ検索
             model.addAttribute("flag", 0);
-            System.out.println(categorySave);
-            System.out.println("カテゴリ検索後→売れ筋順に並び替え");
             categoryFlag = 0;
             // ページング
             Page<Item> ItemPageList = itemRepository.findByCategoryOrderByQuantityDesc(categorySave, pageable);
@@ -178,11 +163,9 @@ public class ItemShowCustomerController {
             model.addAttribute("pages", ItemPageList);
             model.addAttribute("items", itemList);
             model.addAttribute("flag",1);
-            System.out.println("カテゴリ検索→価格帯別検索");
         }else {//通常検索
         	model.addAttribute("items", itemRepository.findByQuantityDescQuery(pageable));
 			model.addAttribute("flag",1);
-			System.out.println("通常検索");
 			//ページング
 			Page<Item>ItemPageList = itemRepository.findByQuantityDescQuery(pageable);
 			List<Item> itemList = ItemPageList.getContent(); model.addAttribute("pages",

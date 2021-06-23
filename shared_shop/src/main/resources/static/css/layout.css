@@ -74,6 +74,7 @@ li {
 	margin: 0 auto;
 	overflow: hidden;
 	float: none;
+	font-size: 17px;
 }
 body > .container {
 	margin-top: 15px;
@@ -346,6 +347,7 @@ aside.admin_menu {
 	font-size: 1.5em;
 	margin-top: 30px;
 	padding-left: 30px;
+
 }
 .complete_link a:hover {
 	color: #d34320;

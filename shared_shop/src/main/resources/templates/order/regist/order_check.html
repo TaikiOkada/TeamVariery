@@ -120,6 +120,7 @@
 				<form method="post" action="/shared_shop/order/complete" >
 					<input type="hidden" name="postalCode" th:value="${orderForm.postalCode}"/>
 					<input type="hidden" name="address" th:value="${orderForm.address}"/>
+					<input type="hidden" name="prefectureId" th:value="${orderForm.prefectureId.id}"/>
 					<input type="hidden" name="name" th:value="${orderForm.name}"/>
 					<input type="hidden" name="phoneNumber" th:value="${orderForm.phoneNumber}"/>
 					<input type="hidden" name="payMethod" th:value="${orderForm.payMethod}"/>
@@ -129,7 +130,7 @@
 			<form method="post" action="/shared_shop/payment/input" class="update">
 				<input type="hidden" name="postalCode" th:value="${orderForm.postalCode}"/>
 				<input type="hidden" name="address" th:value="${orderForm.address}"/>
-				<input type="hidden" name="name" th:value="${orderForm.prefectureId.id}"/>
+				<input type="hidden" name="prefectureId" th:value="${orderForm.prefectureId.id}"/>
 				<input type="hidden" name="name" th:value="${orderForm.name}"/>
 				<input type="hidden" name="phoneNumber" th:value="${orderForm.phoneNumber}"/>
 				<input type="hidden" name="payMethod" th:value="${orderForm.payMethod}"/>

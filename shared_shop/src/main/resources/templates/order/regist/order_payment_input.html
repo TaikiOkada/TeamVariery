@@ -17,32 +17,61 @@
 				<ul class="payment_method_select">
 					<li>
 						<label class="radio_label">
-							<input type="radio" name="payMethod" value="1"
-							checked="checked"/>
+							<th:block th:if="${payMethod} == 1">
+								<input type="radio" name="payMethod" value="1"
+								checked="checked"/>
+							</th:block>
+							<th:block th:if="${payMethod} != 1">
+								<input type="radio" name="payMethod" value="1"/>
+							</th:block>
 							クレジットカード
 						</label>
 					</li>
 					<li>
 						<label class="radio_label">
-							<input type="radio" name="payMethod" value="2" />
+							<th:block th:if="${payMethod} == 2">
+								<input type="radio" name="payMethod" value="2"
+								checked="checked"/>
+							</th:block>
+							<th:block th:if="${payMethod} != 2">
+								<input type="radio" name="payMethod" value="2"/>
+							</th:block>
 							銀行振り込み
 						</label>
 					</li>
 					<li>
 						<label class="radio_label">
-							<input type="radio" name="payMethod" value="3" />
+							<th:block th:if="${payMethod} == 3">
+								<input type="radio" name="payMethod" value="3"
+								checked="checked"/>
+							</th:block>
+							<th:block th:if="${payMethod} != 3">
+								<input type="radio" name="payMethod" value="3"/>
+							</th:block>
 							着払い
 						</label>
 					</li>
 					<li>
 						<label class="radio_label">
-							<input type="radio" name="payMethod" value="4" />
+							<th:block th:if="${payMethod} == 4">
+								<input type="radio" name="payMethod" value="4"
+								checked="checked"/>
+							</th:block>
+							<th:block th:if="${payMethod} != 4">
+								<input type="radio" name="payMethod" value="4"/>
+							</th:block>
 							電子マネー
 						</label>
 					</li>
 					<li>
 						<label class="radio_label">
-							<input type="radio" name="payMethod" value="5" />
+							<th:block th:if="${payMethod} == 5">
+								<input type="radio" name="payMethod" value="5"
+								checked="checked"/>
+							</th:block>
+							<th:block th:if="${payMethod} != 5">
+								<input type="radio" name="payMethod" value="5"/>
+							</th:block>
 							コンビニ決済
 						</label>
 					</li>
@@ -62,6 +91,7 @@
 				<input type="hidden" name="address" th:value="${addressForm.address}" />
 				<input type="hidden" name="name" th:value="${addressForm.name}" />
 				<input type="hidden" name="phoneNumber" th:value="${addressForm.phoneNumber}" />
+				<input type="hidden" name="payMethod" th:value="${addressForm.payMethod}"/>
 				<input type="submit" class="back_button" value="戻る" />
 			</form>
 		</div>

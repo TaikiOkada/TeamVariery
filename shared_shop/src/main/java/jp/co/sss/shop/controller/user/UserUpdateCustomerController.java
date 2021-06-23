@@ -111,12 +111,11 @@ public class UserUpdateCustomerController {
 
 			// 会員情報をViewに渡す
 			model.addAttribute("user", userBean);
-
-
-
+			model.addAttribute("user", form);
+			model.addAttribute("prefectureId", prefectureRepository.getOne(form.getPrefectureId().getId()));
+			model.addAttribute("prefectures", prefectureRepository.findAll());
 			return "user/update/user_update_input";
 		}
-
 		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId().getId()));
 
 		return "user/update/user_update_check";

@@ -12,7 +12,10 @@
 			お届け先入力
 		</h2>
 		<div class="user_info_form_area">
-			<form method="post" action="/shared_shop/payment/input">
+			<form method="post" action="/shared_shop/payment/input" th:object="${orderForm}">
+				<ul th:if="${#fields.hasErrors('*')}"  th:class="input_list" >
+	  				<li th:each="err : ${#fields.errors('*')}" th:text="${err}" th:class="error_list" ></li>
+				</ul>
 
 				<br />
 				<ul class="input_list">

@@ -462,6 +462,19 @@ select {
 	color: #fff;
 	text-shadow: 1px 1px 1px #616161;
 }
+[type=submit].deletebutton {
+	background: #d44444;
+	background-image: -webkit-linear-gradient(top, #d44444, #9e1818);
+	background-image: -moz-linear-gradient(top, #d44444, #9e1818);
+	background-image: -ms-linear-gradient(top, #d44444, #9e1818);
+	background-image: -o-linear-gradient(top, #d44444, #9e1818);
+	background-image: linear-gradient(to bottom, #d44444, #9e1818);
+	color: #fff;
+	text-shadow: 1px 1px 1px #616161;
+	position:relative;
+	bottom:35px;
+	left:30px;
+}
 
 /* ---- テーブル ---- */
 .list_table{

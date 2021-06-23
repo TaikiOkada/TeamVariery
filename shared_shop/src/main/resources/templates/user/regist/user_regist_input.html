@@ -44,8 +44,9 @@
 						<span class="input_title">都道府県</span>
 						<select name="prefectureId">
 							<option  th:each="prefecture: ${prefectures}" th:value="${prefecture.id}"
-										th:text="${prefecture.name}">
+										th:text="${prefecture.name}" th:selected="${userForm.prefectureId.id == prefecture.id }">
 							</option>
+
 						</select>
 					</label>
 				</li>

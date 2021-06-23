@@ -298,6 +298,9 @@ p {
 .item_info_form_area .back_button {
 	background: #ddd;
 }
+.back_button{
+	font-size: 20px;
+}
 .order_check .user_info_form_area {
 	width: 80%;
 }
@@ -310,12 +313,19 @@ p {
 	display: block;
 	width: 100%;
 	margin-top:60px;
+	display: inline;
+	margin-right: 100px;
+	position: relative;
+	left: 200px;
+	text-align: center;
+	font-size: 1.2em;
 }
 .detail_button_area form{
 	display: inline-block;
 	width:33%;
 	margin-left:-1%;
 	text-align: center;
+
 }
 .detail_button_area form:first-of-type{
 	text-align: right;
@@ -324,6 +334,37 @@ p {
 	text-align: left;
 }
 .detail_button_area [type="submit"]{
+	text-align: center;
+	font-size: 1.2em;
+}
+
+/*キャンセルボタン*/
+.detail_button_area_cancel {
+	display: block;
+	width: 100%;
+	display: inline;
+	position: relative;
+	left: 200px;
+}
+.detail_button_area_cancel form{
+	display: inline-block;
+	width:33%;
+	margin-left:-1%;
+	text-align: center;
+}
+.detail_button_area_cancel form:first-of-type{
+	text-align: right;
+}
+.detail_button_area_cancel form:last-of-type{
+	text-align: left;
+}
+.detail_button_area_cancel [type="submit"]{
+	padding: 0.3em 1.5em;
+	font-size: 1.2em;
+}
+
+.delete{
+	text-align: center;
 	padding: 0.6em 1.8em;
 	font-size: 1.2em;
 }
@@ -423,6 +464,19 @@ select {
 	background-image: linear-gradient(to bottom, #d44444, #9e1818);
 	color: #fff;
 	text-shadow: 1px 1px 1px #616161;
+}
+[type=submit].deletebutton {
+	background: #d44444;
+	background-image: -webkit-linear-gradient(top, #d44444, #9e1818);
+	background-image: -moz-linear-gradient(top, #d44444, #9e1818);
+	background-image: -ms-linear-gradient(top, #d44444, #9e1818);
+	background-image: -o-linear-gradient(top, #d44444, #9e1818);
+	background-image: linear-gradient(to bottom, #d44444, #9e1818);
+	color: #fff;
+	text-shadow: 1px 1px 1px #616161;
+	position:relative;
+	bottom:40px;
+	left:0px;
 }
 
 /* ---- テーブル ---- */
@@ -668,8 +722,11 @@ form.delete {
 .flex-item{
 	box-sizing: border-box;
 }
+/*買い物カゴない時のメッセージ*/
+.noitemMessage{
+	font-size: 20px;
 
-
+}
 /* ---- 商品画像(詳細、編集、削除) ---- */
 .value img {
 	width: 100%;

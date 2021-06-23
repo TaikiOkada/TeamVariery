@@ -43,6 +43,8 @@ public class UserRegistCustomerController {
 	@Autowired
 	HttpSession session;
 
+	Prefecture prefectureId;
+
 	/**
 	 * 会員情報入力画面表示処理
 	 *
@@ -50,9 +52,18 @@ public class UserRegistCustomerController {
 	 * @return "user/regist/user_regist_input" 会員情報 登録入力画面へ
 	 */
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.GET)
-	public String registInput(@ModelAttribute UserForm form, Model model) {
+	public String registInput(@ModelAttribute UserForm form, Model model, boolean backflag) {
+		if(backflag == true) {
+			UserForm userForm = new UserForm();
+			model.addAttribute("prefectures",prefectureRepository.findAll());
+			model.addAttribute("userForm",form);
+		}else {
+			UserForm userForm = new UserForm();
+			Prefecture PrefectureId = prefectureRepository.getOne(1);
+			form.setPrefectureId(PrefectureId);
+			model.addAttribute("prefectures",prefectureRepository.findAll());
 
-		model.addAttribute("prefectures",prefectureRepository.findAll());
+		}
 		return "user/regist/user_regist_input";
 	}
 
@@ -63,15 +74,12 @@ public class UserRegistCustomerController {
 	 * @return "user/regist/user_regist_input" 会員情報 登録入力画面へ
 	 */
 	@RequestMapping(path = "/user/regist/input", method = RequestMethod.POST)
-	public String registInput(Model model ,UserForm userForm) {
+	public String registInput(Model model ,UserForm userForm,boolean backflag) {
 
 		model.addAttribute("userForm", userForm);
-
 		model.addAttribute("prefectures",prefectureRepository.findAll());
 		//入力画面に戻る時に、入力した値を保持する。
-		return registInput(userForm,model);
-		//入力画面に戻る時に、入力した値を捨てる。。
-		//return "user/regist/user_regist_input";
+		return registInput(userForm,model,backflag);
 	}
 
 	/**
@@ -87,11 +95,11 @@ public class UserRegistCustomerController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("prefectures",prefectureRepository.findAll());
+			model.addAttribute("prefecture.id", form.getPrefectureId().getId());
 			return "user/regist/user_regist_input";
 		}
-
 		model.addAttribute("prefecture", prefectureRepository.getOne(form.getPrefectureId().getId()));
-
+		model.addAttribute("prefecture.id",form.getPrefectureId().getId());
 		return "user/regist/user_regist_check";
 
 	}
@@ -132,7 +140,6 @@ public class UserRegistCustomerController {
 	 */
 	@RequestMapping(path = "/user/regist/complete", method = RequestMethod.GET)
 	public String registComplete(Model model) {
-
 
 		return "user/regist/user_regist_complete";
 	}

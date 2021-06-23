@@ -47,12 +47,21 @@
 						</label>
 					</li>
 				</ul>
-				<!-- 				<span th:if="${#fields.hasErrors('payMethod')}" th:errors="*{payMethod}"></span> -->
 
+				<input type="hidden" name="postalCode" th:value="${addressForm.postalCode}" />
+				<input type="hidden" name="prefectureId" th:value="${addressForm.prefectureId.id}" />
+				<input type="hidden" name="address" th:value="${addressForm.address}" />
+				<input type="hidden" name="name" th:value="${addressForm.name}" />
+				<input type="hidden" name="phoneNumber" th:value="${addressForm.phoneNumber}" />
 				<input type="submit" class="send_button" value="次へ" />
 			</form>
 			<form method="post" action="/shared_shop/address/input" class="update">
-
+				<input type="hidden" name="backflg" value="true" />
+				<input type="hidden" name="postalCode" th:value="${addressForm.postalCode}" />
+				<input type="hidden" name="prefectureId" th:value="${addressForm.prefectureId.id}" />
+				<input type="hidden" name="address" th:value="${addressForm.address}" />
+				<input type="hidden" name="name" th:value="${addressForm.name}" />
+				<input type="hidden" name="phoneNumber" th:value="${addressForm.phoneNumber}" />
 				<input type="submit" class="back_button" value="戻る" />
 			</form>
 		</div>

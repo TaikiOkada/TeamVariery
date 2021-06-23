@@ -61,10 +61,16 @@ public class OrderRegistCustomerController {
 	 * @return order_address_input 届け先入力画面
 	 */
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
-	public String inputAddress(Model model, @ModelAttribute OrderForm orderForm) {
-		Integer id = ((UserBean) session.getAttribute("user")).getId();
-		model.addAttribute("user", userRepository.getOne(id));
-
+	public String inputAddress(Model model, @ModelAttribute OrderForm orderForm, boolean backflg) {
+		// 支払方法画面から「戻る」ボタン押されていない場合 (初回時)
+		System.out.println("bf = " + backflg);
+		if (backflg != true) {
+			Integer id = ((UserBean) session.getAttribute("user")).getId();
+			model.addAttribute("user", userRepository.getOne(id));
+		} else {
+			model.addAttribute("user", orderForm);			// 入力された内容を保存
+			System.out.println("adddderr");
+		}
 		model.addAttribute("prefectures", prefectureRepository.findAll());
 
 		return "order/regist/order_address_input";
@@ -80,15 +86,20 @@ public class OrderRegistCustomerController {
 			,Model model, boolean backflg) {
 		// 入力内容にエラーがあった場合
 		if (result.hasErrors()) {
-			return inputAddress(model,orderForm);
+			boolean errFlg = true;			// お届け先入力画面用
+			System.out.println("err");
+			return inputAddress(model,orderForm, errFlg);
 		}
 
-		// 確認画面から戻ってきていない場合
-		if (backflg != true) {
-			BeanUtils.copyProperties(orderForm, orderBean);
-		}
+		// 確認画面から戻ってきた場合
+//		if (backflg == true) {
+//			System.out.println("qqq");
+//		} else {
+//
+//		}
 
 		model.addAttribute("payMethod", orderForm.getPayMethod());
+		model.addAttribute("addressForm", orderForm);
 
 		return "order/regist/order_payment_input";
 	}
@@ -111,12 +122,19 @@ public class OrderRegistCustomerController {
 		@SuppressWarnings("unchecked")
 		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
 
+		// エラーメッセージ用リスト
+		List<ItemBean> stockErrList = new ArrayList<ItemBean>();
+
 		// 商品情報の生成
 		ItemBean itemBean = new ItemBean();
+		// 在庫数取得用
+		Item item = new Item();
 
 		// 買い物かごリストの中身を注文リストにコピーする
 		for (BasketBean basketBean : basketBeanList) {
 			itemBean = BeanCopy.copyEntityToBean(itemRepository.getOne(basketBean.getId()));
+			item = itemRepository.getOne(basketBean.getId());
+
 			orderItemBean = new OrderItemBean();
 
 			orderItemBean.setId(basketBean.getId());				// ID
@@ -126,22 +144,32 @@ public class OrderRegistCustomerController {
 			orderItemBean.setImage(itemBean.getImage());			// 画像
 			orderItemBean.setSubtotal(itemBean.getPrice() * basketBean.getOrderNum());	// 小計
 
-			// リストに追加 ここに在庫数チェック？
-			orderItemBeanList.add(orderItemBean);
+			// 在庫数が足りない場合
+			if (item.getStock() < orderItemBean.getOrderNum()) {
+				orderItemBean.setOrderNum(item.getStock());	// 注文数を在庫数までに置き換える
+
+				stockErrList.add(itemBean);
+			}
+
+			// リストに追加 ここに在庫数チェック
+			if (orderItemBean.getOrderNum() > 0) {
+				System.out.println("add");
+				orderItemBeanList.add(orderItemBean);
+			}
 		}
+		// エラーメッセージ用の情報を保存
+		model.addAttribute("itemStocks",stockErrList);
 
 		// 注文リストの商品値段の合計
 		for (OrderItemBean bean : orderItemBeanList) {
 			subTotalNum += bean.getSubtotal();
 		}
-		totalNum = subTotalNum + orderBean.getPrefectureId().getRegionId().getFee();	// 送料込み合計
-
-		//Beanへコピー
-		orderBean.setPayMethod(orderForm.getPayMethod());
-		model.addAttribute("orderBean",orderBean);
+		totalNum = subTotalNum + orderForm.getPrefectureId().getRegionId().getFee();	// 送料込み合計
+		// 入力内容を保存
+		model.addAttribute("orderForm",orderForm);
 
 		// 支払方法場合分け
-		switch(orderBean.getPayMethod()) {
+		switch(orderForm.getPayMethod()) {
 			case 1:
 				model.addAttribute("payMethod","クレジットカード");
 			break;
@@ -184,7 +212,7 @@ public class OrderRegistCustomerController {
 		// 注文登録情報を保存
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-		order.setPrefectureId(orderBean.getPrefectureId());
+//		order.setPrefectureId(orderBean.getPrefectureId());
 
 		User user = new User();
 		Integer id = ((UserBean) session.getAttribute("user")).getId();
@@ -228,10 +256,10 @@ public class OrderRegistCustomerController {
 	/**
 	* 注文キャンセル確認画面表示
 	*
-	* @return order/regist/order_cansel 注文キャンセル確認画面
+	* @return order/regist/order_cancel 注文キャンセル確認画面
 	*/
 	@RequestMapping(path = "/order/cancel", method = RequestMethod.POST)
-	public String canselOrder(@ModelAttribute OrderForm orderForm, Model model) {
+	public String cancelOrder(@ModelAttribute OrderForm orderForm, Model model) {
 		Order order = orderRepository.findById(orderForm.getId()).orElse(null);
 
 		// 表示する注文情報を生成
@@ -273,16 +301,16 @@ public class OrderRegistCustomerController {
 
 		model.addAttribute("order", orderBean);
 
-		return "order/regist/order_cansel";
+		return "order/regist/order_cancel";
 	}
 
 	/**
 	* 注文キャンセル完了画面表示
 	*
-	* @return order/regist/order_cansel_complete 注文完了画面
+	* @return order/regist/order_cancel_complete 注文完了画面
 	*/
-	@RequestMapping(path = "/order/cansel/complete", method = RequestMethod.POST)
-	public String canselComplete(@ModelAttribute OrderForm orderForm, Model model) {
+	@RequestMapping(path = "/order/cancel/complete", method = RequestMethod.POST)
+	public String cancelComplete(@ModelAttribute OrderForm orderForm, Model model) {
 
 		Order order = orderRepository.findById(orderForm.getId()).orElse(null);
 
@@ -317,6 +345,6 @@ public class OrderRegistCustomerController {
 			model.addAttribute("canselFlg", 1);
 		}
 
-		return "order/regist/order_cansel_complete";
+		return "order/regist/order_cancel_complete";
 	}
 }

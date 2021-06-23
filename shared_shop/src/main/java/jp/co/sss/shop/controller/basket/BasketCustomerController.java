@@ -55,6 +55,7 @@ public class BasketCustomerController {
 		} else {
 			// 同じ商品がカゴに入っているか確認
 			for (BasketBean bean: basketBeanList) {
+				// 同じ商品を追加時
 				if (bean.getId() == item.getId()) {
 					// 在庫より注文数が少なければ
 					if (bean.getOrderNum() < bean.getStock()) {
@@ -100,7 +101,6 @@ public class BasketCustomerController {
 	 */
 	@RequestMapping(path = "/basket/delete", method = RequestMethod.POST)
 	public String deleteItem(@ModelAttribute BasketForm form,Model model) {
-//		basketItems.remove(basketItems.indexOf(id));
 		// 警告出さないようにしてるだけのアノテーション
 		@SuppressWarnings("unchecked")
 		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
@@ -148,6 +148,23 @@ public class BasketCustomerController {
 	 */
 	@RequestMapping(path = "/basket/list", method = RequestMethod.GET)
 	public String basketListGet() {
+		// 警告出さないようにしてるだけのアノテーション
+		@SuppressWarnings("unchecked")
+		List<BasketBean> basketBeanList = ((List<BasketBean>) session.getAttribute("baskets"));
+
+		// 買い物かごの中身があった場合
+		if (basketBeanList != null) {
+			// 買い物かごの中身分回す
+			for (BasketBean bean: basketBeanList) {
+				// 買い物かごの商品の在庫を常に更新
+				if (bean.getStock() != itemRepository.getOne(bean.getId()).getStock()) {
+					bean.setStock(itemRepository.getOne(bean.getId()).getStock());
+					int myIndex = basketBeanList.indexOf(bean);		// リストの要素を取得
+					basketBeanList.set(myIndex, bean);					// リストの更新
+				}
+			}
+		}
+
 		return "basket/shopping_basket";
 	}
 

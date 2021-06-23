@@ -61,10 +61,16 @@ public class OrderRegistCustomerController {
 	 * @return order_address_input 届け先入力画面
 	 */
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
-	public String inputAddress(Model model, @ModelAttribute OrderForm orderForm) {
-		Integer id = ((UserBean) session.getAttribute("user")).getId();
-		model.addAttribute("user", userRepository.getOne(id));
-
+	public String inputAddress(Model model, @ModelAttribute OrderForm orderForm, boolean backflg) {
+		// 支払方法画面から「戻る」ボタン押されていない場合 (初回時)
+		System.out.println("bf = " + backflg);
+		if (backflg != true) {
+			Integer id = ((UserBean) session.getAttribute("user")).getId();
+			model.addAttribute("user", userRepository.getOne(id));
+		} else {
+			model.addAttribute("user", orderForm);			// 入力された内容を保存
+			System.out.println("adddderr");
+		}
 		model.addAttribute("prefectures", prefectureRepository.findAll());
 
 		return "order/regist/order_address_input";
@@ -80,15 +86,20 @@ public class OrderRegistCustomerController {
 			,Model model, boolean backflg) {
 		// 入力内容にエラーがあった場合
 		if (result.hasErrors()) {
-			return inputAddress(model,orderForm);
+			boolean errFlg = true;			// お届け先入力画面用
+			System.out.println("err");
+			return inputAddress(model,orderForm, errFlg);
 		}
 
-		// 確認画面から戻ってきていない場合
-		if (backflg != true) {
-			BeanUtils.copyProperties(orderForm, orderBean);
-		}
+		// 確認画面から戻ってきた場合
+//		if (backflg == true) {
+//			System.out.println("qqq");
+//		} else {
+//
+//		}
 
 		model.addAttribute("payMethod", orderForm.getPayMethod());
+		model.addAttribute("addressForm", orderForm);
 
 		return "order/regist/order_payment_input";
 	}
@@ -142,6 +153,7 @@ public class OrderRegistCustomerController {
 
 			// リストに追加 ここに在庫数チェック
 			if (orderItemBean.getOrderNum() > 0) {
+				System.out.println("add");
 				orderItemBeanList.add(orderItemBean);
 			}
 		}
@@ -152,14 +164,12 @@ public class OrderRegistCustomerController {
 		for (OrderItemBean bean : orderItemBeanList) {
 			subTotalNum += bean.getSubtotal();
 		}
-		totalNum = subTotalNum + orderBean.getPrefectureId().getRegionId().getFee();	// 送料込み合計
-
-		//Beanへコピー
-		orderBean.setPayMethod(orderForm.getPayMethod());
-		model.addAttribute("orderBean",orderBean);
+		totalNum = subTotalNum + orderForm.getPrefectureId().getRegionId().getFee();	// 送料込み合計
+		// 入力内容を保存
+		model.addAttribute("orderForm",orderForm);
 
 		// 支払方法場合分け
-		switch(orderBean.getPayMethod()) {
+		switch(orderForm.getPayMethod()) {
 			case 1:
 				model.addAttribute("payMethod","クレジットカード");
 			break;
@@ -202,7 +212,7 @@ public class OrderRegistCustomerController {
 		// 注文登録情報を保存
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-		order.setPrefectureId(orderBean.getPrefectureId());
+//		order.setPrefectureId(orderBean.getPrefectureId());
 
 		User user = new User();
 		Integer id = ((UserBean) session.getAttribute("user")).getId();
@@ -299,7 +309,7 @@ public class OrderRegistCustomerController {
 	*
 	* @return order/regist/order_cancel_complete 注文完了画面
 	*/
-	@RequestMapping(path = "/order/cansel/complete", method = RequestMethod.POST)
+	@RequestMapping(path = "/order/cancel/complete", method = RequestMethod.POST)
 	public String cancelComplete(@ModelAttribute OrderForm orderForm, Model model) {
 
 		Order order = orderRepository.findById(orderForm.getId()).orElse(null);

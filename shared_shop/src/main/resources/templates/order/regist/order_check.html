@@ -24,48 +24,55 @@
 			</th:block>
 			<br />
 		</th:block>
-		<table class="list_table item_detail">
-			<tr>
-				<th>
-					商品名
-				</th>
-				<th>
-					商品画像
-				</th>
-				<th>
-					単価
-				</th>
-				<th>
-					数量
-				</th>
-				<th>
-					小計
-				</th>
-			</tr>
-			<tr th:each="orderItem: ${orderItems}">
-				<td th:text="${orderItem.name}"></td>
-				<td><img th:src="@{/img/{image}(image=${orderItem.image})}"></img>				</td>
-				<td th:text="${orderItem.price}"></td>
-				<td th:text="${orderItem.orderNum}"></td>
-				<td th:text="${orderItem.subtotal}"></td>
-			</tr>
-			<tr>
-				<td colspan="3"></td>
-				<td>商品合計</td>
-				<td th:text="${subTotalNum}"></td>
-			</tr>
-			<tr>
-				<td colspan="3"></td>
-				<td>送料</td>
-				<td th:text="${orderBean.prefectureId.regionId.fee}"></td>
-			</tr>
-			<tr>
-				<td colspan="3"></td>
-				<td class="total">合計</td>
-				<td th:text="${totalNum}"  class="total"></td>
-			</tr>
 
-		</table>
+		<th:block th:if="!${#lists.isEmpty(orderItems)}">
+			<table class="list_table item_detail">
+				<tr>
+					<th>
+						商品名
+					</th>
+					<th>
+						商品画像
+					</th>
+					<th>
+						単価
+					</th>
+					<th>
+						数量
+					</th>
+					<th>
+						小計
+					</th>
+				</tr>
+				<tr th:each="orderItem: ${orderItems}">
+					<td th:text="${orderItem.name}"></td>
+					<td><img th:src="@{/img/{image}(image=${orderItem.image})}"></img>				</td>
+					<td th:text="${orderItem.price}"></td>
+					<td th:text="${orderItem.orderNum}"></td>
+					<td th:text="${orderItem.subtotal}"></td>
+				</tr>
+				<tr>
+					<td colspan="3"></td>
+					<td>商品合計</td>
+					<td th:text="${subTotalNum}"></td>
+				</tr>
+				<tr>
+					<td colspan="3"></td>
+					<td>送料</td>
+					<td th:text="${orderForm.prefectureId.regionId.fee}"></td>
+				</tr>
+				<tr>
+					<td colspan="3"></td>
+					<td class="total">合計</td>
+					<td th:text="${totalNum}"  class="total"></td>
+				</tr>
+
+			</table>
+		</th:block>
+		<th:block th:if="${#lists.isEmpty(orderItems)}">
+			<p>注文できる商品はありません。</p>
+		</th:block>
+
 		<div class="user_info_form_area">
 			<table class="detail_table address">
 				<caption class="table_caption">
@@ -75,25 +82,25 @@
 					<th>
 						郵便番号
 					</th>
-					<td th:text="${orderBean.postalCode}"></td>
+					<td th:text="${orderForm.postalCode}"></td>
 				</tr>
 				<tr>
 					<th>
 						住所
 					</th>
-				<td th:text="${orderBean.prefectureId.name}+${orderBean.address}"></td>
+				<td th:text="${orderForm.prefectureId.name}+${orderForm.address}"></td>
 			</tr>
 				<tr>
 					<th>
 						氏名
 					</th>
-					<td th:text="${orderBean.name}"></td>
+					<td th:text="${orderForm.name}"></td>
 				</tr>
 				<tr>
 					<th>
 						電話番号
 					</th>
-					<td th:text="${orderBean.phoneNumber}"></td>
+					<td th:text="${orderForm.phoneNumber}"></td>
 				</tr>
 			</table>
 			<table class="detail_table pay">
@@ -109,20 +116,23 @@
 					</td>
 				</tr>
 			</table>
-			<form method="post" action="/shared_shop/order/complete" >
-				<input type="hidden" name="postalCode" th:value="${orderBean.postalCode}"/>
-				<input type="hidden" name="address" th:value="${orderBean.address}"/>
-				<input type="hidden" name="name" th:value="${orderBean.name}"/>
-				<input type="hidden" name="phoneNumber" th:value="${orderBean.phoneNumber}"/>
-				<input type="hidden" name="payMethod" th:value="${orderBean.payMethod}"/>
-				<input class="send_button" type="submit" value="ご注文の確定" />
-			</form>
+			<th:block th:if="!${#lists.isEmpty(orderItems)}">
+				<form method="post" action="/shared_shop/order/complete" >
+					<input type="hidden" name="postalCode" th:value="${orderForm.postalCode}"/>
+					<input type="hidden" name="address" th:value="${orderForm.address}"/>
+					<input type="hidden" name="name" th:value="${orderForm.name}"/>
+					<input type="hidden" name="phoneNumber" th:value="${orderForm.phoneNumber}"/>
+					<input type="hidden" name="payMethod" th:value="${orderForm.payMethod}"/>
+					<input class="send_button" type="submit" value="ご注文の確定" />
+				</form>
+			</th:block>
 			<form method="post" action="/shared_shop/payment/input" class="update">
-				<input type="hidden" name="postalCode" th:value="${orderBean.postalCode}"/>
-				<input type="hidden" name="address" th:value="${orderBean.address}"/>
-				<input type="hidden" name="name" th:value="${orderBean.name}"/>
-				<input type="hidden" name="phoneNumber" th:value="${orderBean.phoneNumber}"/>
-				<input type="hidden" name="payMethod" th:value="${orderBean.payMethod}"/>
+				<input type="hidden" name="postalCode" th:value="${orderForm.postalCode}"/>
+				<input type="hidden" name="address" th:value="${orderForm.address}"/>
+				<input type="hidden" name="name" th:value="${orderForm.prefectureId.id}"/>
+				<input type="hidden" name="name" th:value="${orderForm.name}"/>
+				<input type="hidden" name="phoneNumber" th:value="${orderForm.phoneNumber}"/>
+				<input type="hidden" name="payMethod" th:value="${orderForm.payMethod}"/>
 				<input type="hidden" name="backflg" value="true" />
 				<input class="back_button" type="submit" value="戻る" />
 			</form>

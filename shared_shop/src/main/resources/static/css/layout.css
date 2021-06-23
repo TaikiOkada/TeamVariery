@@ -45,6 +45,8 @@ h3{
  */
 form {
 	display: inline;
+	position:relative;
+	top:15px;
 }
 
 table {
@@ -201,9 +203,23 @@ aside.admin_menu {
 .admin_menu .title {
 	background: #ff6c49;
 }
-.search .form {
-	padding: 15px 0 50px 5px;
+.search_area{
+	padding: 0 0 50px 0;
 }
+/* .search .form {
+	padding: 15px 0 50px 5px;
+} */
+/* .price1{
+	margin: 0;
+	position: relative;
+	top: 15px;
+}
+.blank{
+	position:relative;
+	left:15px;
+	top: 15px;
+} */
+
 .search .price,
 .admin_menu .display_list {
 	display: block;

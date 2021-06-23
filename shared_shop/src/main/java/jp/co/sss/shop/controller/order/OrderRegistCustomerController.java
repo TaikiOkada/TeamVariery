@@ -63,14 +63,15 @@ public class OrderRegistCustomerController {
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
 	public String inputAddress(Model model, @ModelAttribute OrderForm orderForm, boolean backflg) {
 		// 支払方法画面から「戻る」ボタン押されていない場合 (初回時)
-		System.out.println("bf = " + backflg);
 		if (backflg != true) {
 			Integer id = ((UserBean) session.getAttribute("user")).getId();
 			model.addAttribute("user", userRepository.getOne(id));
+			model.addAttribute("payMethod", 1);
 		} else {
-			model.addAttribute("user", orderForm);			// 入力された内容を保存
-			System.out.println("adddderr");
+			model.addAttribute("user", orderForm);						// 入力された内容を保存
+			model.addAttribute("payMethod" , orderForm.getPayMethod());
 		}
+		model.addAttribute("backflg", backflg);						// 戻るボタン押されたかのフラグ
 		model.addAttribute("prefectures", prefectureRepository.findAll());
 
 		return "order/regist/order_address_input";
@@ -86,16 +87,12 @@ public class OrderRegistCustomerController {
 			,Model model, boolean backflg) {
 		// 入力内容にエラーがあった場合
 		if (result.hasErrors()) {
-			boolean errFlg = true;			// お届け先入力画面用
-			System.out.println("err");
+			boolean errFlg = true;				// お届け先入力画面用
 			return inputAddress(model,orderForm, errFlg);
 		}
 
-		// 確認画面から戻ってきた場合
-//		if (backflg == true) {
-//			System.out.println("qqq");
-//		} else {
-//
+//		// お届け先入力画面からの遷移時(初回表示)
+//		if (backflg != true) {
 //		}
 
 		model.addAttribute("payMethod", orderForm.getPayMethod());
@@ -139,21 +136,21 @@ public class OrderRegistCustomerController {
 
 			orderItemBean.setId(basketBean.getId());				// ID
 			orderItemBean.setName(basketBean.getName());			// 名前
-			orderItemBean.setOrderNum(basketBean.getOrderNum());	// 注文数
 			orderItemBean.setPrice(itemBean.getPrice());			// 値段
 			orderItemBean.setImage(itemBean.getImage());			// 画像
-			orderItemBean.setSubtotal(itemBean.getPrice() * basketBean.getOrderNum());	// 小計
 
 			// 在庫数が足りない場合
-			if (item.getStock() < orderItemBean.getOrderNum()) {
+			if (item.getStock() < basketBean.getOrderNum()) {
 				orderItemBean.setOrderNum(item.getStock());	// 注文数を在庫数までに置き換える
 
-				stockErrList.add(itemBean);
+				stockErrList.add(itemBean);					// エラーメッセージ用リスト
+			} else {
+				orderItemBean.setOrderNum(basketBean.getOrderNum());	// 注文数
 			}
+			orderItemBean.setSubtotal(orderItemBean.getPrice() * orderItemBean.getOrderNum());	// 小計
 
 			// リストに追加 ここに在庫数チェック
 			if (orderItemBean.getOrderNum() > 0) {
-				System.out.println("add");
 				orderItemBeanList.add(orderItemBean);
 			}
 		}
@@ -212,7 +209,6 @@ public class OrderRegistCustomerController {
 		// 注文登録情報を保存
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-//		order.setPrefectureId(orderBean.getPrefectureId());
 
 		User user = new User();
 		Integer id = ((UserBean) session.getAttribute("user")).getId();
@@ -235,16 +231,25 @@ public class OrderRegistCustomerController {
 			item = new Item();
 			item = itemRepository.getOne(basketBean.getId());
 
-			orderItem = new OrderItem();
-			orderItem.setQuantity(basketBean.getOrderNum());
-			orderItem.setOrder(order);
-			orderItem.setPrice(item.getPrice());
-			orderItem.setItem(item);
-			orderItemRepository.save(orderItem);
+			// その商品の在庫がある場合は登録処理
+			if (item.getStock() > 0) {
+				orderItem = new OrderItem();
+				orderItem.setOrder(order);
+				orderItem.setPrice(item.getPrice());
+				orderItem.setItem(item);
 
-			// 在庫数減らす
-			item.setStock(item.getStock() - orderItem.getQuantity());
-			itemRepository.save(item);
+				// 在庫数が注文数より足りない場合
+				if (item.getStock() < basketBean.getOrderNum()) {
+					orderItem.setQuantity(item.getStock());					// 在庫数分のみ入れ込む
+				} else {
+					orderItem.setQuantity(basketBean.getOrderNum());		// 注文の数まで入れ込む
+				}
+				orderItemRepository.save(orderItem);
+
+				// 在庫数減らす
+				item.setStock(item.getStock() - orderItem.getQuantity());
+				itemRepository.save(item);
+			}
 
 			// 買い物かごの中身削除
 			session.removeAttribute("baskets");

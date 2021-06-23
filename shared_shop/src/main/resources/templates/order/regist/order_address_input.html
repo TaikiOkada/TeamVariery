@@ -65,8 +65,9 @@
 						</label>
 					</li>
 				</ul>
+				<input type="hidden" name="payMethod" th:value="${payMethod}"/>
 				<input type="submit" value="次へ" class="send_button" />
-				<input type="hidden" name="backflg" value="false" />
+				<input type="hidden" name="backflg" th:value="${backflg}" />
 			</form>
 			<form action="/shared_shop/basket/list?page=0">
 				<input type="submit" value="戻る" class="back_button" />

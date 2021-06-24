@@ -53,7 +53,7 @@ public class OrderRegistCustomerController {
 	OrderBean orderBean = new OrderBean();
 	OrderItemBean orderItemBean = new OrderItemBean();
 
-	static final int canCanselTime = 5;
+	static final int canCanselTime = 1;
 
 	/**
 	 * 届け先入力画面表示
@@ -91,10 +91,6 @@ public class OrderRegistCustomerController {
 			return inputAddress(model,orderForm, errFlg);
 		}
 
-//		// お届け先入力画面からの遷移時(初回表示)
-//		if (backflg != true) {
-//		}
-
 		model.addAttribute("payMethod", orderForm.getPayMethod());
 		model.addAttribute("addressForm", orderForm);
 
@@ -107,7 +103,7 @@ public class OrderRegistCustomerController {
 	* @return order/regist/order_check 画面
 	*/
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
-	public String checkOrder(@ModelAttribute OrderForm orderForm ,Integer stock, Model model, HttpSession session) {
+	public String checkOrder(@ModelAttribute OrderForm orderForm, Model model) {
 		// 合計値段
 		int totalNum = 0;
 		int subTotalNum = 0;
@@ -204,17 +200,20 @@ public class OrderRegistCustomerController {
 	* @return order/regist/order_complete 注文完了画面
 	*/
 	@RequestMapping(path = "/order/complete", method = RequestMethod.POST)
-	public String completeOrder(@ModelAttribute OrderForm orderForm) {
+	public String completeOrder(@ModelAttribute OrderForm orderForm, Model model) {
+		// 商品登録フラグ
+		boolean insertFlg = false;
+		System.out.println("com");
 
 		// 注文登録情報を保存
 		Order order = new Order();
 		BeanUtils.copyProperties(orderForm, order);
-
+		// ユーザー情報を保存
 		User user = new User();
 		Integer id = ((UserBean) session.getAttribute("user")).getId();
 		user=userRepository.getOne(id);
 		order.setUser(user);
-
+		// orderテーブルへ保存
 		orderRepository.save(order);
 
 		// 注文商品テーブルへ情報を保存
@@ -233,6 +232,7 @@ public class OrderRegistCustomerController {
 
 			// その商品の在庫がある場合は登録処理
 			if (item.getStock() > 0) {
+				insertFlg = true;
 				orderItem = new OrderItem();
 				orderItem.setOrder(order);
 				orderItem.setPrice(item.getPrice());
@@ -250,10 +250,16 @@ public class OrderRegistCustomerController {
 				item.setStock(item.getStock() - orderItem.getQuantity());
 				itemRepository.save(item);
 			}
-
-			// 買い物かごの中身削除
-			session.removeAttribute("baskets");
 		}
+
+		// 商品が登録されていなかった場合
+		if (insertFlg == false) {
+			// orderに登録した内容を取り消す
+			orderRepository.deleteById(order.getId());
+			return checkOrder(orderForm,model);
+		}
+		// 買い物かごの中身削除
+		session.removeAttribute("baskets");
 
 		return "order/regist/order_complete";
 	}

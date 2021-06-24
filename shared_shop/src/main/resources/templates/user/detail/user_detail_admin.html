@@ -54,7 +54,7 @@
 			</form>
 			<form th:action="@{/user/delete/check/admin}" method="post" th:if="${user.authority != 0}" >
 				<input type="hidden" name="id" th:value="${user.id}" />
-				<input type="submit" value="削除" class="delete" />
+				<input type="submit" value="削除" class="delete1" />
 			</form>
 		</div>
 </body>

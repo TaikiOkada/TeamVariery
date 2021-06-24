@@ -24,8 +24,8 @@
 				</select> <input type="submit" value="検索" />
 			</form>
 		</div>
-	</div>
 ​
+	   <br/><br/><br/>
 	   <h2 class="title">価格帯別検索</h2>
 		<!-- 新着順とトップ画面の時 -->
 		<form th:if="${sortType == null}" th:action="@{/item/list/price/1}">
@@ -41,7 +41,7 @@
 	   		  <!-- <span th:errors="*{price_max} + *{price_min}"></span> -->
 	   		  <input type="submit" value="検索"  class="aaa"/>
 	   </form>
-​
+​		</div>
 ​
 	<!--/* メニュー(運用管理者、及びシステム管理者用) */-->
 	<div th:if="${session.user != null and session.user.authority != 2}">

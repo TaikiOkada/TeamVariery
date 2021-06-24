@@ -299,7 +299,7 @@ aside.admin_menu {
 	border-right: solid 20px rgb(149, 158, 155);
 } */
 
-.main .title::before{
+/* .main .title::before{
 	position: relative;
 	z-index: -1;
 	content: '';
@@ -308,7 +308,7 @@ aside.admin_menu {
 	border: none;
 	border-bottom: solid 10px transparent;
 	border-right: solid 20px rgb(149, 158, 155);
-}
+} */
 
 .admin .main .title.no_shadow::before {
 	display: none;

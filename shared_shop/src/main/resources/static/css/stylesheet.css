@@ -469,6 +469,18 @@ select {
 	color: #fff;
 	text-shadow: 1px 1px 1px #616161;
 }
+[type=submit].delete1{
+	background: #d44444;
+	background-image: -webkit-linear-gradient(top, #d44444, #9e1818);
+	background-image: -moz-linear-gradient(top, #d44444, #9e1818);
+	background-image: -ms-linear-gradient(top, #d44444, #9e1818);
+	background-image: -o-linear-gradient(top, #d44444, #9e1818);
+	background-image: linear-gradient(to bottom, #d44444, #9e1818);
+	color: #fff;
+	text-shadow: 1px 1px 1px #616161;
+	position: relative;
+	bottom:40px;
+}
 [type=submit].deletebutton {
 	background: #d44444;
 	background-image: -webkit-linear-gradient(top, #d44444, #9e1818);
@@ -482,6 +494,7 @@ select {
 	bottom:40px;
 	left:0px;
 }
+
 
 /* ---- テーブル ---- */
 .list_table{
@@ -508,6 +521,13 @@ select {
 	padding: 10px;
 }
 
+.changeadmin{
+	position:relative;
+	bottom: 13px;
+}
+.changebutton{
+	font-size: 20px;
+}
 /* ---- 個別 ---- */
 /*以下のpicとcontents_nameは追記*/
 .pic{
@@ -666,6 +686,8 @@ select {
 	padding: 0px 10px;
 	border-radius: 6px;
 	font-weight: bold;
+	position: relative;
+	bottom: 12px;
 }
 
 

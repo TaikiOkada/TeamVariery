@@ -13,85 +13,12 @@
 				<h2 class="title">
 					人気商品
 				</h2>
-				<div class="item">
+				<div th:each="item : ${items}" class="item">
 					<div class="item_name">
-						鉛筆
-
+						<th:block th:text="${item.name}"></th:block>
 					</div>
-					<a href="/shared_shop/item/detail/9">
-						<img src="img/20180613010316_BlackPencil.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						マスキングテープ(水玉)
-					</div>
-					<a href="/shared_shop/item/detail/10">
-						<img src="img/20180613010231_MaskingTape-Dotted.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						クレヨン
-					</div>
-					<a href="/shared_shop/item/detail/12">
-						<img src="img/20180328124616_crayon.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						オレンジ
-					</div>
-					<a href="/shared_shop/item/detail/3">
-						<img src="img/mandarin_orange_color.png" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						マスキングテープ(星)
-					</div>
-					<a href="/shared_shop/item/detail/11">
-						<img src="img/20180613010141_MaskingTape-Star.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						クリップセット
-					</div>
-					<a href="/shared_shop/item/detail/7">
-						<img src="img/20180327033206_Clips.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						学問のすすめ
-					</div>
-					<a href="/shared_shop/item/detail/13">
-						<img src="img/20180312011416_gakumonnosusume.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						辞書
-					</div>
-					<a href="/shared_shop/item/detail/2">
-						<img src="img/20180312124614_dictionary.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						さくらんぼ
-					</div>
-					<a href="/shared_shop/item/detail/15">
-						<img src="img/20180312125622_cherry.jpg" />
-					</a>
-				</div>
-				<div class="item">
-					<div class="item_name">
-						りんご
-					</div>
-					<a href="/shared_shop/item/detail/1">
-						<img src="img/20180311122622_apple.jpg" />
+					<a th:href="@{/item/detail/{id} (id=${item.id})}">
+						<img th:src="@{/img/{image}(image=${item.image})}" />
 					</a>
 				</div>
 			</article>

@@ -331,6 +331,11 @@ p {
 	position: relative;
 	right: 150px;
 }
+.detail_button_area form .back_button{
+	position:relative;
+	top: -0px;
+	left: 60px;
+}
 .detail_button_area form:first-of-type{
 	text-align: right;
 }

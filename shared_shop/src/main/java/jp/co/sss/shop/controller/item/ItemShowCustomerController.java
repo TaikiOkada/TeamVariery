@@ -54,7 +54,8 @@ public class ItemShowCustomerController {
      */
     @RequestMapping(path = "/")
     public String index(Model model, Pageable pageable) {
-        model.addAttribute("items", itemRepository.findAll());
+    	// 売れ筋(人気順)
+    	model.addAttribute("items", itemRepository.findByQuantityDescQuery(pageable));
         return "index";
     }
     /* メニューバーの処理 */

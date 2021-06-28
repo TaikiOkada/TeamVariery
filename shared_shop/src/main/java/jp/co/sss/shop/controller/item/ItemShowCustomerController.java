@@ -69,7 +69,7 @@ public class ItemShowCustomerController {
         model.addAttribute("pages", ItemPageList);
         model.addAttribute("items", itemList);
         // model.addAttribute("url", "item/list");
-        return "/item/list/item_list";
+        return "item/list/item_list";
     }
     /* サイドバーの処理 */
     /* カテゴリ別検索 */
@@ -87,7 +87,7 @@ public class ItemShowCustomerController {
         model.addAttribute("pages", ItemPageList);
         model.addAttribute("items", itemList);
         model.addAttribute("url", "/item/list/category");
-        return "/item/list/item_list";
+        return "item/list/item_list";
     }
     /* 価格帯別検索 トップ画面・新着順のとき*/
     @RequestMapping(path = "/item/list/price/1")
@@ -111,7 +111,7 @@ public class ItemShowCustomerController {
         model.addAttribute("pages", ItemPageList);
         model.addAttribute("items", itemList);
         model.addAttribute("flag", 0);
-        return "/item/list/item_list";
+        return "item/list/item_list";
     }
     //価格帯別検索 売れ筋順のとき
     @RequestMapping(path = "/item/list/price/{SortType}")
@@ -120,7 +120,7 @@ public class ItemShowCustomerController {
             Model model, Pageable pageable) {
         // 入力エラー発生時
         if (result.hasErrors()) {
-            return "/item/list/item_list";
+            return "item/list/item_list";
         }
         price_max = form.getMax();
         price_min = form.getMin();
@@ -136,7 +136,7 @@ public class ItemShowCustomerController {
         model.addAttribute("pages", ItemPageList);
         model.addAttribute("items", itemList);
         model.addAttribute("SortType",2);
-        return "/item/list/item_list";
+        return "item/list/item_list";
     }
     /* テーブルの処理 */
     /* 売れ筋順に並びかえ */
@@ -172,7 +172,7 @@ public class ItemShowCustomerController {
 			List<Item> itemList = ItemPageList.getContent(); model.addAttribute("pages",
 			ItemPageList); model.addAttribute("items", itemList);
         }
-        return "/item/list/item_list";
+        return "item/list/item_list";
     }
     /* 商品詳細検索 */
     @RequestMapping(path = "/item/detail/{id}")
